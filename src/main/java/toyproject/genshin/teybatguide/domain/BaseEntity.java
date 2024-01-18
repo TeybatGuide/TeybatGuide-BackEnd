@@ -7,6 +7,7 @@ import lombok.Getter;
 import toyproject.genshin.teybatguide.domain.value.Domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -21,6 +22,20 @@ public class BaseEntity implements Serializable {
     }
 
     public BaseEntity(Domain domain) {
-        id = String.join(domain.toString(), "_", UUID.randomUUID().toString().replace("-",""));
+        id = String.join(domain.toString().toLowerCase(), "_",
+                UUID.randomUUID().toString().replace("-",""));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BaseEntity that = (BaseEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
