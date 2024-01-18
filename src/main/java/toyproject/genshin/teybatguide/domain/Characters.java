@@ -1,11 +1,9 @@
 package toyproject.genshin.teybatguide.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
-import toyproject.genshin.teybatguide.domain.value.Country;
-import toyproject.genshin.teybatguide.domain.value.Element;
-import toyproject.genshin.teybatguide.domain.value.Stars;
-import toyproject.genshin.teybatguide.domain.value.WeaponType;
+import toyproject.genshin.teybatguide.domain.value.*;
 
 @Getter
 @Entity
@@ -30,6 +28,18 @@ public class Characters extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private WeaponType weaponType;
 
+    protected Characters() {
+        super(Domain.CHARACTER);
+    }
 
-
+    @Builder
+    public Characters(String characterName, String characterImage, Stars stars, Element element, Country country, WeaponType weaponType) {
+        this();
+        this.characterName = characterName;
+        this.characterImage = characterImage;
+        this.stars = stars;
+        this.element = element;
+        this.country = country;
+        this.weaponType = weaponType;
+    }
 }
