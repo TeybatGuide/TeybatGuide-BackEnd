@@ -1,5 +1,5 @@
 package toyproject.genshin.teybatguide.domain.value;
 
 public enum Domain {
-    CHARACTER;
+    CHARACTER, RESOURCES;
 }

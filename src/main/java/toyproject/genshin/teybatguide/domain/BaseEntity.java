@@ -22,8 +22,7 @@ public class BaseEntity implements Serializable {
     }
 
     public BaseEntity(Domain domain) {
-        id = String.join(domain.toString().toLowerCase(), "_",
-                UUID.randomUUID().toString().replace("-",""));
+        id = String.join(domain.toString().toLowerCase(), "_", generateUUID());
     }
 
     @Override
@@ -37,5 +36,9 @@ public class BaseEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    private String generateUUID() {
+        return UUID.randomUUID().toString().replace("-", "");
     }
 }
