@@ -26,6 +26,7 @@ public class CharacterResources extends BaseEntity {
 
     @Builder
     public CharacterResources(Characters characters, List<Resources> resourcesList) {
+        this();
         this.characters = characters;
         this.resourcesList = resourcesList;
     }
