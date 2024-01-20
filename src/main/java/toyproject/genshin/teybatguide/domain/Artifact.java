@@ -20,15 +20,22 @@ public class Artifact extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Country country;
 
+    @ManyToOne
+    private Characters characters;
+
+    @ManyToOne
+    private ArtifactOptions artifactOptions;
+
     protected Artifact() {
         super(Domain.ARTIFACT);
     }
 
     @Builder
-    public Artifact(String artifactName, String artifactImage, Country country) {
+    public Artifact(String artifactName, String artifactImage, Country country, ArtifactOptions artifactOptions) {
         this();
         this.artifactName = artifactName;
         this.artifactImage = artifactImage;
         this.country = country;
+        this.artifactOptions = artifactOptions;
     }
 }
