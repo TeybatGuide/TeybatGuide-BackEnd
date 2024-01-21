@@ -11,7 +11,7 @@ import toyproject.genshin.teybatguide.domain.value.Domain;
 public class CharacterSpecifications extends BaseEntity {
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Characters characters;
 
     @Column(length = 10)

@@ -13,11 +13,11 @@ import java.util.List;
 public class CharacterResources extends BaseEntity {
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "charater_id", referencedColumnName = "id")
     private Characters characters;
 
     @OneToMany
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "resources_id", referencedColumnName = "id")
     private List<Resources> resourcesList;
 
     protected CharacterResources() {
