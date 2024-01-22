@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum Options {
+public enum ArtifactOptions {
 
     ATK("공격력"),
     DMG_BONUS("피해 증가"),

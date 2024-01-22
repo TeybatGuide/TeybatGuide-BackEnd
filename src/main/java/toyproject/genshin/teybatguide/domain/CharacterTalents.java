@@ -9,8 +9,8 @@ import java.util.List;
 
 @Getter
 @Entity
-@Table(name = "character_resources")
-public class CharacterResources extends BaseEntity {
+@Table(name = "character_talents")
+public class CharacterTalents extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "charater_id", referencedColumnName = "id")
@@ -18,16 +18,20 @@ public class CharacterResources extends BaseEntity {
 
     @OneToMany
     @JoinColumn(name = "resources_id", referencedColumnName = "id")
-    private List<Resources> resourcesList;
+    private List<Resources> resources;
 
-    protected CharacterResources() {
-        super(Domain.CHARACTER_RESOURCES);
+    @Column(nullable = false)
+    private int characterTalentsCount;
+
+    protected CharacterTalents() {
+        super(Domain.CHARACTER_TALENTS);
     }
 
     @Builder
-    public CharacterResources(Characters characters, List<Resources> resourcesList) {
+    public CharacterTalents(Characters characters, List<Resources> resources, int characterTalentsCount) {
         this();
         this.characters = characters;
-        this.resourcesList = resourcesList;
+        this.resources = resources;
+        this.characterTalentsCount = characterTalentsCount;
     }
 }

@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import toyproject.genshin.teybatguide.domain.value.Country;
 import toyproject.genshin.teybatguide.domain.value.Domain;
-import toyproject.genshin.teybatguide.domain.value.Options;
+import toyproject.genshin.teybatguide.domain.value.ArtifactOptions;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,18 +26,18 @@ public class Artifact extends BaseEntity {
 
     @ElementCollection
     @CollectionTable(name = "artifact_options",
-            joinColumns = @JoinColumn(name = "artifact_id")
+            joinColumns = @JoinColumn(name = "artifact_id", referencedColumnName = "id")
     )
     @Enumerated(EnumType.STRING)
     @Column(name = "artifact_options_name")
-    private Set<Options> artifactOptions = new HashSet<>();
+    private Set<ArtifactOptions> artifactOptions = new HashSet<>();
 
     protected Artifact() {
         super(Domain.ARTIFACT);
     }
 
     @Builder
-    public Artifact(String artifactName, String artifactImage, Country country, Set<Options> artifactOptions) {
+    public Artifact(String artifactName, String artifactImage, Country country, Set<ArtifactOptions> artifactOptions) {
         this();
         this.artifactName = artifactName;
         this.artifactImage = artifactImage;
