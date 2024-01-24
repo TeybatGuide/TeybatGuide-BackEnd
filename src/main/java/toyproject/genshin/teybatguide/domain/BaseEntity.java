@@ -22,7 +22,7 @@ public class BaseEntity implements Serializable {
     }
 
     public BaseEntity(Domain domain) {
-        id = String.join(domain.toString().toLowerCase(), "_", generateUUID());
+        id = String.join("", domain.toString().toLowerCase(), "_", generateUUID());
     }
 
     @Override
