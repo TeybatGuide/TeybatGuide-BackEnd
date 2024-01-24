@@ -12,7 +12,9 @@ public enum Country {
     INAZUMA("이나즈마"),
     SUMERU("수메르"),
     FONTAINE("폰타인"),
-    SNEZHNAYA("스네즈나야");
+    SNEZHNAYA("스네즈나야"),
+    NATLAN("나타"),
+    OTHER("기타");
 
     private final String countryName;
 }
