@@ -13,7 +13,7 @@ import java.util.List;
 public class CharacterTalents extends BaseEntity {
 
     @OneToOne
-    @JoinColumn(name = "charater_id", referencedColumnName = "id")
+    @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Characters characters;
 
     @OneToMany

@@ -24,10 +24,8 @@ public class Artifact extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Country country;
 
-    @ElementCollection
-    @CollectionTable(name = "artifact_options",
-            joinColumns = @JoinColumn(name = "artifact_id", referencedColumnName = "id")
-    )
+    @ElementCollection(targetClass = ArtifactOptions.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "artifact_options", joinColumns = @JoinColumn(name = "artifact_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "artifact_options_name")
     private Set<ArtifactOptions> artifactOptions = new HashSet<>();
