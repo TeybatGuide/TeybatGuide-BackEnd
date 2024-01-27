@@ -16,6 +16,9 @@ public class Characters extends BaseEntity {
     @Column(length = 100)
     private String characterImage;
 
+    @Column(length = 100)
+    private String characterImage2;
+
     @Enumerated(EnumType.STRING)
     private Stars stars;
 
@@ -33,10 +36,11 @@ public class Characters extends BaseEntity {
     }
 
     @Builder
-    public Characters(String characterName, String characterImage, Stars stars, Element element, Country country, WeaponType weaponType) {
+    public Characters(String characterName, String characterImage, String characterImage2, Stars stars, Element element, Country country, WeaponType weaponType) {
         this();
         this.characterName = characterName;
         this.characterImage = characterImage;
+        this.characterImage2 = characterImage2;
         this.stars = stars;
         this.element = element;
         this.country = country;
