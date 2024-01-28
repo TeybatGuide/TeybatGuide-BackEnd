@@ -18,33 +18,33 @@ public class CharacterSpecifications extends BaseEntity {
     private String specHealth;
 
     @Column(length = 10)
-    private String specOffensive;
+    private String specATK;
 
     @Column(length = 10)
-    private String specDefensive;
+    private String specDEF;
 
     @Column(length = 10)
-    private String specFetalHitProb;
+    private String specCritRate;
 
     @Column(length = 10)
-    private String specFetalDamage;
+    private String specCritDMG;
 
     @Column(length = 10)
-    private String specElement;
+    private String specElementMastery;
 
     protected CharacterSpecifications() {
         super(Domain.CHARACTER_SPECIFICATIONS);
     }
 
     @Builder
-    public CharacterSpecifications(Characters characters, String specHealth, String specOffensive, String specDefensive, String specFetalHitProb, String specFetalDamage, String specElement) {
+    public CharacterSpecifications(Characters characters, String specHealth, String specATK, String specDEF, String specCritRate, String specCritDMG, String specElementMastery) {
         this();
         this.characters = characters;
         this.specHealth = specHealth;
-        this.specOffensive = specOffensive;
-        this.specDefensive = specDefensive;
-        this.specFetalHitProb = specFetalHitProb;
-        this.specFetalDamage = specFetalDamage;
-        this.specElement = specElement;
+        this.specATK = specATK;
+        this.specDEF = specDEF;
+        this.specCritRate = specCritRate;
+        this.specCritDMG = specCritDMG;
+        this.specElementMastery = specElementMastery;
     }
 }
