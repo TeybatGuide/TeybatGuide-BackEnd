@@ -21,7 +21,7 @@ public class CharactersController {
         return ResponseEntity.ok(charactersService.findAndCreateCharacterList());
     }
 
-    @GetMapping("details")
+    @GetMapping("/details")
     public ResponseEntity<CharacterDetailsResponse> getCharacterDetails(@RequestParam String characterId) {
         return ResponseEntity.ok(charactersService.findAndBuildCharacterDetails(characterId));
     }

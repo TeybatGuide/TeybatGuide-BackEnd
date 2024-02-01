@@ -1,7 +1,6 @@
 package toyproject.genshin.teybatguide.controller.dto;
 
 import lombok.Builder;
-import toyproject.genshin.teybatguide.domain.CharacterSpecifications;
 import toyproject.genshin.teybatguide.domain.Characters;
 
 @Builder
