@@ -16,7 +16,7 @@ public class ImageController {
 
     public final ImageService imageService;
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<Resource> getImage(@RequestBody ImageRequest request) {
 
         Resource resource = imageService.openFile(request.imageUrls());
