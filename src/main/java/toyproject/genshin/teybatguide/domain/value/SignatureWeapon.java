@@ -1,5 +1,5 @@
 package toyproject.genshin.teybatguide.domain.value;
 
-public enum CharacterWeaponOnly {
+public enum SignatureWeapon {
     TRUE, FALSE;
 }

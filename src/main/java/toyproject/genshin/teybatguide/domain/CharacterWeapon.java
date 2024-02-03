@@ -3,7 +3,7 @@ package toyproject.genshin.teybatguide.domain;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
-import toyproject.genshin.teybatguide.domain.value.CharacterWeaponOnly;
+import toyproject.genshin.teybatguide.domain.value.SignatureWeapon;
 import toyproject.genshin.teybatguide.domain.value.Domain;
 
 @Getter
@@ -20,17 +20,17 @@ public class CharacterWeapon extends BaseEntity {
     private Weapon weapon;
 
     @Enumerated(EnumType.STRING)
-    private CharacterWeaponOnly characterWeaponOnly;
+    private SignatureWeapon signatureWeapon;
 
     protected CharacterWeapon() {
         super(Domain.CHARACTER_WEAPON);
     }
 
     @Builder
-    public CharacterWeapon(Characters characters, Weapon weapon, CharacterWeaponOnly characterWeaponOnly) {
+    public CharacterWeapon(Characters characters, Weapon weapon, SignatureWeapon signatureWeapon) {
         this();
         this.characters = characters;
         this.weapon = weapon;
-        this.characterWeaponOnly = characterWeaponOnly;
+        this.signatureWeapon = signatureWeapon;
     }
 }

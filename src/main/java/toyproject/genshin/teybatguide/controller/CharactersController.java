@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toyproject.genshin.teybatguide.controller.dto.CharacterDetailsResponse;
 import toyproject.genshin.teybatguide.controller.dto.CharacterListResponse;
+import toyproject.genshin.teybatguide.controller.dto.CharacterWeaponResponse;
 import toyproject.genshin.teybatguide.service.CharactersService;
 
 import java.util.List;
@@ -24,6 +25,11 @@ public class CharactersController {
     @GetMapping("/details")
     public ResponseEntity<CharacterDetailsResponse> getCharacterDetails(@RequestParam String characterId) {
         return ResponseEntity.ok(charactersService.findAndBuildCharacterDetails(characterId));
+    }
+
+    @GetMapping("/details/weapons")
+    public ResponseEntity<CharacterWeaponResponse> getCharacterDetailsForWeapon(@RequestParam String characterId) {
+        return ResponseEntity.ok(charactersService.findAndBuildCharacterWeapon(characterId));
     }
 
 }
