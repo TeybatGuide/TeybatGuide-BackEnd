@@ -5,11 +5,11 @@ import org.springframework.stereotype.Repository;
 import toyproject.genshin.teybatguide.domain.CharacterWeapon;
 import toyproject.genshin.teybatguide.domain.Characters;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface CharacterWeaponRepository extends JpaRepository<CharacterWeapon, String> {
 
-    Optional<CharacterWeapon> findByCharacters(Characters characters);
+    List<CharacterWeapon> findByCharacters(Characters characters);
 
 }

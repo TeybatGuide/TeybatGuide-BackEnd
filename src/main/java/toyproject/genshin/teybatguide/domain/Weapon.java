@@ -3,6 +3,7 @@ package toyproject.genshin.teybatguide.domain;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import toyproject.genshin.teybatguide.domain.value.Domain;
 import toyproject.genshin.teybatguide.domain.value.Stars;
 import toyproject.genshin.teybatguide.domain.value.WeaponOptions;
@@ -16,6 +17,7 @@ public class Weapon extends BaseEntity {
     @Column(length = 50)
     private String weaponName;
 
+    @Setter
     @Column(length = 100)
     private String weaponImage;
 
@@ -26,7 +28,7 @@ public class Weapon extends BaseEntity {
     private WeaponType weaponType;
 
     @Enumerated(EnumType.STRING)
-    private WeaponOptions weaponOptions;
+    private WeaponOptions weaponOption;
 
     @Column(length = 30)
     private String weaponEffect;
@@ -39,13 +41,13 @@ public class Weapon extends BaseEntity {
     }
 
     @Builder
-    public Weapon(String weaponName, String weaponImage, Stars stars, WeaponType weaponType, WeaponOptions weaponOptions, String weaponEffect, String weaponEffectExplanation) {
+    public Weapon(String weaponName, String weaponImage, Stars stars, WeaponType weaponType, WeaponOptions weaponOption, String weaponEffect, String weaponEffectExplanation) {
         this();
         this.weaponName = weaponName;
         this.weaponImage = weaponImage;
         this.stars = stars;
         this.weaponType = weaponType;
-        this.weaponOptions = weaponOptions;
+        this.weaponOption = weaponOption;
         this.weaponEffect = weaponEffect;
         this.weaponEffectExplanation = weaponEffectExplanation;
     }
