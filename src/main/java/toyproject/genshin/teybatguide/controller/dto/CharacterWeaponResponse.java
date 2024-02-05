@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 @Builder
-public record CharacterWeaponResponse(WeaponDto signatureWeapon, List<WeaponDto> weapons) {
+public record CharacterWeaponResponse(List<CharacterWeaponListDto> wrapper, String version) {
 
-    public static CharacterWeaponResponse of(Map<SignatureWeapon, List<WeaponDto>> weaponDtoMap) {
+    public static CharacterWeaponResponse of(List<CharacterWeaponListDto> weapons, String version) {
         return CharacterWeaponResponse.builder()
-                .signatureWeapon(weaponDtoMap.getOrDefault(SignatureWeapon.TRUE, Collections.emptyList()).stream().findFirst().orElse(null))
-                .weapons(weaponDtoMap.get(SignatureWeapon.FALSE))
+                .wrapper(weapons)
+                .version(version)
                 .build();
     }
 }
