@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Recommend {
 
-    BEST("추천"), PRIORITY("우선도"), OTHER("기타");
+    BEST("추천"), OTHER("기타");
 
     private final String recommendName;
 
