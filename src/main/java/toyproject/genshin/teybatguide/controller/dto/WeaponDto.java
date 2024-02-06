@@ -6,7 +6,7 @@ import toyproject.genshin.teybatguide.domain.Weapon;
 import toyproject.genshin.teybatguide.domain.value.WeaponCriteria;
 
 @Builder
-public record WeaponDto(String id, String weaponImage, String weaponName, String recommend, String comment) {
+public record WeaponDto(String id, String weaponImage, String weaponName, String recommend, String comments) {
 
     public static WeaponDto of(CharacterWeapon characterWeapon) {
         Weapon weapon = characterWeapon.getWeapon();
@@ -16,7 +16,7 @@ public record WeaponDto(String id, String weaponImage, String weaponName, String
                 .weaponImage(weapon.getWeaponImage())
                 .weaponName(weapon.getWeaponName())
                 .recommend(characterWeapon.getRecommend().getRecommendName())
-                .comment(characterWeapon.getComment())
+                .comments(characterWeapon.getComments())
                 .build();
     }
 

@@ -23,13 +23,13 @@ public class CharactersController {
         return ResponseEntity.ok(charactersService.findAndCreateCharacterList());
     }
 
-    @GetMapping("/details")
-    public ResponseEntity<CharacterDetailsResponse> getCharacterDetails(@RequestParam String characterId) {
+    @GetMapping("/{character_id}")
+    public ResponseEntity<CharacterDetailsResponse> getCharacterDetails(@PathVariable(name = "character_id") String characterId) {
         return ResponseEntity.ok(charactersService.findAndBuildCharacterDetails(characterId));
     }
 
-    @GetMapping("/details/weapons")
-    public ResponseEntity<CharacterWeaponResponse> getCharacterDetailsForWeapon(@RequestParam String characterId) {
+    @GetMapping("/{character_id}/weapons")
+    public ResponseEntity<CharacterWeaponResponse> getCharacterDetailsForWeapon(@PathVariable(name = "character_id") String characterId) {
         return ResponseEntity.ok(charactersService.findAndBuildCharacterWeapon(characterId));
     }
 
