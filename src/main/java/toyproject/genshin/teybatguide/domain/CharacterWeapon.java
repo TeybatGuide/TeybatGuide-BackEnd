@@ -32,7 +32,7 @@ public class CharacterWeapon extends BaseEntity {
     private Recommend recommend;
 
     @Column(length = 100)
-    private String comment;
+    private String comments;
 
     @Column(length = 10)
     private String version;
@@ -42,14 +42,14 @@ public class CharacterWeapon extends BaseEntity {
     }
 
     @Builder
-    public CharacterWeapon(Characters characters, Weapon weapon, SignatureWeapon signatureWeapon, WeaponCriteria weaponCriteria, Recommend recommend, String comment, String version) {
+    public CharacterWeapon(Characters characters, Weapon weapon, SignatureWeapon signatureWeapon, WeaponCriteria weaponCriteria, Recommend recommend, String comments, String version) {
         this();
         this.characters = characters;
         this.weapon = weapon;
         this.signatureWeapon = signatureWeapon;
         this.weaponCriteria = weaponCriteria;
         this.recommend = recommend;
-        this.comment = comment;
+        this.comments = comments;
         this.version = version;
     }
 
@@ -60,7 +60,7 @@ public class CharacterWeapon extends BaseEntity {
                 .signatureWeapon(request.signatureWeapon())
                 .weaponCriteria(request.criteria())
                 .recommend(request.recommend())
-                .comment(request.text())
+                .comments(request.text())
                 .version(request.version())
                 .build();
     }
