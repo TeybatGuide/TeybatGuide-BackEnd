@@ -1,6 +1,8 @@
 package toyproject.genshin.teybatguide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toyproject.genshin.teybatguide.controller.dto.characters.*;
@@ -26,11 +28,9 @@ public class CharactersService {
     private final CharacterWeaponRepository characterWeaponRepository;
     private final WeaponRepository weaponRepository;
 
-    public List<CharacterListResponse> findAndCreateCharacterList() {
-        return charactersRepository.findAll()
-                .stream()
-                .map(CharacterListResponse::of)
-                .toList();
+    public Page<CharacterListResponse> findAndCreateCharacterList(CharacterListRequest request, Pageable pageable) {
+        return charactersRepository.findByStarsAndCountryAndElementAndWeaponType(request, pageable)
+                .map(CharacterListResponse::of);
     }
 
     public CharacterDetailsResponse findAndBuildCharacterDetails(String id) {
