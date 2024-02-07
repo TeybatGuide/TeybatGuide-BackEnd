@@ -1,12 +1,14 @@
 package toyproject.genshin.teybatguide.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import toyproject.genshin.teybatguide.controller.dto.WeaponListResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.*;
+import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListRequest;
+import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListResponse;
+import toyproject.genshin.teybatguide.controller.dto.base.PageDto;
+import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
 import toyproject.genshin.teybatguide.service.WeaponService;
 
 import java.util.List;
@@ -18,9 +20,13 @@ public class WeaponController {
 
     private final WeaponService weaponService;
 
-    @GetMapping
-    public ResponseEntity<List<WeaponListResponse>> getWeaponList(@RequestParam(name = "filter_on", required = false) List<String> filters) {
-        return ResponseEntity.ok(weaponService.getWeaponListResponse());
+    @PostMapping
+    public PageResponseData<List<WeaponListResponse>> getWeaponList(
+            @PageableDefault(size = 20) Pageable pageable,
+            @RequestBody WeaponListRequest request
+    ) {
+        Page<WeaponListResponse> response = weaponService.getWeaponListResponse(pageable, request);
+        return PageResponseData.of(response.toList(), PageDto.of(response));
     }
 
 }

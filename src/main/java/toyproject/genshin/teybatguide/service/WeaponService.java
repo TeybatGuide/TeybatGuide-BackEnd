@@ -1,12 +1,13 @@
 package toyproject.genshin.teybatguide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toyproject.genshin.teybatguide.controller.dto.WeaponListResponse;
+import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListRequest;
+import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListResponse;
 import toyproject.genshin.teybatguide.repository.WeaponRepository;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,10 +16,13 @@ public class WeaponService {
 
     private final WeaponRepository weaponRepository;
 
-    public List<WeaponListResponse> getWeaponListResponse() {
-        return weaponRepository.findAll().stream()
-                .map(WeaponListResponse::of)
-                .toList();
+    public Page<WeaponListResponse> getWeaponListResponse(Pageable pageable, WeaponListRequest request) {
+        return weaponRepository.findByStarsInAndWeaponTypeInAndWeaponOptionIn(request, pageable)
+                .map(WeaponListResponse::of);
+    }
+
+    private boolean isNull(WeaponListRequest request) {
+        return request.stars() == null && request.weaponOptions() == null && request.weaponTypes() == null;
     }
 
 }
