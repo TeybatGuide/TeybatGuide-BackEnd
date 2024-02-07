@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 import toyproject.genshin.teybatguide.domain.Characters;
 
 @Repository
-public interface CharactersRepository extends JpaRepository<Characters, String> {
+public interface CharactersRepository extends JpaRepository<Characters, String>, CustomCharacterRepository {
+
 }
