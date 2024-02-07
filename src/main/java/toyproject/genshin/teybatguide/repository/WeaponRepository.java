@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 import toyproject.genshin.teybatguide.domain.Weapon;
 
 @Repository
-public interface WeaponRepository extends JpaRepository<Weapon, String> {
+public interface WeaponRepository extends JpaRepository<Weapon, String>, CustomWeaponRepository {
+
 }
