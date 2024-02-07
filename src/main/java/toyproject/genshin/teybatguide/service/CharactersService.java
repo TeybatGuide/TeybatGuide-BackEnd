@@ -3,17 +3,13 @@ package toyproject.genshin.teybatguide.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toyproject.genshin.teybatguide.controller.dto.*;
+import toyproject.genshin.teybatguide.controller.dto.characters.*;
 import toyproject.genshin.teybatguide.domain.CharacterWeapon;
 import toyproject.genshin.teybatguide.domain.Characters;
 import toyproject.genshin.teybatguide.domain.Weapon;
-import toyproject.genshin.teybatguide.domain.value.SignatureWeapon;
 import toyproject.genshin.teybatguide.domain.value.WeaponCriteria;
 import toyproject.genshin.teybatguide.exception.TeybatException;
-import toyproject.genshin.teybatguide.repository.CharacterSpecificationsRepository;
-import toyproject.genshin.teybatguide.repository.CharacterWeaponRepository;
-import toyproject.genshin.teybatguide.repository.CharactersRepository;
-import toyproject.genshin.teybatguide.repository.WeaponRepository;
+import toyproject.genshin.teybatguide.repository.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -55,10 +51,10 @@ public class CharactersService {
 
         List<CharacterWeapon> characterList = characterWeaponRepository.findByCharacters(character);
 
-        Map<WeaponCriteria, List<WeaponDto>> collect = characterList.stream()
+        Map<WeaponCriteria, List<CharacterWeaponDto>> collect = characterList.stream()
                 .collect(Collectors.groupingBy(
                         CharacterWeapon::getWeaponCriteria,
-                        Collectors.mapping(WeaponDto::of, Collectors.toList())
+                        Collectors.mapping(CharacterWeaponDto::of, Collectors.toList())
                 ));
 
         List<CharacterWeaponListDto> characterWeaponListDtos = collect.entrySet().stream()

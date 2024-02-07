@@ -1,4 +1,4 @@
-package toyproject.genshin.teybatguide.controller.dto;
+package toyproject.genshin.teybatguide.controller.dto.characters;
 
 import lombok.Builder;
 import toyproject.genshin.teybatguide.domain.value.Recommend;
@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Builder
-public record CharacterWeaponListDto(String weaponCriterion, WeaponDto bestWeapon, List<WeaponDto> weapons) {
+public record CharacterWeaponListDto(String weaponCriterion, CharacterWeaponDto bestWeapon, List<CharacterWeaponDto> weapons) {
 
-    public static CharacterWeaponListDto of(WeaponCriteria weaponCriteria, List<WeaponDto> weapons) {
+    public static CharacterWeaponListDto of(WeaponCriteria weaponCriteria, List<CharacterWeaponDto> weapons) {
 
-        Map<Boolean, List<WeaponDto>> weaponMap = weapons.stream()
+        Map<Boolean, List<CharacterWeaponDto>> weaponMap = weapons.stream()
                 .collect(Collectors.partitioningBy(
                         weaponDto -> weaponDto.recommend().equals(Recommend.BEST.getRecommendName())
                 ));

@@ -3,10 +3,10 @@ package toyproject.genshin.teybatguide.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import toyproject.genshin.teybatguide.controller.dto.CharacterDetailsResponse;
-import toyproject.genshin.teybatguide.controller.dto.CharacterListResponse;
-import toyproject.genshin.teybatguide.controller.dto.CharacterWeaponResponse;
-import toyproject.genshin.teybatguide.controller.dto.CharacterWeaponSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.characters.CharacterDetailsResponse;
+import toyproject.genshin.teybatguide.controller.dto.characters.CharacterListResponse;
+import toyproject.genshin.teybatguide.controller.dto.characters.CharacterWeaponResponse;
+import toyproject.genshin.teybatguide.controller.dto.characters.CharacterWeaponSaveRequest;
 import toyproject.genshin.teybatguide.service.CharactersService;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class CharactersController {
 
     private final CharactersService charactersService;
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<List<CharacterListResponse>> getCharacterList() {
         return ResponseEntity.ok(charactersService.findAndCreateCharacterList());
     }

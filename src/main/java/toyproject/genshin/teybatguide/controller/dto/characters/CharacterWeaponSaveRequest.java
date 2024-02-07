@@ -1,4 +1,4 @@
-package toyproject.genshin.teybatguide.controller.dto;
+package toyproject.genshin.teybatguide.controller.dto.characters;
 
 import toyproject.genshin.teybatguide.domain.value.Recommend;
 import toyproject.genshin.teybatguide.domain.value.SignatureWeapon;

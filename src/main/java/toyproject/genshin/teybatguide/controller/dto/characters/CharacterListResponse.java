@@ -1,4 +1,4 @@
-package toyproject.genshin.teybatguide.controller.dto;
+package toyproject.genshin.teybatguide.controller.dto.characters;
 
 import lombok.Builder;
 import toyproject.genshin.teybatguide.domain.Characters;
