@@ -1,17 +1,16 @@
-package toyproject.genshin.teybatguide.controller.dto;
+package toyproject.genshin.teybatguide.controller.dto.characters;
 
 import lombok.Builder;
 import toyproject.genshin.teybatguide.domain.CharacterWeapon;
 import toyproject.genshin.teybatguide.domain.Weapon;
-import toyproject.genshin.teybatguide.domain.value.WeaponCriteria;
 
 @Builder
-public record WeaponDto(String id, String weaponImage, String weaponName, String recommend, String comments) {
+public record CharacterWeaponDto(String id, String weaponImage, String weaponName, String recommend, String comments) {
 
-    public static WeaponDto of(CharacterWeapon characterWeapon) {
+    public static CharacterWeaponDto of(CharacterWeapon characterWeapon) {
         Weapon weapon = characterWeapon.getWeapon();
 
-        return WeaponDto.builder()
+        return CharacterWeaponDto.builder()
                 .id(weapon.getId())
                 .weaponImage(weapon.getWeaponImage())
                 .weaponName(weapon.getWeaponName())

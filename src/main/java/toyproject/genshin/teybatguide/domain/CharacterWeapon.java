@@ -3,7 +3,7 @@ package toyproject.genshin.teybatguide.domain;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
-import toyproject.genshin.teybatguide.controller.dto.CharacterWeaponSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.characters.CharacterWeaponSaveRequest;
 import toyproject.genshin.teybatguide.domain.value.Recommend;
 import toyproject.genshin.teybatguide.domain.value.SignatureWeapon;
 import toyproject.genshin.teybatguide.domain.value.Domain;

@@ -1,11 +1,8 @@
-package toyproject.genshin.teybatguide.controller.dto;
+package toyproject.genshin.teybatguide.controller.dto.characters;
 
 import lombok.Builder;
-import toyproject.genshin.teybatguide.domain.value.SignatureWeapon;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Builder
 public record CharacterWeaponResponse(List<CharacterWeaponListDto> wrapper, String version) {
