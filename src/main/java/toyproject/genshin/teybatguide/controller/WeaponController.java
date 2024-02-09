@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponDetailsResponse;
 import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListRequest;
 import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListResponse;
 import toyproject.genshin.teybatguide.controller.dto.base.PageDto;
@@ -27,6 +29,11 @@ public class WeaponController {
     ) {
         Page<WeaponListResponse> response = weaponService.getWeaponListResponse(pageable, request);
         return PageResponseData.of(response.toList(), PageDto.of(response));
+    }
+
+    @GetMapping("/{weapon_id}")
+    public ResponseEntity<WeaponDetailsResponse> getWeaponDetails(@PathVariable(name = "weapon_id") String weaponId) {
+        return ResponseEntity.ok(weaponService.searchForBasicWeaponsInformation(weaponId));
     }
 
 }

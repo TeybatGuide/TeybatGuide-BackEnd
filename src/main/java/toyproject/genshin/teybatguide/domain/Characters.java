@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import toyproject.genshin.teybatguide.domain.value.*;
 
+import java.util.List;
+
 @Getter
 @Entity
 @Table(name = "characters")
@@ -30,6 +32,9 @@ public class Characters extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private WeaponType weaponType;
+
+    @OneToMany(mappedBy = "characters")
+    private List<CharacterWeapon> characterWeapons;
 
     protected Characters() {
         super(Domain.CHARACTER);
