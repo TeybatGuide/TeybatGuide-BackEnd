@@ -25,8 +25,8 @@ public class CharactersService {
 
     private final CharactersRepository charactersRepository;
     private final CharacterSpecificationsRepository specificationsRepository;
-    private final CharacterWeaponRepository characterWeaponRepository;
-    private final WeaponRepository weaponRepository;
+//    private final CharacterWeaponRepository characterWeaponRepository;
+//    private final WeaponRepository weaponRepository;
 
     public Page<CharacterListResponse> findAndCreateCharacterList(CharacterListRequest request, Pageable pageable) {
         return charactersRepository.findByStarsAndCountryAndElementAndWeaponType(request, pageable)
@@ -49,7 +49,7 @@ public class CharactersService {
         Characters character = charactersRepository.findById(id)
                 .orElseThrow(() -> new TeybatException("아이디가 존재하지 않습니다."));
 
-        List<CharacterWeapon> characterList = characterWeaponRepository.findByCharacters(character);
+        List<CharacterWeapon> characterList = character.getCharacterWeapons();
 
         Map<WeaponCriteria, List<CharacterWeaponDto>> collect = characterList.stream()
                 .collect(Collectors.groupingBy(
@@ -80,15 +80,15 @@ public class CharactersService {
         return null;
     }
 
-    @Transactional
-    public String save(CharacterWeaponSaveRequest request) {
-        Characters character = charactersRepository.findById(request.characterId())
-                .orElseThrow(() -> new TeybatException("캐릭터가 없음"));
-
-        Weapon weapon = weaponRepository.findById(request.weaponId()).orElseThrow(() -> new TeybatException("무기가 없음"));
-        characterWeaponRepository.save(CharacterWeapon.of(character, weapon, request));
-
-        return "goood";
-    }
+//    @Transactional
+//    public String save(CharacterWeaponSaveRequest request) {
+//        Characters character = charactersRepository.findById(request.characterId())
+//                .orElseThrow(() -> new TeybatException("캐릭터가 없음"));
+//
+//        Weapon weapon = weaponRepository.findById(request.weaponId()).orElseThrow(() -> new TeybatException("무기가 없음"));
+//        characterWeaponRepository.save(CharacterWeapon.of(character, weapon, request));
+//
+//        return "goood";
+//    }
 
 }
