@@ -9,6 +9,8 @@ import toyproject.genshin.teybatguide.domain.value.Stars;
 import toyproject.genshin.teybatguide.domain.value.WeaponOptions;
 import toyproject.genshin.teybatguide.domain.value.WeaponType;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Table(name = "weapon")
@@ -35,6 +37,9 @@ public class Weapon extends BaseEntity {
 
     @Column(length = 500)
     private String weaponEffectExplanation;
+
+    @OneToMany(mappedBy = "weapon")
+    private List<CharacterWeapon> characterWeapons;
 
     protected Weapon() {
         super(Domain.WEAPON);
