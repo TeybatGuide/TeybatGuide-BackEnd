@@ -39,9 +39,9 @@ public class CharactersController {
         return ResponseEntity.ok(charactersService.findAndBuildCharacterWeapon(characterId));
     }
 
-    @PostMapping("/weapons/add")
-    public ResponseEntity<String> save(@RequestBody CharacterWeaponSaveRequest request) {
-        return ResponseEntity.ok(charactersService.save(request));
-    }
+//    @PostMapping("/weapons/add")
+//    public ResponseEntity<String> save(@RequestBody CharacterWeaponSaveRequest request) {
+//        return ResponseEntity.ok(charactersService.save(request));
+//    }
 
 }

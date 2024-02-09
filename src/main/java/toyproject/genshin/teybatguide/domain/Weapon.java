@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import toyproject.genshin.teybatguide.domain.value.Domain;
-import toyproject.genshin.teybatguide.domain.value.Stars;
-import toyproject.genshin.teybatguide.domain.value.WeaponOptions;
-import toyproject.genshin.teybatguide.domain.value.WeaponType;
+import toyproject.genshin.teybatguide.domain.value.*;
 
 import java.util.List;
 
@@ -32,6 +29,12 @@ public class Weapon extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private WeaponOptions weaponOption;
 
+    @Enumerated(EnumType.STRING)
+    private WeaponSource weaponSource;
+
+    @Column(length = 100)
+    private String weaponSourceExplanation;
+
     @Column(length = 30)
     private String weaponEffect;
 
@@ -46,13 +49,15 @@ public class Weapon extends BaseEntity {
     }
 
     @Builder
-    public Weapon(String weaponName, String weaponImage, Stars stars, WeaponType weaponType, WeaponOptions weaponOption, String weaponEffect, String weaponEffectExplanation) {
+    public Weapon(String weaponName, String weaponImage, Stars stars, WeaponType weaponType, WeaponOptions weaponOption, WeaponSource weaponSource, String weaponSourceExplanation, String weaponEffect, String weaponEffectExplanation) {
         this();
         this.weaponName = weaponName;
         this.weaponImage = weaponImage;
         this.stars = stars;
         this.weaponType = weaponType;
         this.weaponOption = weaponOption;
+        this.weaponSource = weaponSource;
+        this.weaponSourceExplanation = weaponSourceExplanation;
         this.weaponEffect = weaponEffect;
         this.weaponEffectExplanation = weaponEffectExplanation;
     }
