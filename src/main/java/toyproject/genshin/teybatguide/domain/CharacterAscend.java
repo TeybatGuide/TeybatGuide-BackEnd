@@ -16,9 +16,9 @@ public class CharacterAscend extends BaseEntity {
     @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Characters characters;
 
-    @OneToMany
-    @JoinColumn(name = "resources_id")
-    private List<Resources> resources;
+    @ManyToOne
+    @JoinColumn(name = "resources_id", referencedColumnName = "id")
+    private Resources resources;
 
     @Column(nullable = false)
     private int characterAscendCount;
@@ -28,10 +28,9 @@ public class CharacterAscend extends BaseEntity {
     }
 
     @Builder
-    public CharacterAscend(Characters characters, List<Resources> resources, int characterAscendCount) {
+    public CharacterAscend(Characters characters, int characterAscendCount) {
         this();
         this.characters = characters;
-        this.resources = resources;
         this.characterAscendCount = characterAscendCount;
     }
 }

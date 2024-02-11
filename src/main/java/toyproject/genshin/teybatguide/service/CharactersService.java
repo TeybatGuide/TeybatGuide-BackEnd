@@ -5,9 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toyproject.genshin.teybatguide.controller.dto.ResourceSaveRequest;
 import toyproject.genshin.teybatguide.controller.dto.characters.*;
 import toyproject.genshin.teybatguide.domain.CharacterWeapon;
 import toyproject.genshin.teybatguide.domain.Characters;
+import toyproject.genshin.teybatguide.domain.Resources;
 import toyproject.genshin.teybatguide.domain.Weapon;
 import toyproject.genshin.teybatguide.domain.value.WeaponCriteria;
 import toyproject.genshin.teybatguide.exception.TeybatException;
@@ -27,6 +29,7 @@ public class CharactersService {
     private final CharacterSpecificationsRepository specificationsRepository;
 //    private final CharacterWeaponRepository characterWeaponRepository;
 //    private final WeaponRepository weaponRepository;
+    private final ResourcesRepository resourcesRepository;
 
     public Page<CharacterListResponse> findAndCreateCharacterList(CharacterListRequest request, Pageable pageable) {
         return charactersRepository.findByStarsAndCountryAndElementAndWeaponType(request, pageable)

@@ -3,6 +3,7 @@ package toyproject.genshin.teybatguide.domain;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponAscendSaveRequest;
 import toyproject.genshin.teybatguide.domain.value.Domain;
 
 import java.util.List;
@@ -12,13 +13,13 @@ import java.util.List;
 @Table(name = "weapon_ascend")
 public class WeaponAscend extends BaseEntity {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "weapon_id", referencedColumnName = "id")
     private Weapon weapon;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "resources_id", referencedColumnName = "id")
-    private List<Resources> resources;
+    private Resources resources;
 
     @Column(nullable = false)
     private int weaponAscendCount;
@@ -28,10 +29,18 @@ public class WeaponAscend extends BaseEntity {
     }
 
     @Builder
-    public WeaponAscend(Weapon weapon, List<Resources> resources, int weaponAscendCount) {
+    public WeaponAscend(Weapon weapon, Resources resources, int weaponAscendCount) {
         this();
         this.weapon = weapon;
         this.resources = resources;
         this.weaponAscendCount = weaponAscendCount;
+    }
+
+    public static WeaponAscend of(WeaponAscendSaveRequest request, Weapon weapon, Resources resources) {
+        return WeaponAscend.builder()
+                .weapon(weapon)
+                .resources(resources)
+                .weaponAscendCount(request.count())
+                .build();
     }
 }

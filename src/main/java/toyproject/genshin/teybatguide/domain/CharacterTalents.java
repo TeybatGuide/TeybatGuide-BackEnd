@@ -16,9 +16,9 @@ public class CharacterTalents extends BaseEntity {
     @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Characters characters;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "resources_id", referencedColumnName = "id")
-    private List<Resources> resources;
+    private Resources resource;
 
     @Column(nullable = false)
     private int characterTalentsCount;
@@ -28,10 +28,9 @@ public class CharacterTalents extends BaseEntity {
     }
 
     @Builder
-    public CharacterTalents(Characters characters, List<Resources> resources, int characterTalentsCount) {
+    public CharacterTalents(Characters characters, int characterTalentsCount) {
         this();
         this.characters = characters;
-        this.resources = resources;
         this.characterTalentsCount = characterTalentsCount;
     }
 }
