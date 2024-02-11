@@ -16,9 +16,9 @@ public class WeaponAscend extends BaseEntity {
     @JoinColumn(name = "weapon_id", referencedColumnName = "id")
     private Weapon weapon;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "resources_id", referencedColumnName = "id")
-    private List<Resources> resources;
+    private Resources resources;
 
     @Column(nullable = false)
     private int weaponAscendCount;
@@ -28,10 +28,9 @@ public class WeaponAscend extends BaseEntity {
     }
 
     @Builder
-    public WeaponAscend(Weapon weapon, List<Resources> resources, int weaponAscendCount) {
+    public WeaponAscend(Weapon weapon, int weaponAscendCount) {
         this();
         this.weapon = weapon;
-        this.resources = resources;
         this.weaponAscendCount = weaponAscendCount;
     }
 }
