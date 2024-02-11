@@ -1,9 +1,10 @@
 package toyproject.genshin.teybatguide.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/main")
+@RequiredArgsConstructor
 public class MainController {
 }

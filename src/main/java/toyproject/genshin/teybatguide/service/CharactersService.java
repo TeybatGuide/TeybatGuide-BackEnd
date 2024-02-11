@@ -83,12 +83,6 @@ public class CharactersService {
         return null;
     }
 
-    @Transactional
-    public String saveResources(ResourceSaveRequest request) {
-        resourcesRepository.save(Resources.of(request));
-        return "good";
-    }
-
 //    @Transactional
 //    public String save(CharacterWeaponSaveRequest request) {
 //        Characters character = charactersRepository.findById(request.characterId())
