@@ -7,10 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toyproject.genshin.teybatguide.controller.dto.characters.CharacterListResponse;
-import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponAscendSaveRequest;
-import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponDetailsResponse;
-import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListRequest;
-import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListResponse;
+import toyproject.genshin.teybatguide.controller.dto.weapons.*;
 import toyproject.genshin.teybatguide.controller.dto.base.PageDto;
 import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
 import toyproject.genshin.teybatguide.service.WeaponService;
@@ -41,6 +38,11 @@ public class WeaponController {
     @GetMapping("/{weapon_id}/characters")
     public ResponseEntity<List<CharacterListResponse>> getWeaponRecommendedCharacters(@PathVariable(name = "weapon_id") String weaponId) {
         return ResponseEntity.ok(weaponService.searchForRecommendedCharacters(weaponId));
+    }
+
+    @GetMapping("/{weapon_id}/resources")
+    public ResponseEntity<List<WeaponAscendListResponse>> getWeaponAscendResources(@PathVariable(name = "weapon_id") String weaponId) {
+        return ResponseEntity.ok(weaponService.searchForAscendResources(weaponId));
     }
 
     @PostMapping("/save/ascend")

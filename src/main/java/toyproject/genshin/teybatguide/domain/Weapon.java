@@ -44,6 +44,9 @@ public class Weapon extends BaseEntity {
     @OneToMany(mappedBy = "weapon")
     private List<CharacterWeapon> characterWeapons;
 
+    @OneToMany(mappedBy = "weapon")
+    private List<WeaponAscend> weaponAscends;
+
     protected Weapon() {
         super(Domain.WEAPON);
     }

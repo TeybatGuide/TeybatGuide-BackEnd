@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "weapon_ascend")
 public class WeaponAscend extends BaseEntity {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "weapon_id", referencedColumnName = "id")
     private Weapon weapon;
 
