@@ -7,6 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toyproject.genshin.teybatguide.controller.dto.characters.CharacterListResponse;
+import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponAscendSaveRequest;
 import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponDetailsResponse;
 import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListRequest;
 import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListResponse;
@@ -40,6 +41,11 @@ public class WeaponController {
     @GetMapping("/{weapon_id}/characters")
     public ResponseEntity<List<CharacterListResponse>> getWeaponRecommendedCharacters(@PathVariable(name = "weapon_id") String weaponId) {
         return ResponseEntity.ok(weaponService.searchForRecommendedCharacters(weaponId));
+    }
+
+    @PostMapping("/save/ascend")
+    public String saveWeaponAscend(@RequestBody WeaponAscendSaveRequest request) {
+        return weaponService.saveWeaponAscend(request);
     }
 
 }
