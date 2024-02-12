@@ -20,9 +20,7 @@ public class CustomCharacterBannerRepositoryImpl implements CustomCharacterBanne
     public List<CharacterBanner> findByDateTimeBetween(LocalDateTime localDateTime) {
         return jpaQueryFactory
                 .selectFrom(characterBanner)
-                .where(
-                        isBetweenDate(localDateTime)
-                )
+                .where(isBetweenDate(localDateTime))
                 .fetch();
     }
 
