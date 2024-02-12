@@ -16,6 +16,8 @@ public class CharacterBanner extends BaseEntity {
     @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Characters characters;
 
+    private LocalDateTime bannerStartDate;
+
     private LocalDateTime bannerEndDate;
 
     protected CharacterBanner() {
@@ -23,9 +25,10 @@ public class CharacterBanner extends BaseEntity {
     }
 
     @Builder
-    public CharacterBanner(Characters characters, LocalDateTime bannerEndDate) {
+    public CharacterBanner(Characters characters, LocalDateTime bannerStartDate, LocalDateTime bannerEndDate) {
         this();
         this.characters = characters;
+        this.bannerStartDate = bannerStartDate;
         this.bannerEndDate = bannerEndDate;
     }
 }
