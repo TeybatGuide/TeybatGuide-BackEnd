@@ -27,7 +27,7 @@ public class CharactersService {
 
     private final CharactersRepository charactersRepository;
     private final CharacterSpecificationsRepository specificationsRepository;
-//    private final CharacterWeaponRepository characterWeaponRepository;
+    //    private final CharacterWeaponRepository characterWeaponRepository;
 //    private final WeaponRepository weaponRepository;
     private final ResourcesRepository resourcesRepository;
 
@@ -77,7 +77,7 @@ public class CharactersService {
     }
 
     private String getVersion(List<CharacterWeapon> characterWeapons) {
-        if(isPresentCharacterList(characterWeapons)) {
+        if (isPresentCharacterList(characterWeapons)) {
             return characterWeapons.get(0).getVersion();
         }
         return null;

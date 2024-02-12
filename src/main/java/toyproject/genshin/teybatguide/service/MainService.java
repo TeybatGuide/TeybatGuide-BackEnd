@@ -3,11 +3,10 @@ package toyproject.genshin.teybatguide.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toyproject.genshin.teybatguide.controller.dto.main.CharacterBannerDto;
-import toyproject.genshin.teybatguide.controller.dto.main.CharacterBannerResponse;
-import toyproject.genshin.teybatguide.controller.dto.main.CharacterBannerSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.main.*;
 import toyproject.genshin.teybatguide.domain.CharacterBanner;
 import toyproject.genshin.teybatguide.domain.Characters;
+import toyproject.genshin.teybatguide.domain.WeaponBanner;
 import toyproject.genshin.teybatguide.exception.TeybatException;
 import toyproject.genshin.teybatguide.repository.CharacterBannerRepository;
 import toyproject.genshin.teybatguide.repository.CharactersRepository;
@@ -28,7 +27,7 @@ public class MainService {
     public CharacterBannerResponse searchCharacterBanner() {
         List<CharacterBanner> characterBanners = characterBannerRepository.findByDateTimeBetween(LocalDateTime.now());
 
-        if(characterBanners.isEmpty()) {
+        if (characterBanners.isEmpty()) {
             return CharacterBannerResponse.empty();
         }
         List<CharacterBannerDto> characterBannerDtos = characterBanners.stream()
@@ -36,6 +35,20 @@ public class MainService {
                 .toList();
 
         return CharacterBannerResponse.of(characterBanners.get(0), characterBannerDtos);
+    }
+
+    public WeaponBannerResponse searchWeaponBanner() {
+        List<WeaponBanner> weaponBanners = weaponBannerRepository.findByDateTimeBetween(LocalDateTime.now());
+
+        if (weaponBanners.isEmpty()) {
+            return WeaponBannerResponse.empty();
+        }
+
+        List<WeaponBannerDto> weaponBannerDtos = weaponBanners.stream()
+                .map(WeaponBannerDto::of)
+                .toList();
+
+        return WeaponBannerResponse.of(weaponBanners.get(0), weaponBannerDtos);
     }
 
     @Transactional
