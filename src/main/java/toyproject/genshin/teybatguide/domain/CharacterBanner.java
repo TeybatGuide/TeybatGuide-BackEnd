@@ -1,9 +1,6 @@
 package toyproject.genshin.teybatguide.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import toyproject.genshin.teybatguide.domain.value.Domain;
@@ -15,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "character_banner")
 public class CharacterBanner extends BaseEntity {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Characters characters;
 
