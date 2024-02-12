@@ -6,6 +6,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
+import toyproject.genshin.teybatguide.controller.dto.main.WeaponBannerSaveRequest;
 import toyproject.genshin.teybatguide.domain.value.Domain;
 
 import java.time.LocalDateTime;
@@ -33,5 +34,13 @@ public class WeaponBanner extends BaseEntity {
         this.weapon = weapon;
         this.bannerStartDate = bannerStartDate;
         this.bannerEndDate = bannerEndDate;
+    }
+
+    public static WeaponBanner of(Weapon weapon, WeaponBannerSaveRequest request) {
+        return WeaponBanner.builder()
+                .weapon(weapon)
+                .bannerStartDate(request.startDate())
+                .bannerEndDate(request.endDate())
+                .build();
     }
 }
