@@ -1,11 +1,9 @@
 package toyproject.genshin.teybatguide.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import toyproject.genshin.teybatguide.controller.dto.main.CharacterBannerSaveRequest;
 import toyproject.genshin.teybatguide.domain.value.Domain;
 
 import java.time.LocalDateTime;
@@ -15,9 +13,11 @@ import java.time.LocalDateTime;
 @Table(name = "character_banner")
 public class CharacterBanner extends BaseEntity {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Characters characters;
+
+    private LocalDateTime bannerStartDate;
 
     private LocalDateTime bannerEndDate;
 
@@ -26,9 +26,18 @@ public class CharacterBanner extends BaseEntity {
     }
 
     @Builder
-    public CharacterBanner(Characters characters, LocalDateTime bannerEndDate) {
+    public CharacterBanner(Characters characters, LocalDateTime bannerStartDate, LocalDateTime bannerEndDate) {
         this();
         this.characters = characters;
+        this.bannerStartDate = bannerStartDate;
         this.bannerEndDate = bannerEndDate;
+    }
+
+    public static CharacterBanner of(Characters characters, CharacterBannerSaveRequest request) {
+        return CharacterBanner.builder()
+                .characters(characters)
+                .bannerStartDate(request.startDate())
+                .bannerEndDate(request.endDate())
+                .build();
     }
 }
