@@ -10,7 +10,6 @@ import toyproject.genshin.teybatguide.domain.Weapon;
 import toyproject.genshin.teybatguide.domain.WeaponBanner;
 import toyproject.genshin.teybatguide.exception.TeybatException;
 import toyproject.genshin.teybatguide.repository.CharacterBannerRepository;
-import toyproject.genshin.teybatguide.repository.CharactersRepository;
 import toyproject.genshin.teybatguide.repository.WeaponBannerRepository;
 
 import java.time.LocalDateTime;
@@ -22,7 +21,6 @@ import java.util.List;
 public class MainService {
 
     private final CharacterBannerRepository characterBannerRepository;
-    private final CharactersRepository charactersRepository;
     private final WeaponBannerRepository weaponBannerRepository;
 
     public CharacterBannerResponse searchCharacterBanner() {
@@ -54,7 +52,7 @@ public class MainService {
 
     @Transactional
     public String saveCharacterBanner(CharacterBannerSaveRequest request) {
-        Characters characters = charactersRepository.findById(request.characterId())
+        Characters characters = characterBannerRepository.findCharactersById(request.characterId())
                 .orElseThrow(() -> new TeybatException("아이디가 없습니다."));
 
         characterBannerRepository.save(CharacterBanner.of(characters, request));
