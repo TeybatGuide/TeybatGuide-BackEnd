@@ -19,7 +19,7 @@ public class ResourcesService {
         Resources resources = Resources.of(request);
         String path = "/" + resources.getId().replace("_", "/") + ".webp";
         resources.setResourcesImage(path);
-        resourcesRepository.save(Resources.of(request));
+        resourcesRepository.save(resources);
         return "good";
     }
 
