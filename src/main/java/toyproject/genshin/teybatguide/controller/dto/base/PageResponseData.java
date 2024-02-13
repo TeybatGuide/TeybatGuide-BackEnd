@@ -2,7 +2,7 @@ package toyproject.genshin.teybatguide.controller.dto.base;
 
 import org.springframework.data.domain.Pageable;
 
-public record PageResponseData<T>(T body, PageDto page) {
+public record PageResponseData<T>(T wrapper, PageDto page) {
 
     public static <T> PageResponseData<T> of(T wrapper, PageDto page) {
         return new PageResponseData<T>(wrapper, page);
