@@ -30,7 +30,7 @@ public class PageDto {
     public static PageDto of(Page page) {
         return PageDto.builder()
                 .totalPages(page.getTotalPages())
-                .currentPage(page.getNumber())
+                .currentPage(page.getNumber() + 1)
                 .totalElements(page.getTotalElements())
                 .build();
     }
