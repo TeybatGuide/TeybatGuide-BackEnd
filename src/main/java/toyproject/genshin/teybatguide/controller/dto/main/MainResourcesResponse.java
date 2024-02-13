@@ -1,17 +1,17 @@
 package toyproject.genshin.teybatguide.controller.dto.main;
 
 import lombok.Builder;
-import toyproject.genshin.teybatguide.domain.Resources;
+import toyproject.genshin.teybatguide.domain.value.Materials;
+
+import java.util.List;
 
 @Builder
-public record MainResourcesResponse(String id, String name, String imageUrls, String star) {
+public record MainResourcesResponse(String criterion, List<MainResourcesListDto> resources) {
 
-    public static MainResourcesResponse of(Resources resources) {
+    public static MainResourcesResponse of(Materials materials, List<MainResourcesListDto> resources) {
         return MainResourcesResponse.builder()
-                .id(resources.getId())
-                .name(resources.getResourcesName())
-                .imageUrls(resources.getResourcesImage())
-                .star(resources.getStars().getStarsName())
+                .criterion(materials.getResourceByName())
+                .resources(resources)
                 .build();
     }
 
