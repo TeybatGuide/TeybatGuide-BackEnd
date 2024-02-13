@@ -23,7 +23,7 @@ public class CustomCharacterBannerRepositoryImpl implements CustomCharacterBanne
     public List<CharacterBanner> findByDateTimeBetween(LocalDateTime localDateTime) {
         return jpaQueryFactory
                 .selectFrom(characterBanner)
-                .where(isBetweenDate(localDateTime))
+                .where(betweenDate(localDateTime))
                 .fetch();
     }
 
@@ -37,7 +37,7 @@ public class CustomCharacterBannerRepositoryImpl implements CustomCharacterBanne
         );
     }
 
-    private BooleanExpression isBetweenDate(LocalDateTime localDateTime) {
+    private BooleanExpression betweenDate(LocalDateTime localDateTime) {
         BooleanExpression isLoeStartDate = characterBanner.bannerStartDate.loe(localDateTime);
         BooleanExpression isGoeEndDate = characterBanner.bannerEndDate.goe(localDateTime);
 
