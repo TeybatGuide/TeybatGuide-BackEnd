@@ -50,9 +50,9 @@ public class CustomResourcesRepositoryImpl implements CustomResourcesRepository 
 
     private BooleanExpression eqStarsAndMaterials() {
         BooleanExpression characterTalent = eqMaterials(Materials.CHARACTERS_TALENT_MATERIAL).and(eqStar(Stars.FOUR));
-        BooleanExpression weaponAscension = eqMaterials(Materials.WEAPONS_ASCENSION_MATERIAL).and(eqStar(Stars.FOUR));
+        BooleanExpression weaponAscension = eqMaterials(Materials.WEAPONS_ASCENSION_MATERIAL).and(eqStar(Stars.FIVE));
 
-        return Expressions.allOf(characterTalent, weaponAscension);
+        return Expressions.anyOf(characterTalent, weaponAscension);
     }
 
     private BooleanExpression eqDayOfWeek(DayOfWeek dayOfWeek) {
