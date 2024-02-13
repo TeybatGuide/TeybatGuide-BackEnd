@@ -16,6 +16,9 @@ public class ResourcesService {
 
     @Transactional
     public String saveResources(ResourceSaveRequest request) {
+        Resources resources = Resources.of(request);
+        String path = "/" + resources.getId().replace("_", "/") + ".webp";
+        resources.setResourcesImage(path);
         resourcesRepository.save(Resources.of(request));
         return "good";
     }
