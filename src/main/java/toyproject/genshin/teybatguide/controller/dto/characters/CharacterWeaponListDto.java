@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Builder
-public record CharacterWeaponListDto(String weaponCriterion, CharacterWeaponDto bestWeapon, List<CharacterWeaponDto> weapons) {
+public record CharacterWeaponListDto(String criterion, CharacterWeaponDto bestWeapon, List<CharacterWeaponDto> weapons) {
 
     public static CharacterWeaponListDto of(WeaponCriteria weaponCriteria, List<CharacterWeaponDto> weapons) {
 
@@ -19,7 +19,7 @@ public record CharacterWeaponListDto(String weaponCriterion, CharacterWeaponDto 
                 ));
 
         return CharacterWeaponListDto.builder()
-                .weaponCriterion(weaponCriteria.getWeaponCriteriaName())
+                .criterion(weaponCriteria.getWeaponCriteriaName())
                 .bestWeapon(weaponMap.get(true).stream().findFirst().orElse(null))
                 .weapons(weaponMap.get(false))
                 .build();

@@ -27,7 +27,7 @@ public class PageDto {
         this.totalElements = totalElements;
     }
 
-    public static PageDto of(Page page) {
+    public static PageDto of(Page page) {;
         return PageDto.builder()
                 .totalPages(page.getTotalPages())
                 .currentPage(page.getNumber())

@@ -23,7 +23,7 @@ public class CustomWeaponBannerRepositoryImpl implements CustomWeaponBannerRepos
     public List<WeaponBanner> findByDateTimeBetween(LocalDateTime localDateTime) {
         return jpaQueryFactory
                 .selectFrom(weaponBanner)
-                .where(isBetweenDate(localDateTime))
+                .where(betweenDate(localDateTime))
                 .fetch();
     }
 
@@ -32,19 +32,19 @@ public class CustomWeaponBannerRepositoryImpl implements CustomWeaponBannerRepos
         return Optional.ofNullable(
                 jpaQueryFactory
                         .selectFrom(weapon)
-                        .where(isIdEq(id))
+                        .where(eqId(id))
                         .fetchOne()
         );
     }
 
-    private BooleanExpression isBetweenDate(LocalDateTime localDateTime) {
+    private BooleanExpression betweenDate(LocalDateTime localDateTime) {
         BooleanExpression isLoeStartDate = weaponBanner.bannerStartDate.loe(localDateTime);
         BooleanExpression isGoeEndDate = weaponBanner.bannerEndDate.goe(localDateTime);
 
         return Expressions.allOf(isLoeStartDate, isGoeEndDate);
     }
 
-    private BooleanExpression isIdEq(String id) {
+    private BooleanExpression eqId(String id) {
         return id != null ? weapon.id.eq(id) : null;
     }
 }

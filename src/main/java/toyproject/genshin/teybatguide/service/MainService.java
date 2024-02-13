@@ -1,19 +1,26 @@
 package toyproject.genshin.teybatguide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toyproject.genshin.teybatguide.controller.dto.base.PageDto;
+import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
 import toyproject.genshin.teybatguide.controller.dto.main.*;
-import toyproject.genshin.teybatguide.domain.CharacterBanner;
-import toyproject.genshin.teybatguide.domain.Characters;
-import toyproject.genshin.teybatguide.domain.Weapon;
-import toyproject.genshin.teybatguide.domain.WeaponBanner;
+import toyproject.genshin.teybatguide.domain.*;
+import toyproject.genshin.teybatguide.domain.value.DayOfWeek;
+import toyproject.genshin.teybatguide.domain.value.Materials;
 import toyproject.genshin.teybatguide.exception.TeybatException;
 import toyproject.genshin.teybatguide.repository.CharacterBannerRepository;
+import toyproject.genshin.teybatguide.repository.ResourcesRepository;
 import toyproject.genshin.teybatguide.repository.WeaponBannerRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,6 +29,7 @@ public class MainService {
 
     private final CharacterBannerRepository characterBannerRepository;
     private final WeaponBannerRepository weaponBannerRepository;
+    private final ResourcesRepository resourcesRepository;
 
     public CharacterBannerResponse searchCharacterBanner() {
         List<CharacterBanner> characterBanners = characterBannerRepository.findByDateTimeBetween(LocalDateTime.now());
@@ -48,6 +56,32 @@ public class MainService {
                 .toList();
 
         return WeaponBannerResponse.of(weaponBanners.get(0), weaponBannerDtos);
+    }
+
+    public PageResponseData<List<MainResourcesResponse>> searchResources(Pageable pageable) {
+        Page<Resources> resourcesPage = resourcesRepository.findByDayOfWeekForMain(DayOfWeek.of(getDayOfWeek()), pageable);
+
+        Map<Materials, List<MainResourcesListDto>> materialsListMap = resourcesPage.stream()
+                .collect(Collectors.groupingBy(
+                        Resources::getMaterials,
+                        Collectors.mapping(MainResourcesListDto::of, Collectors.toList())
+                ));
+
+        List<MainResourcesResponse> mainResourcesResponses = materialsListMap.entrySet().stream()
+                .map(entry -> MainResourcesResponse.of(entry.getKey(), entry.getValue()))
+                .toList();
+
+        return PageResponseData.of(mainResourcesResponses, PageDto.of(resourcesPage));
+    }
+
+    private java.time.DayOfWeek getDayOfWeek() {
+        LocalDateTime now = LocalDateTime.now();
+
+        if (now.getHour() < 5) {
+            now = now.minusDays(1);
+        }
+
+        return now.getDayOfWeek();
     }
 
     @Transactional

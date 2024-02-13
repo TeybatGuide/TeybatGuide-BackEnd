@@ -2,14 +2,14 @@ package toyproject.genshin.teybatguide.controller.dto.base;
 
 import org.springframework.data.domain.Pageable;
 
-public record PageResponseData<T>(T body, PageDto page) {
+public record PageResponseData<T>(T wrapper, PageDto page) {
 
-    public static <T> PageResponseData<T> of(T body, PageDto page) {
-        return new PageResponseData<T>(body, page);
+    public static <T> PageResponseData<T> of(T wrapper, PageDto page) {
+        return new PageResponseData<T>(wrapper, page);
     }
 
-    public static <T> PageResponseData<T> of(T body, Pageable pageable) {
-        return new PageResponseData<T>(body, PageDto.of(pageable));
+    public static <T> PageResponseData<T> of(T wrapper, Pageable pageable) {
+        return new PageResponseData<T>(wrapper, PageDto.of(pageable));
     }
 
 }
