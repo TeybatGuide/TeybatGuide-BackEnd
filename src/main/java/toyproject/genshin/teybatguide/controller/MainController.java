@@ -28,6 +28,11 @@ public class MainController {
         return ResponseEntity.ok(mainService.searchWeaponBanner());
     }
 
+    @GetMapping("/banner/events")
+    public ResponseEntity<List<BannerEventsDto>> getEvents() {
+        return ResponseEntity.ok(mainService.searchEvents());
+    }
+
     @GetMapping("/resources")
     public PageResponseData<List<MainResourcesResponse>> getResourcesForMain(@PageableDefault(size = 20) Pageable pageable) {
         return mainService.searchResources(pageable);
@@ -41,6 +46,11 @@ public class MainController {
     @PostMapping("/banner/weapon/save")
     public String saveWeaponBanners(@RequestBody WeaponBannerSaveRequest request) {
         return mainService.saveWeaponBanner(request);
+    }
+
+    @PostMapping("/banner/events/save")
+    public String saveEventBanner(@RequestBody BannerEventsDto request) {
+        return mainService.saveEvents(request);
     }
 
 }

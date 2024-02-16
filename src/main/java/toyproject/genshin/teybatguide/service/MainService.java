@@ -2,7 +2,6 @@ package toyproject.genshin.teybatguide.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +13,7 @@ import toyproject.genshin.teybatguide.domain.value.DayOfWeek;
 import toyproject.genshin.teybatguide.domain.value.Materials;
 import toyproject.genshin.teybatguide.exception.TeybatException;
 import toyproject.genshin.teybatguide.repository.CharacterBannerRepository;
+import toyproject.genshin.teybatguide.repository.EventRepository;
 import toyproject.genshin.teybatguide.repository.ResourcesRepository;
 import toyproject.genshin.teybatguide.repository.WeaponBannerRepository;
 
@@ -30,6 +30,7 @@ public class MainService {
     private final CharacterBannerRepository characterBannerRepository;
     private final WeaponBannerRepository weaponBannerRepository;
     private final ResourcesRepository resourcesRepository;
+    private final EventRepository eventRepository;
 
     public CharacterBannerResponse searchCharacterBanner() {
         List<CharacterBanner> characterBanners = characterBannerRepository.findByDateTimeBetween(LocalDateTime.now());
@@ -74,6 +75,12 @@ public class MainService {
         return PageResponseData.of(mainResourcesResponses, PageDto.of(resourcesPage));
     }
 
+    public List<BannerEventsDto> searchEvents() {
+        return eventRepository.findByDate(LocalDateTime.now()).stream()
+                .map(BannerEventsDto::of)
+                .toList();
+    }
+
     private java.time.DayOfWeek getDayOfWeek() {
         LocalDateTime now = LocalDateTime.now();
 
@@ -100,6 +107,12 @@ public class MainService {
 
         weaponBannerRepository.save(WeaponBanner.of(weapon, request));
         return "good";
+    }
+
+    @Transactional
+    public String saveEvents(BannerEventsDto request) {
+        eventRepository.save(Event.of(request));
+        return "저장 완료";
     }
 
 }
