@@ -6,10 +6,10 @@ import toyproject.genshin.teybatguide.domain.Event;
 import java.time.LocalDateTime;
 
 @Builder
-public record BannerEventsResponse(String eventName, LocalDateTime startDate, LocalDateTime endDate) {
+public record BannerEventsDto(String eventName, LocalDateTime startDate, LocalDateTime endDate) {
 
-    public static BannerEventsResponse of(Event event) {
-        return BannerEventsResponse.builder()
+    public static BannerEventsDto of(Event event) {
+        return BannerEventsDto.builder()
                 .eventName(event.getEventName())
                 .startDate(event.getEventStartDate())
                 .endDate(event.getEventEndDate())
