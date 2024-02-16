@@ -75,9 +75,9 @@ public class MainService {
         return PageResponseData.of(mainResourcesResponses, PageDto.of(resourcesPage));
     }
 
-    public List<BannerEventsResponse> searchEvents() {
+    public List<BannerEventsDto> searchEvents() {
         return eventRepository.findByDate(LocalDateTime.now()).stream()
-                .map(BannerEventsResponse::of)
+                .map(BannerEventsDto::of)
                 .toList();
     }
 
@@ -107,6 +107,12 @@ public class MainService {
 
         weaponBannerRepository.save(WeaponBanner.of(weapon, request));
         return "good";
+    }
+
+    @Transactional
+    public String saveEvents(BannerEventsDto request) {
+        eventRepository.save(Event.of(request));
+        return "저장 완료";
     }
 
 }

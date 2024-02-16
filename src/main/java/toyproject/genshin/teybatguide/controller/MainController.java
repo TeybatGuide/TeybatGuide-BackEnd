@@ -29,7 +29,7 @@ public class MainController {
     }
 
     @GetMapping("/banner/events")
-    public ResponseEntity<List<BannerEventsResponse>> getEvents() {
+    public ResponseEntity<List<BannerEventsDto>> getEvents() {
         return ResponseEntity.ok(mainService.searchEvents());
     }
 
@@ -46,6 +46,11 @@ public class MainController {
     @PostMapping("/banner/weapon/save")
     public String saveWeaponBanners(@RequestBody WeaponBannerSaveRequest request) {
         return mainService.saveWeaponBanner(request);
+    }
+
+    @PostMapping("/banner/events/save")
+    public String saveEventBanner(@RequestBody BannerEventsDto request) {
+        return mainService.saveEvents(request);
     }
 
 }
