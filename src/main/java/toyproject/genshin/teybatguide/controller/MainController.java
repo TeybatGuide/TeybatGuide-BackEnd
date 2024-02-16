@@ -28,6 +28,11 @@ public class MainController {
         return ResponseEntity.ok(mainService.searchWeaponBanner());
     }
 
+    @GetMapping("/banner/events")
+    public ResponseEntity<List<BannerEventsResponse>> getEvents() {
+        return ResponseEntity.ok(mainService.searchEvents());
+    }
+
     @GetMapping("/resources")
     public PageResponseData<List<MainResourcesResponse>> getResourcesForMain(@PageableDefault(size = 20) Pageable pageable) {
         return mainService.searchResources(pageable);
