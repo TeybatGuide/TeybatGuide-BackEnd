@@ -1,6 +1,7 @@
 package toyproject.genshin.teybatguide.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactListRequest;
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactListResponse;
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.base.PageDto;
 import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
 import toyproject.genshin.teybatguide.service.ArtifactService;
 
@@ -25,9 +27,10 @@ public class ArtifactController {
     @PostMapping
     public PageResponseData<List<ArtifactListResponse>> getArtifactList(
             @RequestBody ArtifactListRequest request,
-            @PageableDefault(size = 10) Pageable pageable
+            @PageableDefault(size = 15) Pageable pageable
     ) {
-        return null;
+        Page<ArtifactListResponse> artifactListResponses = artifactService.searchArtifactList(request, pageable);
+        return PageResponseData.of(artifactListResponses.stream().toList(), PageDto.of(artifactListResponses));
     }
 
     @PostMapping("/save")
