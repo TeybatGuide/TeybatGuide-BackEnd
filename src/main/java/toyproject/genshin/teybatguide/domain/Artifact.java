@@ -3,6 +3,8 @@ package toyproject.genshin.teybatguide.domain;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactSaveRequest;
 import toyproject.genshin.teybatguide.domain.value.Country;
 import toyproject.genshin.teybatguide.domain.value.Domain;
 import toyproject.genshin.teybatguide.domain.value.ArtifactOptions;
@@ -19,6 +21,7 @@ public class Artifact extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String artifactName;
 
+    @Setter
     @Column(nullable = false, length = 100)
     private String artifactImage;
 
@@ -45,5 +48,14 @@ public class Artifact extends BaseEntity {
         this.artifactImage = artifactImage;
         this.country = country;
         this.artifactOptions = artifactOptions;
+    }
+
+    public static Artifact of(ArtifactSaveRequest request) {
+        return Artifact.builder()
+                .artifactName(request.name())
+                .artifactImage("-")
+                .artifactOptions(request.artifactOptions())
+                .country(request.country())
+                .build();
     }
 }
