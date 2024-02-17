@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactListRequest;
+import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactListResponse;
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactSaveRequest;
 import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
 import toyproject.genshin.teybatguide.service.ArtifactService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/artifact")
@@ -20,7 +23,7 @@ public class ArtifactController {
     private final ArtifactService artifactService;
 
     @PostMapping
-    public PageResponseData getArtifactList(
+    public PageResponseData<List<ArtifactListResponse>> getArtifactList(
             @RequestBody ArtifactListRequest request,
             @PageableDefault(size = 10) Pageable pageable
     ) {
