@@ -5,5 +5,5 @@ import toyproject.genshin.teybatguide.domain.value.Country;
 
 import java.util.Set;
 
-public record ArtifactSaveRequest(String name, Country country, Set<ArtifactOptions> artifactOptions) {
+public record ArtifactSaveRequest(String name, Country country, String domain, Set<ArtifactOptions> artifactOptions) {
 }

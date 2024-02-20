@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import toyproject.genshin.teybatguide.domain.value.*;
+import toyproject.genshin.teybatguide.domain.value.Domain;
 
 import java.util.List;
 

@@ -9,7 +9,10 @@ import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactListReques
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactListResponse;
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactSaveRequest;
 import toyproject.genshin.teybatguide.domain.Artifact;
+import toyproject.genshin.teybatguide.domain.Domain;
+import toyproject.genshin.teybatguide.exception.TeybatException;
 import toyproject.genshin.teybatguide.repository.ArtifactRepository;
+import toyproject.genshin.teybatguide.repository.DomainRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +20,7 @@ import toyproject.genshin.teybatguide.repository.ArtifactRepository;
 public class ArtifactService {
 
     private final ArtifactRepository artifactRepository;
+    private final DomainRepository domainRepository;
 
     public Page<ArtifactListResponse> searchArtifactList(ArtifactListRequest request, Pageable pageable) {
         return artifactRepository.findByCountriesAndOptions(request, pageable)
@@ -25,7 +29,9 @@ public class ArtifactService {
 
     @Transactional
     public String saveArtifact(ArtifactSaveRequest request) {
-        Artifact entity = Artifact.of(request);
+        Domain domain = domainRepository.findById(request.domain())
+                .orElseThrow(() -> new TeybatException("비경 id가 존재하지 않습니다."));
+        Artifact entity = Artifact.of(request, domain);
         entity.setArtifactImage("/"+ entity.getId().replace("_", "/") + ".webp");
         artifactRepository.save(entity);
         return "good";
