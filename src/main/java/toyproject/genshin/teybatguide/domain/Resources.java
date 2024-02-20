@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import toyproject.genshin.teybatguide.controller.dto.ResourceSaveRequest;
 import toyproject.genshin.teybatguide.domain.value.*;
+import toyproject.genshin.teybatguide.domain.value.Domain;
 
 import java.util.List;
 

@@ -6,12 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactSaveRequest;
 import toyproject.genshin.teybatguide.domain.value.Country;
-import toyproject.genshin.teybatguide.domain.value.Domain;
 import toyproject.genshin.teybatguide.domain.value.ArtifactOptions;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static toyproject.genshin.teybatguide.domain.value.Domain.ARTIFACT;
 
 @Entity
 @Getter
@@ -34,27 +35,33 @@ public class Artifact extends BaseEntity {
     @Column(name = "artifact_options_name")
     private Set<ArtifactOptions> artifactOptions = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "domain_id", referencedColumnName = "id")
+    private Domain domain;
+
     @OneToMany(mappedBy = "artifact")
     private List<CharacterArtifact> characterArtifacts;
 
     protected Artifact() {
-        super(Domain.ARTIFACT);
+        super(ARTIFACT);
     }
 
     @Builder
-    public Artifact(String artifactName, String artifactImage, Country country, Set<ArtifactOptions> artifactOptions) {
+    public Artifact(String artifactName, String artifactImage, Country country, toyproject.genshin.teybatguide.domain.Domain domain, Set<ArtifactOptions> artifactOptions) {
         this();
         this.artifactName = artifactName;
         this.artifactImage = artifactImage;
         this.country = country;
+        this.domain = domain;
         this.artifactOptions = artifactOptions;
     }
 
-    public static Artifact of(ArtifactSaveRequest request) {
+    public static Artifact of(ArtifactSaveRequest request, Domain domain) {
         return Artifact.builder()
                 .artifactName(request.name())
                 .artifactImage("-")
                 .artifactOptions(request.artifactOptions())
+                .domain(domain)
                 .country(request.country())
                 .build();
     }
