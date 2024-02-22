@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactSaveRequest;
-import toyproject.genshin.teybatguide.domain.value.Country;
 import toyproject.genshin.teybatguide.domain.value.ArtifactOptions;
 
 import java.util.HashSet;
@@ -26,9 +25,6 @@ public class Artifact extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String artifactImage;
 
-    @Enumerated(EnumType.STRING)
-    private Country country;
-
     @ElementCollection(targetClass = ArtifactOptions.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "artifact_options", joinColumns = @JoinColumn(name = "artifact_id"))
     @Enumerated(EnumType.STRING)
@@ -47,11 +43,10 @@ public class Artifact extends BaseEntity {
     }
 
     @Builder
-    public Artifact(String artifactName, String artifactImage, Country country, toyproject.genshin.teybatguide.domain.Domain domain, Set<ArtifactOptions> artifactOptions) {
+    public Artifact(String artifactName, String artifactImage, toyproject.genshin.teybatguide.domain.Domain domain, Set<ArtifactOptions> artifactOptions) {
         this();
         this.artifactName = artifactName;
         this.artifactImage = artifactImage;
-        this.country = country;
         this.domain = domain;
         this.artifactOptions = artifactOptions;
     }
@@ -62,7 +57,6 @@ public class Artifact extends BaseEntity {
                 .artifactImage("-")
                 .artifactOptions(request.artifactOptions())
                 .domain(domain)
-                .country(request.country())
                 .build();
     }
 }
