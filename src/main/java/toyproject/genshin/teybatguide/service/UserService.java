@@ -29,7 +29,7 @@ public class UserService {
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         HttpEntity<KakaoTokenRequest> kakaoTokenRequest =
-                new HttpEntity<>(KakaoTokenRequest.of("1","1",code,"1"), headers);
+                new HttpEntity<>(KakaoTokenRequest.of("1", code), headers);
 
         ResponseEntity<String> accessTokenResponse = rt.exchange(
                 "https://kauth.kakao.com/oauth/token",
