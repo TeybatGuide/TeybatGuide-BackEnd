@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import toyproject.genshin.teybatguide.controller.dto.oauth.KakaoProfile;
 import toyproject.genshin.teybatguide.controller.dto.oauth.KakaoTokenRequest;
 import toyproject.genshin.teybatguide.controller.dto.oauth.OauthToken;
-import toyproject.genshin.teybatguide.controller.dto.oauth.jwt.JwtProperties;
+import toyproject.genshin.teybatguide.jwt.properties.JwtProperties;
 import toyproject.genshin.teybatguide.domain.User;
 import toyproject.genshin.teybatguide.exception.TeybatException;
 import toyproject.genshin.teybatguide.repository.UserRepository;

@@ -1,4 +1,4 @@
-package toyproject.genshin.teybatguide.controller.dto.oauth.jwt;
+package toyproject.genshin.teybatguide.jwt.properties;
 
 public interface JwtProperties {
 
