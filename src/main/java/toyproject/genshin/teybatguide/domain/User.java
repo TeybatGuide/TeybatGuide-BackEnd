@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import toyproject.genshin.teybatguide.controller.dto.oauth.KakaoProfile;
 import toyproject.genshin.teybatguide.domain.value.Domain;
 import toyproject.genshin.teybatguide.domain.value.Role;
 
@@ -16,8 +17,8 @@ import java.sql.Timestamp;
 @Table(name = "users")
 public class User extends BaseEntity {
 
-    @Column(length = 50, nullable = false)
-    private String loginId;
+    @Column(nullable = false)
+    private Long socialId;
 
     @Column(length = 100)
     private String profileImage;
@@ -42,12 +43,22 @@ public class User extends BaseEntity {
     }
 
     @Builder
-    public User(String loginId, String profileImage, String nickname, String email, Role userRole) {
+    public User(Long socialId, String profileImage, String nickname, String email, Role userRole) {
         this();
-        this.loginId = loginId;
+        this.socialId = socialId;
         this.profileImage = profileImage;
         this.nickname = nickname;
         this.email = email;
         this.userRole = userRole;
+    }
+
+    public static User of(KakaoProfile profile) {
+        return User.builder()
+                .socialId(profile.getId())
+                .profileImage(profile.getKakao_account().getProfile().getProfile_image_url())
+                .nickname(profile.getKakao_account().getProfile().getNickname())
+                .email(profile.getKakao_account().getEmail())
+                .userRole(Role.USER)
+                .build();
     }
 }

@@ -18,7 +18,11 @@ public class UserController {
 
     @GetMapping("/oauth/token")
     public ResponseEntity<OauthToken> getLogin(@RequestParam String code) {
-        return ResponseEntity.ok(userService.getAccessToken(code));
+        OauthToken accessToken = userService.getAccessToken(code);
+
+        userService.saveUser(accessToken.getAccess_token());
+
+        return ResponseEntity.ok(accessToken);
     }
 
 }
