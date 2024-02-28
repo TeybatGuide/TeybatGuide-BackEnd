@@ -22,6 +22,7 @@ import toyproject.genshin.teybatguide.jwt.JwtRequestFilter;
 public class SecurityConfig {
 
     private final CorsFilter corsFilter;
+    public static final String FRONT_URL = "http://localhost:3000";
 
     @Bean
     public BCryptPasswordEncoder encodePwd() {

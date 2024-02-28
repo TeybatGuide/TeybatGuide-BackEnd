@@ -1,5 +1,6 @@
 package toyproject.genshin.teybatguide.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import toyproject.genshin.teybatguide.controller.dto.oauth.OauthToken;
+import toyproject.genshin.teybatguide.controller.dto.user.UserInfoResponse;
 import toyproject.genshin.teybatguide.jwt.properties.JwtProperties;
 import toyproject.genshin.teybatguide.service.UserService;
 
@@ -28,6 +30,11 @@ public class UserController {
         headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
 
         return ResponseEntity.ok().headers(headers).body("success");
+    }
+
+    @GetMapping
+    public ResponseEntity<UserInfoResponse> getCurrentUser(HttpServletRequest request) {
+        return ResponseEntity.ok(userService.getUser(request));
     }
 
 }

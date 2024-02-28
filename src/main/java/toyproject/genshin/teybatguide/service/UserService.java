@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import toyproject.genshin.teybatguide.controller.dto.oauth.KakaoProfile;
 import toyproject.genshin.teybatguide.controller.dto.oauth.KakaoTokenRequest;
 import toyproject.genshin.teybatguide.controller.dto.oauth.OauthToken;
+import toyproject.genshin.teybatguide.controller.dto.user.UserInfoResponse;
 import toyproject.genshin.teybatguide.jwt.properties.JwtProperties;
 import toyproject.genshin.teybatguide.domain.User;
 import toyproject.genshin.teybatguide.exception.TeybatException;
@@ -24,13 +27,23 @@ import toyproject.genshin.teybatguide.repository.UserRepository;
 import java.util.Date;
 import java.util.Map;
 
+import static toyproject.genshin.teybatguide.config.SecurityConfig.FRONT_URL;
 
+
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+
+    public UserInfoResponse getUser(HttpServletRequest request) {
+        User user = userRepository.findById(request.getHeader("id"))
+                .orElseThrow(() -> new TeybatException("아이디가 존재하지 않습니다."));
+
+        return UserInfoResponse.of(user);
+    }
 
     public OauthToken getAccessToken(String code) {
         RestTemplate rt = new RestTemplate();
@@ -39,7 +52,7 @@ public class UserService {
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         HttpEntity<KakaoTokenRequest> kakaoTokenRequest =
-                new HttpEntity<>(KakaoTokenRequest.of("1", code), headers);
+                new HttpEntity<>(KakaoTokenRequest.of(FRONT_URL + "/auth", code), headers);
 
         ResponseEntity<String> accessTokenResponse = rt.exchange(
                 "https://kauth.kakao.com/oauth/token",
