@@ -2,6 +2,8 @@ package toyproject.genshin.teybatguide.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,9 +16,13 @@ import org.springframework.web.client.RestTemplate;
 import toyproject.genshin.teybatguide.controller.dto.oauth.KakaoProfile;
 import toyproject.genshin.teybatguide.controller.dto.oauth.KakaoTokenRequest;
 import toyproject.genshin.teybatguide.controller.dto.oauth.OauthToken;
+import toyproject.genshin.teybatguide.controller.dto.oauth.jwt.JwtProperties;
 import toyproject.genshin.teybatguide.domain.User;
 import toyproject.genshin.teybatguide.exception.TeybatException;
 import toyproject.genshin.teybatguide.repository.UserRepository;
+
+import java.util.Date;
+import java.util.Map;
 
 
 @Service
@@ -54,15 +60,27 @@ public class UserService {
         return oauthToken;
     }
 
-    public User saveUser(String token) {
+    public String saveUserAndGetToken(String token) {
         KakaoProfile profile = findProfile(token);
 
         if(!existsUserByEmail(profile)){
             userRepository.save(User.of(profile));
         }
 
-        return userRepository.findByEmail(profile.getKakao_account().getEmail())
+        User user = userRepository.findByEmail(profile.getKakao_account().getEmail())
                 .orElseThrow(() -> new TeybatException("저장이 안됐습니다."));
+        return createToken(user);
+    }
+
+    private String createToken(User user) {
+        return Jwts.builder()
+                .addClaims(Map.of(
+                        "id", user.getId(),
+                        "nickname", user.getNickname()
+                ))
+                .signWith(SignatureAlgorithm.HS256, JwtProperties.SECRET)
+                .setExpiration(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
+                .compact();
     }
 
     private Boolean existsUserByEmail(KakaoProfile profile) {
