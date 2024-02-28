@@ -15,6 +15,7 @@ import toyproject.genshin.teybatguide.domain.value.Country;
 import java.util.List;
 
 import static toyproject.genshin.teybatguide.domain.QArtifact.artifact;
+import static toyproject.genshin.teybatguide.domain.QDomain.domain;
 
 @RequiredArgsConstructor
 public class CustomArtifactRepositoryImpl implements CustomArtifactRepository {
@@ -24,8 +25,10 @@ public class CustomArtifactRepositoryImpl implements CustomArtifactRepository {
     @Override
     public Page<Artifact> findByCountriesAndOptions(ArtifactListRequest request, Pageable pageable) {
         List<Artifact> result = jpaQueryFactory
-                .selectFrom(artifact)
+                .select(artifact)
+                .from(artifact, domain)
                 .where(
+                        artifact.domain.eq(domain),
                         inCountries(request.countries()),
                         inOptions(request.artifactOptions())
                 )
@@ -47,7 +50,7 @@ public class CustomArtifactRepositoryImpl implements CustomArtifactRepository {
     }
 
     private BooleanExpression inCountries(List<Country> countryList) {
-        return countryList != null ? artifact.country.in(countryList) : artifact.country.in(Country.values());
+        return countryList != null ? artifact.domain.country.in(countryList) : artifact.domain.country.in(Country.values());
     }
 
     private BooleanExpression inOptions(List<ArtifactOptions> options) {
