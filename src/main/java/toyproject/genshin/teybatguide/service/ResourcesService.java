@@ -8,7 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceListRequest;
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceListResponse;
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceSaveRequest;
+import toyproject.genshin.teybatguide.domain.Domain;
 import toyproject.genshin.teybatguide.domain.Resources;
+import toyproject.genshin.teybatguide.exception.TeybatException;
+import toyproject.genshin.teybatguide.repository.DomainRepository;
 import toyproject.genshin.teybatguide.repository.ResourcesRepository;
 
 @Service
@@ -17,6 +20,7 @@ import toyproject.genshin.teybatguide.repository.ResourcesRepository;
 public class ResourcesService {
 
     private final ResourcesRepository resourcesRepository;
+    private final DomainRepository domainRepository;
 
     public Page<ResourceListResponse> searchResourceList(ResourceListRequest request, Pageable pageable) {
         return resourcesRepository.findByCountryAndDayOfWeekAndMaterial(request, pageable)
@@ -26,7 +30,10 @@ public class ResourcesService {
 
     @Transactional
     public String saveResources(ResourceSaveRequest request) {
-        Resources resources = Resources.of(request);
+        Domain domain = domainRepository.findById(request.domainId())
+                .orElseThrow(() -> new TeybatException("domainId가 존재하지 않습니다."));
+
+        Resources resources = Resources.of(request, domain);
         String path = "/" + resources.getId().replace("_", "/") + ".webp";
         resources.setResourcesImage(path);
         resourcesRepository.save(resources);

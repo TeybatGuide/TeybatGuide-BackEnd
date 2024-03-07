@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceSaveRequest;
 import toyproject.genshin.teybatguide.domain.value.*;
-import toyproject.genshin.teybatguide.domain.value.Domain;
+
+import static toyproject.genshin.teybatguide.domain.value.Domain.*;
 
 @Entity
 @Getter
@@ -21,9 +22,6 @@ public class Resources extends BaseEntity {
     private String resourcesImage;
 
     @Enumerated(EnumType.STRING)
-    private Country country;
-
-    @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
 
     @Enumerated(EnumType.STRING)
@@ -32,29 +30,33 @@ public class Resources extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Materials materials;
 
+    @ManyToOne
+    @JoinColumn(name = "domain_id", referencedColumnName = "id")
+    private Domain domain;
+
     protected Resources() {
-        super(Domain.RESOURCES);
+        super(RESOURCES);
     }
 
     @Builder
-    public Resources(String resourcesName, String resourcesImage, Country country, DayOfWeek dayOfWeek, Stars stars, Materials materials) {
+    public Resources(String resourcesName, String resourcesImage, DayOfWeek dayOfWeek, Stars stars, Materials materials, Domain domain) {
         this();
         this.resourcesName = resourcesName;
         this.resourcesImage = resourcesImage;
-        this.country = country;
         this.dayOfWeek = dayOfWeek;
         this.stars = stars;
         this.materials = materials;
+        this.domain = domain;
     }
 
-    public static Resources of(ResourceSaveRequest request) {
+    public static Resources of(ResourceSaveRequest request, Domain domain) {
         return Resources.builder()
                 .resourcesName(request.name())
                 .resourcesImage("")
-                .country(request.country())
                 .dayOfWeek(request.day())
                 .stars(request.stars())
                 .materials(request.materials())
+                .domain(domain)
                 .build();
     }
 }

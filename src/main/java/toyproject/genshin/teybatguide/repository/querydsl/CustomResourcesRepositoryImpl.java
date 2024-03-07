@@ -86,7 +86,7 @@ public class CustomResourcesRepositoryImpl implements CustomResourcesRepository 
     }
 
     private BooleanExpression inCountry(List<Country> countries) {
-        return countries != null ? resources.country.in(countries) : null;
+        return countries != null ? resources.domain.country.in(countries) : null;
     }
 
     private BooleanExpression inDayOfWeek(List<DayOfWeek> dayOfWeeks) {
