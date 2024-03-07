@@ -50,7 +50,7 @@ public class CustomArtifactRepositoryImpl implements CustomArtifactRepository {
     }
 
     private BooleanExpression inCountries(List<Country> countryList) {
-        return countryList != null ? artifact.domain.country.in(countryList) : artifact.domain.country.in(Country.values());
+        return  countryList != null ? artifact.domain.country.in(countryList) : null;
     }
 
     private BooleanExpression inOptions(List<ArtifactOptions> options) {

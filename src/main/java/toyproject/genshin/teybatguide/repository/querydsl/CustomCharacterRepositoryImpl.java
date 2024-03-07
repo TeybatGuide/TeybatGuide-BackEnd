@@ -53,18 +53,18 @@ public class CustomCharacterRepositoryImpl implements CustomCharacterRepository 
     }
 
     private BooleanExpression inElement(List<Element> elements) {
-        return elements != null ? characters.element.in(elements) : characters.element.in(Element.values());
+        return elements != null ? characters.element.in(elements) : null;
     }
 
     private BooleanExpression inCountry(List<Country> countries) {
-        return countries != null ? characters.country.in(countries) : characters.country.in(Country.values());
+        return countries != null ? characters.country.in(countries) : null;
     }
 
     private BooleanExpression inStars(List<Stars> stars) {
-        return stars != null ? characters.stars.in(stars) : characters.stars.in(Stars.values());
+        return stars != null ? characters.stars.in(stars) : null;
     }
 
     private BooleanExpression inWeaponType(List<WeaponType> weaponTypes) {
-        return weaponTypes != null ? characters.weaponType.in(weaponTypes) : characters.weaponType.in(WeaponType.values());
+        return weaponTypes != null ? characters.weaponType.in(weaponTypes) : null;
     }
 }

@@ -54,14 +54,14 @@ public class CustomWeaponRepositoryImpl implements CustomWeaponRepository {
     }
 
     private BooleanExpression inStars(List<Stars> stars) {
-        return stars != null ? weapon.stars.in(stars) : weapon.stars.in(Stars.values());
+        return stars != null ? weapon.stars.in(stars) : null;
     }
 
     private BooleanExpression inWeaponType(List<WeaponType> weaponTypes) {
-        return weaponTypes != null ? weapon.weaponType.in(weaponTypes) : weapon.weaponType.in(WeaponType.values());
+        return weaponTypes != null ? weapon.weaponType.in(weaponTypes) : null;
     }
 
     private BooleanExpression inWeaponOptions(List<WeaponOptions> weaponOptions) {
-        return weaponOptions != null ? weapon.weaponOption.in(weaponOptions) : weapon.weaponOption.in(WeaponOptions.values());
+        return weaponOptions != null ? weapon.weaponOption.in(weaponOptions) : null;
     }
 }

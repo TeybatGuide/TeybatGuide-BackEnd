@@ -6,7 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import toyproject.genshin.teybatguide.controller.dto.ImageRequest;
+import toyproject.genshin.teybatguide.controller.dto.image.ImageRequest;
 import toyproject.genshin.teybatguide.service.ImageService;
 
 @RestController
