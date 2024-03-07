@@ -43,8 +43,11 @@ public class SecurityConfig {
         http
                 .authorizeRequests((authz) -> authz
                                 .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
-                                .requestMatchers("/bookmark/**", "/user/mypage/**").hasRole(Role.USER.name())
-                                .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
+                                .requestMatchers(
+                                        new AntPathRequestMatcher("/bookmark/**"),
+                                        new AntPathRequestMatcher("/user/mypage/**")
+                                ).hasRole(Role.USER.name())
+                                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole(Role.ADMIN.name())
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling((exceptionConfig) ->
