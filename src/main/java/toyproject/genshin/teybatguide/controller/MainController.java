@@ -38,6 +38,11 @@ public class MainController {
         return mainService.searchResources(pageable);
     }
 
+    @GetMapping("/banner/characters/resources")
+    public ResponseEntity getResourcesForBannerCharacter() {
+        return null;
+    }
+
     @PostMapping("/banner/character/save")
     public String saveCharacterBanners(@RequestBody CharacterBannerSaveRequest request) {
         return mainService.saveCharacterBanner(request);
