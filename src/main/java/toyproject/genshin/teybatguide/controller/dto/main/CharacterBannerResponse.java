@@ -2,6 +2,7 @@ package toyproject.genshin.teybatguide.controller.dto.main;
 
 import lombok.Builder;
 import toyproject.genshin.teybatguide.domain.CharacterBanner;
+import toyproject.genshin.teybatguide.domain.value.BannerType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,6 +17,22 @@ public record CharacterBannerResponse(LocalDateTime startDate, LocalDateTime end
                 .endDate(banner.getBannerEndDate())
                 .bannerType(banner.getBannerType().getBannerTypeName())
                 .characters(characters)
+                .build();
+    }
+
+    public static CharacterBannerResponse of(BannerType bannerType, List<CharacterBanner> characters) {
+
+        CharacterBanner characterBanner = characters.get(0);
+
+        List<CharacterBannerDto> characterBannerDtos = characters.stream()
+                .map(CharacterBannerDto::of)
+                .toList();
+
+        return CharacterBannerResponse.builder()
+                .startDate(characterBanner.getBannerStartDate())
+                .endDate(characterBanner.getBannerEndDate())
+                .bannerType(bannerType.getBannerTypeName())
+                .characters(characterBannerDtos)
                 .build();
     }
 

@@ -19,7 +19,7 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping("/banner/characters")
-    public ResponseEntity<CharacterBannerResponse> getCharacterBanners() {
+    public ResponseEntity<List<CharacterBannerResponse>> getCharacterBanners() {
         return ResponseEntity.ok(mainService.searchCharacterBanner());
     }
 

@@ -9,6 +9,7 @@ import toyproject.genshin.teybatguide.controller.dto.base.PageDto;
 import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
 import toyproject.genshin.teybatguide.controller.dto.main.*;
 import toyproject.genshin.teybatguide.domain.*;
+import toyproject.genshin.teybatguide.domain.value.BannerType;
 import toyproject.genshin.teybatguide.domain.value.DayOfWeek;
 import toyproject.genshin.teybatguide.domain.value.Materials;
 import toyproject.genshin.teybatguide.exception.TeybatException;
@@ -32,17 +33,16 @@ public class MainService {
     private final ResourcesRepository resourcesRepository;
     private final EventRepository eventRepository;
 
-    public CharacterBannerResponse searchCharacterBanner() {
-        List<CharacterBanner> characterBanners = characterBannerRepository.findByDateTimeBetween(LocalDateTime.now());
+    public List<CharacterBannerResponse> searchCharacterBanner() {
+        Map<BannerType, List<CharacterBanner>> characterBanners = characterBannerRepository.findByDateTimeBetween(LocalDateTime.now());
 
         if (characterBanners.isEmpty()) {
-            return CharacterBannerResponse.empty();
+            return List.of(CharacterBannerResponse.empty());
         }
-        List<CharacterBannerDto> characterBannerDtos = characterBanners.stream()
-                .map(CharacterBannerDto::of)
-                .toList();
 
-        return CharacterBannerResponse.of(characterBanners.get(0), characterBannerDtos);
+        return characterBanners.entrySet().stream()
+                .map(entry -> CharacterBannerResponse.of(entry.getKey(), entry.getValue()))
+                .toList();
     }
 
     public WeaponBannerResponse searchWeaponBanner() {

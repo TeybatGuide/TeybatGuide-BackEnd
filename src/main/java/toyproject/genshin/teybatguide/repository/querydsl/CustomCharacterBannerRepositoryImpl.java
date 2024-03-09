@@ -1,16 +1,20 @@
 package toyproject.genshin.teybatguide.repository.querydsl;
 
+import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import toyproject.genshin.teybatguide.domain.CharacterBanner;
 import toyproject.genshin.teybatguide.domain.Characters;
+import toyproject.genshin.teybatguide.domain.value.BannerType;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import static com.querydsl.core.group.GroupBy.list;
 import static toyproject.genshin.teybatguide.domain.QCharacterBanner.characterBanner;
 import static toyproject.genshin.teybatguide.domain.QCharacters.characters;
 
@@ -20,11 +24,14 @@ public class CustomCharacterBannerRepositoryImpl implements CustomCharacterBanne
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<CharacterBanner> findByDateTimeBetween(LocalDateTime localDateTime) {
+    public Map<BannerType, List<CharacterBanner>> findByDateTimeBetween(LocalDateTime localDateTime) {
         return jpaQueryFactory
-                .selectFrom(characterBanner)
+                .from(characterBanner)
                 .where(betweenDate(localDateTime))
-                .fetch();
+                .transform(GroupBy
+                        .groupBy(characterBanner.bannerType)
+                        .as(list(characterBanner))
+                );
     }
 
     @Override
