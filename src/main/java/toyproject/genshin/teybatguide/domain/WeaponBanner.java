@@ -1,12 +1,10 @@
 package toyproject.genshin.teybatguide.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import toyproject.genshin.teybatguide.controller.dto.main.WeaponBannerSaveRequest;
+import toyproject.genshin.teybatguide.domain.value.BannerType;
 import toyproject.genshin.teybatguide.domain.value.Domain;
 
 import java.time.LocalDateTime;
@@ -20,6 +18,9 @@ public class WeaponBanner extends BaseEntity {
     @JoinColumn(name = "weapon_id", referencedColumnName = "id")
     private Weapon weapon;
 
+    @Enumerated(EnumType.STRING)
+    private BannerType bannerType;
+
     private LocalDateTime bannerStartDate;
 
     private LocalDateTime bannerEndDate;
@@ -29,9 +30,10 @@ public class WeaponBanner extends BaseEntity {
     }
 
     @Builder
-    public WeaponBanner(Weapon weapon, LocalDateTime bannerStartDate, LocalDateTime bannerEndDate) {
+    public WeaponBanner(Weapon weapon, BannerType bannerType, LocalDateTime bannerStartDate, LocalDateTime bannerEndDate) {
         this();
         this.weapon = weapon;
+        this.bannerType = bannerType;
         this.bannerStartDate = bannerStartDate;
         this.bannerEndDate = bannerEndDate;
     }

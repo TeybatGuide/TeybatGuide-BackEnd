@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Builder
-public record WeaponBannerResponse(LocalDateTime startDate, LocalDateTime endDate, List<WeaponBannerDto> weapons) {
+public record WeaponBannerResponse(LocalDateTime startDate, LocalDateTime endDate, String bannerType, List<WeaponBannerDto> weapons) {
 
     public static WeaponBannerResponse of(WeaponBanner banner, List<WeaponBannerDto> weapons) {
         return WeaponBannerResponse.builder()
                 .startDate(banner.getBannerStartDate())
                 .endDate(banner.getBannerEndDate())
+                .bannerType(banner.getBannerType().getBannerTypeName())
                 .weapons(weapons)
                 .build();
     }
