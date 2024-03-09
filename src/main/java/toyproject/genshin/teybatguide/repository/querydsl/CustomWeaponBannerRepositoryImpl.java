@@ -1,16 +1,20 @@
 package toyproject.genshin.teybatguide.repository.querydsl;
 
+import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import toyproject.genshin.teybatguide.domain.Weapon;
 import toyproject.genshin.teybatguide.domain.WeaponBanner;
+import toyproject.genshin.teybatguide.domain.value.BannerType;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import static com.querydsl.core.group.GroupBy.list;
 import static toyproject.genshin.teybatguide.domain.QWeapon.weapon;
 import static toyproject.genshin.teybatguide.domain.QWeaponBanner.weaponBanner;
 
@@ -20,11 +24,14 @@ public class CustomWeaponBannerRepositoryImpl implements CustomWeaponBannerRepos
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<WeaponBanner> findByDateTimeBetween(LocalDateTime localDateTime) {
+    public Map<BannerType, List<WeaponBanner>> findByDateTimeBetween(LocalDateTime localDateTime) {
         return jpaQueryFactory
-                .selectFrom(weaponBanner)
+                .from(weaponBanner)
                 .where(betweenDate(localDateTime))
-                .fetch();
+                .transform(GroupBy
+                        .groupBy(weaponBanner.bannerType)
+                        .as(list(weaponBanner))
+                );
     }
 
     @Override

@@ -45,18 +45,16 @@ public class MainService {
                 .toList();
     }
 
-    public WeaponBannerResponse searchWeaponBanner() {
-        List<WeaponBanner> weaponBanners = weaponBannerRepository.findByDateTimeBetween(LocalDateTime.now());
+    public List<WeaponBannerResponse> searchWeaponBanner() {
+        Map<BannerType, List<WeaponBanner>> weaponBanners = weaponBannerRepository.findByDateTimeBetween(LocalDateTime.now());
 
         if (weaponBanners.isEmpty()) {
-            return WeaponBannerResponse.empty();
+            return List.of(WeaponBannerResponse.empty());
         }
 
-        List<WeaponBannerDto> weaponBannerDtos = weaponBanners.stream()
-                .map(WeaponBannerDto::of)
+        return weaponBanners.entrySet().stream()
+                .map(entry -> WeaponBannerResponse.of(entry.getKey(), entry.getValue()))
                 .toList();
-
-        return WeaponBannerResponse.of(weaponBanners.get(0), weaponBannerDtos);
     }
 
     public PageResponseData<List<MainResourcesResponse>> searchResources(Pageable pageable) {

@@ -2,6 +2,7 @@ package toyproject.genshin.teybatguide.controller.dto.main;
 
 import lombok.Builder;
 import toyproject.genshin.teybatguide.domain.WeaponBanner;
+import toyproject.genshin.teybatguide.domain.value.BannerType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,6 +17,22 @@ public record WeaponBannerResponse(LocalDateTime startDate, LocalDateTime endDat
                 .endDate(banner.getBannerEndDate())
                 .bannerType(banner.getBannerType().getBannerTypeName())
                 .weapons(weapons)
+                .build();
+    }
+
+    public static WeaponBannerResponse of(BannerType bannerType, List<WeaponBanner> weapons) {
+
+        WeaponBanner weaponBanner = weapons.get(0);
+
+        List<WeaponBannerDto> weaponBannerDtoList = weapons.stream()
+                .map(WeaponBannerDto::of)
+                .toList();
+
+        return WeaponBannerResponse.builder()
+                .startDate(weaponBanner.getBannerStartDate())
+                .endDate(weaponBanner.getBannerEndDate())
+                .bannerType(bannerType.getBannerTypeName())
+                .weapons(weaponBannerDtoList)
                 .build();
     }
 
