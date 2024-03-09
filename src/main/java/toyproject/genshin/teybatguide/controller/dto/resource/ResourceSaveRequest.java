@@ -5,5 +5,5 @@ import toyproject.genshin.teybatguide.domain.value.DayOfWeek;
 import toyproject.genshin.teybatguide.domain.value.Materials;
 import toyproject.genshin.teybatguide.domain.value.Stars;
 
-public record ResourceSaveRequest(String name, Country country, DayOfWeek day, Stars stars, Materials materials, String domainId) {
+public record ResourceSaveRequest(String name, Country country, DayOfWeek day, Stars stars, Materials materials, Materials materialsDetails, String domainId) {
 }
