@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesResponse;
 import toyproject.genshin.teybatguide.controller.dto.base.PageDto;
 import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
 import toyproject.genshin.teybatguide.controller.dto.main.*;
@@ -79,6 +80,10 @@ public class MainService {
         return eventRepository.findByDate(LocalDateTime.now()).stream()
                 .map(BannerEventsDto::of)
                 .toList();
+    }
+
+    public List<MainCharacterResourcesResponse> searchBannerCharacterResources() {
+        return null;
     }
 
     private java.time.DayOfWeek getDayOfWeek() {

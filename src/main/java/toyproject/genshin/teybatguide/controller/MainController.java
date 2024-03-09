@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesResponse;
 import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
 import toyproject.genshin.teybatguide.controller.dto.main.*;
 import toyproject.genshin.teybatguide.service.MainService;
@@ -39,7 +40,8 @@ public class MainController {
     }
 
     @GetMapping("/banner/characters/resources")
-    public ResponseEntity getResourcesForBannerCharacter() {
+    public ResponseEntity<List<MainCharacterResourcesResponse>> getResourcesForBannerCharacter() {
+        mainService.searchBannerCharacterResources();
         return null;
     }
 
