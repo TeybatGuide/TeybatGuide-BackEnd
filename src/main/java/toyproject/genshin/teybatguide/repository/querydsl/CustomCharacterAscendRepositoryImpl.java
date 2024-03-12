@@ -34,7 +34,6 @@ public class CustomCharacterAscendRepositoryImpl implements CustomCharacterAscen
                         .groupBy(characterAscend.characters)
                         .as(list(characterAscend.resources))
                 );
-
     }
 
     private BooleanExpression inCharacters(List<Characters> characters) {

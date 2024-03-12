@@ -41,8 +41,7 @@ public class MainController {
 
     @GetMapping("/banner/characters/resources")
     public ResponseEntity<List<MainCharacterResourcesResponse>> getResourcesForBannerCharacter() {
-        mainService.searchBannerCharacterResources();
-        return null;
+        return ResponseEntity.ok(mainService.searchBannerCharacterResources());
     }
 
     @PostMapping("/banner/character/save")

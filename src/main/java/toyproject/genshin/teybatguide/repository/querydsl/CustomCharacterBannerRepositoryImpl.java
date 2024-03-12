@@ -28,6 +28,15 @@ public class CustomCharacterBannerRepositoryImpl implements CustomCharacterBanne
     }
 
     @Override
+    public List<Characters> findCharactersByDateTimeBetween(LocalDateTime localDateTime) {
+        return jpaQueryFactory
+                .select(characterBanner.characters)
+                .from(characterBanner)
+                .where(betweenDate(localDateTime))
+                .fetch();
+    }
+
+    @Override
     public Optional<Characters> findCharactersById(String id) {
         return Optional.ofNullable(
                 jpaQueryFactory

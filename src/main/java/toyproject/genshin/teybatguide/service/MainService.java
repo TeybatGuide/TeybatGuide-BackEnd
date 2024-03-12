@@ -13,10 +13,7 @@ import toyproject.genshin.teybatguide.domain.*;
 import toyproject.genshin.teybatguide.domain.value.DayOfWeek;
 import toyproject.genshin.teybatguide.domain.value.Materials;
 import toyproject.genshin.teybatguide.exception.TeybatException;
-import toyproject.genshin.teybatguide.repository.CharacterBannerRepository;
-import toyproject.genshin.teybatguide.repository.EventRepository;
-import toyproject.genshin.teybatguide.repository.ResourcesRepository;
-import toyproject.genshin.teybatguide.repository.WeaponBannerRepository;
+import toyproject.genshin.teybatguide.repository.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,6 +26,7 @@ import java.util.stream.Collectors;
 public class MainService {
 
     private final CharacterBannerRepository characterBannerRepository;
+    private final CharacterAscendRepository characterAscendRepository;
     private final WeaponBannerRepository weaponBannerRepository;
     private final ResourcesRepository resourcesRepository;
     private final EventRepository eventRepository;
@@ -83,7 +81,10 @@ public class MainService {
     }
 
     public List<MainCharacterResourcesResponse> searchBannerCharacterResources() {
-        return null;
+        List<Characters> characters = characterBannerRepository.findCharactersByDateTimeBetween(LocalDateTime.now());
+        return characterAscendRepository.findByCharacters(characters).entrySet().stream()
+                .map(entry -> MainCharacterResourcesResponse.of(entry.getKey(), entry.getValue()))
+                .toList();
     }
 
     private java.time.DayOfWeek getDayOfWeek() {
