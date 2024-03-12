@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesResponse;
 import toyproject.genshin.teybatguide.controller.dto.base.PageDto;
 import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
 import toyproject.genshin.teybatguide.controller.dto.main.*;
@@ -12,10 +13,7 @@ import toyproject.genshin.teybatguide.domain.*;
 import toyproject.genshin.teybatguide.domain.value.DayOfWeek;
 import toyproject.genshin.teybatguide.domain.value.Materials;
 import toyproject.genshin.teybatguide.exception.TeybatException;
-import toyproject.genshin.teybatguide.repository.CharacterBannerRepository;
-import toyproject.genshin.teybatguide.repository.EventRepository;
-import toyproject.genshin.teybatguide.repository.ResourcesRepository;
-import toyproject.genshin.teybatguide.repository.WeaponBannerRepository;
+import toyproject.genshin.teybatguide.repository.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +26,7 @@ import java.util.stream.Collectors;
 public class MainService {
 
     private final CharacterBannerRepository characterBannerRepository;
+    private final CharacterAscendRepository characterAscendRepository;
     private final WeaponBannerRepository weaponBannerRepository;
     private final ResourcesRepository resourcesRepository;
     private final EventRepository eventRepository;
@@ -78,6 +77,13 @@ public class MainService {
     public List<BannerEventsDto> searchEvents() {
         return eventRepository.findByDate(LocalDateTime.now()).stream()
                 .map(BannerEventsDto::of)
+                .toList();
+    }
+
+    public List<MainCharacterResourcesResponse> searchBannerCharacterResources() {
+        List<Characters> characters = characterBannerRepository.findCharactersByDateTimeBetween(LocalDateTime.now());
+        return characterAscendRepository.findByCharacters(characters).entrySet().stream()
+                .map(entry -> MainCharacterResourcesResponse.of(entry.getKey(), entry.getValue()))
                 .toList();
     }
 
