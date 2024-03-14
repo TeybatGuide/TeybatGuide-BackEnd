@@ -13,6 +13,8 @@ public interface CustomCharacterBannerRepository {
 
     Map<BannerType, List<CharacterBanner>> findByDateTimeBetween(LocalDateTime localDateTime);
 
+    List<Characters> findCharactersByDateTimeBetween(LocalDateTime localDateTime);
+
     Optional<Characters> findCharactersById(String id);
 
 }

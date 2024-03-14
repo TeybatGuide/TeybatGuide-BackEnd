@@ -30,6 +30,9 @@ public class Resources extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Materials materials;
 
+    @Enumerated(EnumType.STRING)
+    private Materials materialsDetails;
+
     @ManyToOne
     @JoinColumn(name = "domain_id", referencedColumnName = "id")
     private Domain domain;
@@ -39,13 +42,14 @@ public class Resources extends BaseEntity {
     }
 
     @Builder
-    public Resources(String resourcesName, String resourcesImage, DayOfWeek dayOfWeek, Stars stars, Materials materials, Domain domain) {
+    public Resources(String resourcesName, String resourcesImage, DayOfWeek dayOfWeek, Stars stars, Materials materials, Materials materialsDetails, Domain domain) {
         this();
         this.resourcesName = resourcesName;
         this.resourcesImage = resourcesImage;
         this.dayOfWeek = dayOfWeek;
         this.stars = stars;
         this.materials = materials;
+        this.materialsDetails = materialsDetails;
         this.domain = domain;
     }
 
@@ -56,6 +60,7 @@ public class Resources extends BaseEntity {
                 .dayOfWeek(request.day())
                 .stars(request.stars())
                 .materials(request.materials())
+                .materialsDetails(request.materialsDetails())
                 .domain(domain)
                 .build();
     }
