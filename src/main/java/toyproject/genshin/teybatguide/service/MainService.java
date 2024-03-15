@@ -32,16 +32,14 @@ public class MainService {
     private final ResourcesRepository resourcesRepository;
     private final EventRepository eventRepository;
 
-    public List<CharacterBannerResponse> searchCharacterBanner() {
-        Map<BannerType, List<CharacterBanner>> characterBanners = characterBannerRepository.findByDateTimeBetween(LocalDateTime.now());
+    public CharacterBannerResponse searchCharacterBanner() {
+        List<CharacterBanner> characterBanners = characterBannerRepository.findByDateTimeBetween(LocalDateTime.now());
 
         if (characterBanners.isEmpty()) {
-            return List.of(CharacterBannerResponse.empty());
+            return CharacterBannerResponse.empty();
         }
 
-        return characterBanners.entrySet().stream()
-                .map(entry -> CharacterBannerResponse.of(entry.getKey(), entry.getValue()))
-                .toList();
+        return CharacterBannerResponse.of(BannerType.CHARACTER, characterBanners);
     }
 
     public List<WeaponBannerResponse> searchWeaponBanner() {

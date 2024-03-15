@@ -11,7 +11,10 @@ import java.util.Optional;
 
 public interface CustomCharacterBannerRepository {
 
-    Map<BannerType, List<CharacterBanner>> findByDateTimeBetween(LocalDateTime localDateTime);
+
+    Map<BannerType, List<CharacterBanner>> findByDateTimeBetweenGroupBy(LocalDateTime localDateTime);
+
+    List<CharacterBanner> findByDateTimeBetween(LocalDateTime localDateTime);
 
     List<Characters> findCharactersByDateTimeBetween(LocalDateTime localDateTime);
 

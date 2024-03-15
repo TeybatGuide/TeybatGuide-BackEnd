@@ -24,7 +24,7 @@ public class CustomCharacterBannerRepositoryImpl implements CustomCharacterBanne
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Map<BannerType, List<CharacterBanner>> findByDateTimeBetween(LocalDateTime localDateTime) {
+    public Map<BannerType, List<CharacterBanner>> findByDateTimeBetweenGroupBy(LocalDateTime localDateTime) {
         return jpaQueryFactory
                 .from(characterBanner)
                 .where(betweenDate(localDateTime))
@@ -32,6 +32,18 @@ public class CustomCharacterBannerRepositoryImpl implements CustomCharacterBanne
                         .groupBy(characterBanner.bannerType)
                         .as(list(characterBanner))
                 );
+    }
+
+    @Override
+    public List<CharacterBanner> findByDateTimeBetween(LocalDateTime localDateTime) {
+        return jpaQueryFactory
+                .selectFrom(characterBanner)
+                .where(
+                        betweenDate(localDateTime),
+                        eqBannerType(BannerType.CHARACTER)
+                )
+                .fetch();
+
     }
 
     @Override
@@ -62,6 +74,10 @@ public class CustomCharacterBannerRepositoryImpl implements CustomCharacterBanne
 
     private BooleanExpression eqCharacterId(String characterId) {
         return characterId != null ? characters.id.eq(characterId) : null;
+    }
+
+    private BooleanExpression eqBannerType(BannerType bannerType) {
+        return characterBanner.bannerType.eq(bannerType);
     }
 
 }
