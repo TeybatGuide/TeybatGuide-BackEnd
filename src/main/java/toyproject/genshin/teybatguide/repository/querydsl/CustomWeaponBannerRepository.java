@@ -13,7 +13,7 @@ public interface CustomWeaponBannerRepository {
 
     Map<BannerType, List<WeaponBanner>> findByDateTimeBetweenGroupBy(LocalDateTime localDateTime);
 
-    List<WeaponBanner> findByDateTimeBetween(LocalDateTime localDateTime);
+    List<WeaponBanner> findByDateTimeBetween(LocalDateTime localDateTime, BannerType bannerType);
 
     Optional<Weapon> findWeaponById(String id);
 

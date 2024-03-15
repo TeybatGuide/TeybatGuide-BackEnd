@@ -32,8 +32,8 @@ public class MainService {
     private final ResourcesRepository resourcesRepository;
     private final EventRepository eventRepository;
 
-    public CharacterBannerResponse searchCharacterBanner() {
-        List<CharacterBanner> characterBanners = characterBannerRepository.findByDateTimeBetween(LocalDateTime.now());
+    public CharacterBannerResponse searchCharacterBanner(BannerType bannerType) {
+        List<CharacterBanner> characterBanners = characterBannerRepository.findByDateTimeBetween(LocalDateTime.now(), bannerType);
 
         if (characterBanners.isEmpty()) {
             return CharacterBannerResponse.empty();
@@ -42,8 +42,8 @@ public class MainService {
         return CharacterBannerResponse.of(BannerType.CHARACTER, characterBanners);
     }
 
-    public WeaponBannerResponse searchWeaponBanner() {
-        List<WeaponBanner> weaponBanners = weaponBannerRepository.findByDateTimeBetween(LocalDateTime.now());
+    public WeaponBannerResponse searchWeaponBanner(BannerType bannerType) {
+        List<WeaponBanner> weaponBanners = weaponBannerRepository.findByDateTimeBetween(LocalDateTime.now(), bannerType);
 
         if (weaponBanners.isEmpty()) {
             return WeaponBannerResponse.empty();

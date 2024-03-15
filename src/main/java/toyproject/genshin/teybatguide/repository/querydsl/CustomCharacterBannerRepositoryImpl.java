@@ -35,12 +35,12 @@ public class CustomCharacterBannerRepositoryImpl implements CustomCharacterBanne
     }
 
     @Override
-    public List<CharacterBanner> findByDateTimeBetween(LocalDateTime localDateTime) {
+    public List<CharacterBanner> findByDateTimeBetween(LocalDateTime localDateTime, BannerType bannerType) {
         return jpaQueryFactory
                 .selectFrom(characterBanner)
                 .where(
                         betweenDate(localDateTime),
-                        eqBannerType(BannerType.CHARACTER)
+                        eqBannerType(bannerType)
                 )
                 .fetch();
 

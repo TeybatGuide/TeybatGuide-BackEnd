@@ -35,12 +35,12 @@ public class CustomWeaponBannerRepositoryImpl implements CustomWeaponBannerRepos
     }
 
     @Override
-    public List<WeaponBanner> findByDateTimeBetween(LocalDateTime localDateTime) {
+    public List<WeaponBanner> findByDateTimeBetween(LocalDateTime localDateTime, BannerType bannerType) {
         return jpaQueryFactory
                 .selectFrom(weaponBanner)
                 .where(
                         betweenDate(localDateTime),
-                        eqBannerType(BannerType.WEAPON)
+                        eqBannerType(bannerType)
                 )
                 .fetch();
     }

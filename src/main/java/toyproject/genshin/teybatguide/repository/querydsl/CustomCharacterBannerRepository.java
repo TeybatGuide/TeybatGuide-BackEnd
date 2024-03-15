@@ -14,7 +14,7 @@ public interface CustomCharacterBannerRepository {
 
     Map<BannerType, List<CharacterBanner>> findByDateTimeBetweenGroupBy(LocalDateTime localDateTime);
 
-    List<CharacterBanner> findByDateTimeBetween(LocalDateTime localDateTime);
+    List<CharacterBanner> findByDateTimeBetween(LocalDateTime localDateTime, BannerType bannerType);
 
     List<Characters> findCharactersByDateTimeBetween(LocalDateTime localDateTime);
 
