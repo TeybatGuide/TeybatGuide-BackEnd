@@ -24,7 +24,7 @@ public class CustomWeaponBannerRepositoryImpl implements CustomWeaponBannerRepos
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Map<BannerType, List<WeaponBanner>> findByDateTimeBetween(LocalDateTime localDateTime) {
+    public Map<BannerType, List<WeaponBanner>> findByDateTimeBetweenGroupBy(LocalDateTime localDateTime) {
         return jpaQueryFactory
                 .from(weaponBanner)
                 .where(betweenDate(localDateTime))
@@ -32,6 +32,17 @@ public class CustomWeaponBannerRepositoryImpl implements CustomWeaponBannerRepos
                         .groupBy(weaponBanner.bannerType)
                         .as(list(weaponBanner))
                 );
+    }
+
+    @Override
+    public List<WeaponBanner> findByDateTimeBetween(LocalDateTime localDateTime) {
+        return jpaQueryFactory
+                .selectFrom(weaponBanner)
+                .where(
+                        betweenDate(localDateTime),
+                        eqBannerType(BannerType.WEAPON)
+                )
+                .fetch();
     }
 
     @Override
@@ -53,5 +64,9 @@ public class CustomWeaponBannerRepositoryImpl implements CustomWeaponBannerRepos
 
     private BooleanExpression eqId(String id) {
         return id != null ? weapon.id.eq(id) : null;
+    }
+
+    private BooleanExpression eqBannerType(BannerType bannerType) {
+        return weaponBanner.bannerType.eq(bannerType);
     }
 }

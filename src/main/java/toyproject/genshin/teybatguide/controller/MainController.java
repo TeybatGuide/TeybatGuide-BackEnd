@@ -25,7 +25,7 @@ public class MainController {
     }
 
     @GetMapping("/banner/weapons")
-    public ResponseEntity<List<WeaponBannerResponse>> getWeaponBanner() {
+    public ResponseEntity<WeaponBannerResponse> getWeaponBanner() {
         return ResponseEntity.ok(mainService.searchWeaponBanner());
     }
 

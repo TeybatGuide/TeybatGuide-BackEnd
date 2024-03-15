@@ -42,16 +42,14 @@ public class MainService {
         return CharacterBannerResponse.of(BannerType.CHARACTER, characterBanners);
     }
 
-    public List<WeaponBannerResponse> searchWeaponBanner() {
-        Map<BannerType, List<WeaponBanner>> weaponBanners = weaponBannerRepository.findByDateTimeBetween(LocalDateTime.now());
+    public WeaponBannerResponse searchWeaponBanner() {
+        List<WeaponBanner> weaponBanners = weaponBannerRepository.findByDateTimeBetween(LocalDateTime.now());
 
         if (weaponBanners.isEmpty()) {
-            return List.of(WeaponBannerResponse.empty());
+            return WeaponBannerResponse.empty();
         }
 
-        return weaponBanners.entrySet().stream()
-                .map(entry -> WeaponBannerResponse.of(entry.getKey(), entry.getValue()))
-                .toList();
+        return WeaponBannerResponse.of(BannerType.WEAPON, weaponBanners);
     }
 
     public PageResponseData<List<MainResourcesResponse>> searchResources(Pageable pageable) {

@@ -11,7 +11,9 @@ import java.util.Optional;
 
 public interface CustomWeaponBannerRepository {
 
-    Map<BannerType, List<WeaponBanner>> findByDateTimeBetween(LocalDateTime localDateTime);
+    Map<BannerType, List<WeaponBanner>> findByDateTimeBetweenGroupBy(LocalDateTime localDateTime);
+
+    List<WeaponBanner> findByDateTimeBetween(LocalDateTime localDateTime);
 
     Optional<Weapon> findWeaponById(String id);
 
