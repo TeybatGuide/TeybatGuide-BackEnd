@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesResponse;
 import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
 import toyproject.genshin.teybatguide.controller.dto.main.*;
+import toyproject.genshin.teybatguide.domain.value.BannerType;
 import toyproject.genshin.teybatguide.service.MainService;
 
 import java.util.List;
@@ -20,13 +21,13 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping("/banner/characters")
-    public ResponseEntity<CharacterBannerResponse> getCharacterBanners() {
-        return ResponseEntity.ok(mainService.searchCharacterBanner());
+    public ResponseEntity<CharacterBannerResponse> getCharacterBanner(@RequestParam(name = "type", defaultValue = "CHARACTER") BannerType bannerType) {
+        return ResponseEntity.ok(mainService.searchCharacterBanner(bannerType));
     }
 
     @GetMapping("/banner/weapons")
-    public ResponseEntity<WeaponBannerResponse> getWeaponBanner() {
-        return ResponseEntity.ok(mainService.searchWeaponBanner());
+    public ResponseEntity<WeaponBannerResponse> getWeaponBanner(@RequestParam(name = "type", defaultValue = "WEAPON") BannerType bannerType) {
+        return ResponseEntity.ok(mainService.searchWeaponBanner(bannerType));
     }
 
     @GetMapping("/banner/events")
