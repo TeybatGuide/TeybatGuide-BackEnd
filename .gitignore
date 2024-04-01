@@ -39,3 +39,6 @@ out/
 /src/main/resources/dev-application.properties
 /src/main/resources/db.sql
 /src/main/resources/application.yml
+
+### Q class ###
+/src/main/generated/*
