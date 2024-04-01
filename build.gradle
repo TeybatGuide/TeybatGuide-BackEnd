@@ -50,8 +50,6 @@ dependencies {
 
 }
 
-def querydslDir = "$buildDir/generated/querydsl"
-
 clean {
     delete file (generatedDir)
 }
