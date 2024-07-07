@@ -1,6 +1,7 @@
 buildscript {
     ext {
         queryDslVersion = "5.0.0"
+        snippetsDir = file('build/generated-snippets')
     }
 }
 
@@ -8,6 +9,11 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.1'
     id 'io.spring.dependency-management' version '1.1.4'
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
+}
+
+configurations {
+    asciidoctorExt
 }
 
 def generatedDir = 'src/main/generated'
@@ -23,6 +29,11 @@ repositories {
     mavenCentral()
 }
 
+test {
+    useJUnitPlatform()
+    outputs.dir snippetsDir
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -33,14 +44,20 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    // spring security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
 
+    // jackson
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
+    // jwt
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
     //querydsl
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
@@ -50,10 +67,37 @@ dependencies {
 
 }
 
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test // asciidoctor를 수행하기전 test를 수행하도록 선언
+    configurations 'asciidoctorExt'
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from ("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
+}
+
 clean {
     delete file (generatedDir)
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.register('copyApiDocument', Copy) { // 자동으로 생성된 문서를 옮겨주는 copyApiDocument task 선언
+    dependsOn asciidoctor // copyApiDocument를 수행하기전 asciidoctor를 수행하도록 선언
+    doFirst { // 작업이 실행되기전 수행하는 작업 선언
+        delete file("src/main/resources/static/docs") // 기존 문서 삭제
+    }
+    // 생성된 문서를 static/docs로 이동
+    from asciidoctor.outputDir
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyApiDocument
 }
