@@ -1,0 +1,26 @@
+= Coonect API Document
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+
+== Characters 관련 API
+
+=== 캐릭터 리스트 조회
+
+==== 요청
+
+include::{snippets}/character-controller-test/get-character-list-test/http-request.adoc[]
+
+==== 요청 필드
+
+include::{snippets}/character-controller-test/get-character-list-test/query-parameters.adoc[]
+
+==== 응답
+
+include::{snippets}/character-controller-test/get-character-list-test/http-response.adoc[]
+
+==== 응답 필드
+
+include::{snippets}/character-controller-test/get-character-list-test/response-fields.adoc[]
