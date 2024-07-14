@@ -80,6 +80,7 @@ asciidoctor {
     inputs.dir snippetsDir
     dependsOn test // asciidoctor를 수행하기전 test를 수행하도록 선언
     configurations 'asciidoctorExt'
+    baseDirFollowsSourceFile()
 }
 
 clean {
@@ -93,7 +94,7 @@ tasks.named('test') {
 
 tasks.register('copyDocument', Copy) { // (12)
     dependsOn asciidoctor
-    from file("build/docs/asciidoc")
+    from file("${asciidoctor.outputDir}")
     into file("src/main/resources/static/docs")
 }
 
