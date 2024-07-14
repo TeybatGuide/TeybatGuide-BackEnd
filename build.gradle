@@ -31,11 +31,10 @@ repositories {
 
 test {
     useJUnitPlatform()
-    outputs.dir snippetsDir
 }
 
 ext {
-    set('snippetsDir', file("build/generated-snippets"))
+    snippetsDir = file('build/generated-snippets')
 }
 
 dependencies {
@@ -83,31 +82,21 @@ asciidoctor {
     configurations 'asciidoctorExt'
 }
 
-bootJar {
-    dependsOn asciidoctor
-    from ("${asciidoctor.outputDir}") {
-        into 'static/docs'
-    }
-}
-
 clean {
     delete file (generatedDir)
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+    outputs.dir snippetsDir
 }
 
-tasks.register('copyApiDocument', Copy) { // 자동으로 생성된 문서를 옮겨주는 copyApiDocument task 선언
-    dependsOn asciidoctor // copyApiDocument를 수행하기전 asciidoctor를 수행하도록 선언
-    doFirst { // 작업이 실행되기전 수행하는 작업 선언
-        delete file("src/main/resources/static/docs") // 기존 문서 삭제
-    }
-    // 생성된 문서를 static/docs로 이동
-    from asciidoctor.outputDir
+tasks.register('copyDocument', Copy) { // (12)
+    dependsOn asciidoctor
+    from file("build/docs/asciidoc")
     into file("src/main/resources/static/docs")
 }
 
 build {
-    dependsOn copyApiDocument
+    dependsOn copyDocument
 }
