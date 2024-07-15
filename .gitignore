@@ -42,3 +42,6 @@ out/
 
 ### Q class ###
 /src/main/generated/*
+
+### rest docs ###
+/src/main/resources/static/docs/*

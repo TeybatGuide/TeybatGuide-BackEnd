@@ -1,6 +1,7 @@
 buildscript {
     ext {
         queryDslVersion = "5.0.0"
+        snippetsDir = file('build/generated-snippets')
     }
 }
 
@@ -8,6 +9,11 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.1'
     id 'io.spring.dependency-management' version '1.1.4'
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
+}
+
+configurations {
+    asciidoctorExt
 }
 
 def generatedDir = 'src/main/generated'
@@ -23,24 +29,44 @@ repositories {
     mavenCentral()
 }
 
+test {
+    useJUnitPlatform()
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    //lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    //spring security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
 
+    //jackson
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
+    //jwt
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    //rest docs
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
     //querydsl
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
@@ -50,10 +76,28 @@ dependencies {
 
 }
 
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test // asciidoctor를 수행하기전 test를 수행하도록 선언
+    configurations 'asciidoctorExt'
+    baseDirFollowsSourceFile()
+}
+
 clean {
     delete file (generatedDir)
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+    outputs.dir snippetsDir
+}
+
+tasks.register('copyDocument', Copy) { // (12)
+    dependsOn asciidoctor
+    from file("${asciidoctor.outputDir}")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
 }

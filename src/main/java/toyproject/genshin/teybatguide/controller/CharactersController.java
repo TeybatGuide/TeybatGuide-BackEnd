@@ -20,10 +20,10 @@ public class CharactersController {
 
     private final CharactersService charactersService;
 
-    @PostMapping
+    @GetMapping
     public PageResponseData<List<CharacterListResponse>> getCharacterList(
             @PageableDefault(size = 20) Pageable pageable,
-            @RequestBody CharacterListRequest request
+            @ModelAttribute CharacterListRequest request
     ) {
         Page<CharacterListResponse> responses = charactersService.findAndCreateCharacterList(request, pageable);
         return PageResponseData.of(responses.toList(), PageDto.of(responses));
