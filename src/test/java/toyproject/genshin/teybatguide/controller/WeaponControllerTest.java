@@ -23,11 +23,15 @@ import toyproject.genshin.teybatguide.service.WeaponService;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.web.servlet.mvc.method.annotation.SseEmitter.event;
+import static toyproject.genshin.teybatguide.common.data.Types.*;
 
 @Slf4j
 @AutoConfigureRestDocs
@@ -53,11 +57,15 @@ public class WeaponControllerTest extends AbstractRestDocsTests {
         Pageable pageable = PageRequest.of(0, 20);
 
         //when
-        when(weaponService.getWeaponListResponse(eq(pageable), eq(request1))).thenReturn(
+        when(weaponService.getWeaponListResponse(
+                eq(pageable), eq(request1)
+        )).thenReturn(
                 new PageImpl<>(createWeaponResponse(weapon1, weapon3))
         );
 
-        when(weaponService.getWeaponListResponse(eq(pageable), eq(request2))).thenReturn(
+        when(weaponService.getWeaponListResponse(
+                eq(pageable), eq(request2)
+        )).thenReturn(
                 new PageImpl<>(createWeaponResponse(weapon1, weapon2))
         );
 
@@ -73,7 +81,11 @@ public class WeaponControllerTest extends AbstractRestDocsTests {
                         RestDocsUtil.generateRequestParams(createRequestParams()),
                         RestDocsUtil.generateResponseFields(createResponseField())
                 ))
-                .andExpect(status().isOk());
+                .andExpectAll(
+                        status().isOk(),
+                        content().string(containsString("TestWeapon1")),
+                        content().string(containsString("TestWeapon3"))
+                );
 
         mockMvc.perform(get("/api/weapons")
                         .params(RequestConverter.convertRequestToMultiValueMap(request2))
@@ -83,7 +95,11 @@ public class WeaponControllerTest extends AbstractRestDocsTests {
                         RestDocsUtil.generateRequestParams(createRequestParams()),
                         RestDocsUtil.generateResponseFields(createResponseField())
                 ))
-                .andExpect(status().isOk());
+                .andExpectAll(
+                        status().isOk(),
+                        content().string(containsString("TestWeapon1")),
+                        content().string(containsString("TestWeapon2"))
+                );
 
     }
 
@@ -106,11 +122,26 @@ public class WeaponControllerTest extends AbstractRestDocsTests {
     }
 
     private List<Field> createRequestParams() {
-        return List.of();
+        return List.of(
+                new Field("stars", ARRAY, "5성/4성", "Enum stars", true),
+                new Field("weaponOptions", ARRAY, "무기 주옵션", "Enum WeaponOptions", true),
+                new Field("weaponTypes", ARRAY, "무기 종류", "Enum WeaponType", true)
+        );
     }
 
     private List<Field> createResponseField() {
-        return List.of();
+        return List.of(
+                new Field("wrapper[].id", STRING, "무기 id", "pk", false),
+                new Field("wrapper[].name", STRING, "무기 이름"),
+                new Field("wrapper[].imageUrls", STRING, "무기 이미지 경로"),
+                new Field("wrapper[].stars", STRING, "무기 별", "Enum Stars", false),
+
+                new Field("page.currentPage", NUMBER, "현재 페이지"),
+                new Field("page.totalPages", NUMBER, "총 페이지"),
+                new Field("page.totalElements", NUMBER, "총 아이템 개수"),
+
+                new Field("message", STRING, "메세지")
+        );
     }
 
 }
