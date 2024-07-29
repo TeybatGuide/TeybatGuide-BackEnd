@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toyproject.genshin.teybatguide.controller.dto.main.MainResourcesResponse;
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceListRequest;
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceListResponse;
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceSaveRequest;
@@ -27,12 +28,6 @@ public class ResourcesService {
         return resourcesRepository.findByCountryAndDayOfWeekAndMaterial(request, pageable)
                 .map(ResourceListResponse::of);
     }
-
-    public Page<ResourceListResponse> searchResourcesByDayOfWeek(DayOfWeek dayOfWeek, Pageable pageable) {
-        return resourcesRepository.findByDayOfWeek(dayOfWeek, pageable)
-                .map(ResourceListResponse::of);
-    }
-
 
     @Transactional
     public String saveResources(ResourceSaveRequest request) {
