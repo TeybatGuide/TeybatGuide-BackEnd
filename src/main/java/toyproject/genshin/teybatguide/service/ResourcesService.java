@@ -10,6 +10,7 @@ import toyproject.genshin.teybatguide.controller.dto.resource.ResourceListRespon
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceSaveRequest;
 import toyproject.genshin.teybatguide.domain.Domain;
 import toyproject.genshin.teybatguide.domain.Resources;
+import toyproject.genshin.teybatguide.domain.value.DayOfWeek;
 import toyproject.genshin.teybatguide.exception.TeybatException;
 import toyproject.genshin.teybatguide.repository.DomainRepository;
 import toyproject.genshin.teybatguide.repository.ResourcesRepository;
@@ -24,6 +25,11 @@ public class ResourcesService {
 
     public Page<ResourceListResponse> searchResourceList(ResourceListRequest request, Pageable pageable) {
         return resourcesRepository.findByCountryAndDayOfWeekAndMaterial(request, pageable)
+                .map(ResourceListResponse::of);
+    }
+
+    public Page<ResourceListResponse> searchResourcesByDayOfWeek(DayOfWeek dayOfWeek, Pageable pageable) {
+        return resourcesRepository.findByDayOfWeek(dayOfWeek, pageable)
                 .map(ResourceListResponse::of);
     }
 
