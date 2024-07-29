@@ -21,10 +21,10 @@ public class WeaponController {
 
     private final WeaponService weaponService;
 
-    @PostMapping
+    @GetMapping
     public PageResponseData<List<WeaponListResponse>> getWeaponList(
             @PageableDefault(size = 20) Pageable pageable,
-            @RequestBody WeaponListRequest request
+            @ModelAttribute WeaponListRequest request
     ) {
         Page<WeaponListResponse> response = weaponService.getWeaponListResponse(pageable, request);
         return PageResponseData.of(response.toList(), PageDto.of(response));

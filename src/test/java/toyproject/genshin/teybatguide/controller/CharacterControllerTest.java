@@ -32,15 +32,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static toyproject.genshin.teybatguide.common.data.Types.*;
 
 @Slf4j
 @AutoConfigureRestDocs
 @WebMvcTest(CharactersController.class)
 public class CharacterControllerTest extends AbstractRestDocsTests {
-
-    private static final String STRING = "String";
-    private static final String NUMBER = "Number";
-    private static final String ARRAY = "Array";
 
     @MockBean
     private CharactersService charactersService;
