@@ -3,7 +3,6 @@ package toyproject.genshin.teybatguide.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesResponse;
@@ -21,32 +20,27 @@ public class MainController {
 
     private final MainService mainService;
 
-//    @GetMapping("/banner/characters")
-    @QueryMapping
+    @GetMapping("/banner/characters")
     public ResponseEntity<CharacterBannerResponse> getCharacterBanner(@RequestParam(name = "type", defaultValue = "CHARACTER") BannerType bannerType) {
         return ResponseEntity.ok(mainService.searchCharacterBanner(bannerType));
     }
 
-//    @GetMapping("/banner/weapons")
-    @QueryMapping
+    @GetMapping("/banner/weapons")
     public ResponseEntity<WeaponBannerResponse> getWeaponBanner(@RequestParam(name = "type", defaultValue = "WEAPON") BannerType bannerType) {
         return ResponseEntity.ok(mainService.searchWeaponBanner(bannerType));
     }
 
-//    @GetMapping("/banner/events")
-    @QueryMapping
+    @GetMapping("/banner/events")
     public ResponseEntity<List<BannerEventsDto>> getEvents() {
         return ResponseEntity.ok(mainService.searchEvents());
     }
 
-//    @GetMapping("/resources")
-    @QueryMapping
+    @GetMapping("/resources")
     public PageResponseData<List<MainResourcesResponse>> getResourcesForMain(@PageableDefault(size = 20) Pageable pageable) {
         return mainService.searchResources(pageable);
     }
 
-//    @GetMapping("/banner/characters/resources")
-    @QueryMapping
+    @GetMapping("/banner/characters/resources")
     public ResponseEntity<List<MainCharacterResourcesResponse>> getResourcesForBannerCharacter() {
         return ResponseEntity.ok(mainService.searchBannerCharacterResources());
     }
