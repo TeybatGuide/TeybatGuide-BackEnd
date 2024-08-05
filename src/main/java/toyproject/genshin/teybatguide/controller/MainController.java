@@ -35,10 +35,10 @@ public class MainController {
         return ResponseEntity.ok(mainService.searchEvents());
     }
 
-    @GetMapping("/resources")
-    public PageResponseData<List<MainResourcesResponse>> getResourcesForMain(@PageableDefault(size = 20) Pageable pageable) {
-        return mainService.searchResources(pageable);
-    }
+//    @GetMapping("/resources")
+//    public PageResponseData<List<MainResourcesResponse>> getResourcesForMain(@PageableDefault(size = 20) Pageable pageable) {
+//        return mainService.searchResources(pageable);
+//    }
 
     @GetMapping("/banner/characters/resources")
     public ResponseEntity<List<MainCharacterResourcesResponse>> getResourcesForBannerCharacter() {

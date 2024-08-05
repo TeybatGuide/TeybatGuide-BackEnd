@@ -3,6 +3,10 @@ package toyproject.genshin.teybatguide.domain.value;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Getter
 @RequiredArgsConstructor
 public enum Materials {
@@ -17,5 +21,9 @@ public enum Materials {
     OTHER("-");
 
     private final String resourceByName;
+
+    public static Materials of(final String name) {
+        return Materials.valueOf(name.toUpperCase());
+    }
 
 }

@@ -52,21 +52,21 @@ public class MainService {
         return WeaponBannerResponse.of(BannerType.WEAPON, weaponBanners);
     }
 
-    public PageResponseData<List<MainResourcesResponse>> searchResources(Pageable pageable) {
-        Page<Resources> resourcesPage = resourcesRepository.findByDayOfWeekForMain(DayOfWeek.of(getDayOfWeek()), pageable);
-
-        Map<Materials, List<MainResourcesListDto>> materialsListMap = resourcesPage.stream()
-                .collect(Collectors.groupingBy(
-                        Resources::getMaterials,
-                        Collectors.mapping(MainResourcesListDto::of, Collectors.toList())
-                ));
-
-        List<MainResourcesResponse> mainResourcesResponses = materialsListMap.entrySet().stream()
-                .map(entry -> MainResourcesResponse.of(entry.getKey(), entry.getValue()))
-                .toList();
-
-        return PageResponseData.of(mainResourcesResponses, PageDto.of(resourcesPage));
-    }
+//    public PageResponseData<List<MainResourcesResponse>> searchResources(Pageable pageable) {
+//        Page<Resources> resourcesPage = resourcesRepository.findByDayOfWeekForMain(DayOfWeek.of(getDayOfWeek()), pageable);
+//
+//        Map<Materials, List<MainResourcesListDto>> materialsListMap = resourcesPage.stream()
+//                .collect(Collectors.groupingBy(
+//                        Resources::getMaterials,
+//                        Collectors.mapping(MainResourcesListDto::of, Collectors.toList())
+//                ));
+//
+//        List<MainResourcesResponse> mainResourcesResponses = materialsListMap.entrySet().stream()
+//                .map(entry -> MainResourcesResponse.of(entry.getKey(), entry.getValue()))
+//                .toList();
+//
+//        return PageResponseData.of(mainResourcesResponses, PageDto.of(resourcesPage));
+//    }
 
     public List<BannerEventsDto> searchEvents() {
         return eventRepository.findByDate(LocalDateTime.now()).stream()

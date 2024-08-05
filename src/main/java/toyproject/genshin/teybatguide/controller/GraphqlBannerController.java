@@ -39,25 +39,8 @@ public class GraphqlBannerController {
     }
 
     @QueryMapping
-    public List<MainResourcesResponse> getResourcesToday(
-            @Argument int limit,
-            @Argument int offset,
-            @Argument String sortAttribute,
-            @Argument String sortDirection
-    ) {
-        Sort sort = Sort.by(sortAttribute);
-        sort = isSortDirectionAscending(sortDirection) ? sort.ascending() : sort.descending();
-
-        return mainService.searchResources(PageRequest.of(offset, limit, sort)).wrapper();
-    }
-
-    @QueryMapping
     public List<MainCharacterResourcesResponse> getResourcesForBannerCharacter() {
         return mainService.searchBannerCharacterResources();
-    }
-
-    private boolean isSortDirectionAscending(String sortDirection) {
-        return sortDirection.toLowerCase().equals(SortDirection.ASCENDING.toString());
     }
 
 }

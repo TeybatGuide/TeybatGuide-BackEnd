@@ -41,6 +41,23 @@ public class CustomResourcesRepositoryImpl implements CustomResourcesRepository 
     }
 
     @Override
+    public Page<Resources> findByDayOfWeekAndMaterialForMain(
+            DayOfWeek dayOfWeek, Materials materials, Pageable pageable
+    ) {
+        List<Resources> resourcesList = jpaQueryFactory
+                .selectFrom(resources)
+                .where(
+                        eqDayOfWeek(dayOfWeek),
+                        eqMaterialsDivideByStar(materials)
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return PageableExecutionUtils.getPage(resourcesList, pageable, getCount(dayOfWeek)::fetchOne);
+    }
+
+    @Override
     public Page<Resources> findByCountryAndDayOfWeekAndMaterial(ResourceListRequest request, Pageable pageable) {
 
         List<Resources> resourcesList = jpaQueryFactory
@@ -85,6 +102,14 @@ public class CustomResourcesRepositoryImpl implements CustomResourcesRepository 
         return Expressions.anyOf(characterTalent, weaponAscension);
     }
 
+    private BooleanExpression eqMaterialsDivideByStar(Materials materials) {
+        if (isCharacterMaterial(materials)) {
+            return eqMaterials(materials).and(eqStar(Stars.FOUR));
+        } else {
+            return eqMaterials(materials).and(eqStar(Stars.FIVE));
+        }
+    }
+
     private BooleanExpression inCountry(List<Country> countries) {
         return countries != null ? resources.domain.country.in(countries) : null;
     }
@@ -107,5 +132,9 @@ public class CustomResourcesRepositoryImpl implements CustomResourcesRepository 
 
     private BooleanExpression eqStar(Stars stars) {
         return resources.stars.eq(stars);
+    }
+
+    private boolean isCharacterMaterial(Materials materials) {
+        return materials.equals(Materials.CHARACTERS_TALENT_MATERIAL);
     }
 }
