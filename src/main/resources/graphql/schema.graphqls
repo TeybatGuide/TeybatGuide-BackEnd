@@ -1,0 +1,70 @@
+scalar DateTime
+
+type Query {
+    characterBanner: CharacterBanner
+    weaponBanner: WeaponBanner
+    events: [Event]
+#    resourcesToday(limit: Int!, offset: Int!, sortAttribute: String, sortDirection: String): Resources
+    resourcesTodayByMaterials(materials: String!, limit: Int!, offset: Int!, sortAttribute: String, sortDirection: String): Resources
+    resourcesForBannerCharacters: ResourcesForBanners
+}
+
+type CharacterBanner {
+    startDate: DateTime
+    endDate: DateTime
+    bannerType: String
+    characters: [Character]
+}
+
+type Character {
+    id: String!
+    name: String!
+}
+
+type WeaponBanner {
+    startDate: DateTime
+    endDate: DateTime
+    bannerType: String
+    weapons: [Weapon]
+}
+
+type Weapon {
+    id: String!
+    name: String!
+}
+
+type Event {
+    eventName: String
+    startDate: DateTime
+    endDate: DateTime
+}
+
+type Resources {
+    criterion: String
+    resources: [MainResourcesListDto]
+}
+
+type MainResourcesListDto {
+    id: String!
+    name: String!
+    imageUrls: String
+    star: String
+}
+
+type ResourcesForBanners {
+    characterId: String!
+    responses: [ResourceListRes]
+}
+
+type ResourceListRes {
+    resourceId: String!
+    resourceName: String!
+    imageUrls: String
+    star: String
+    domain: Domain
+}
+
+type Domain {
+    id: String!
+    name: String!
+}
