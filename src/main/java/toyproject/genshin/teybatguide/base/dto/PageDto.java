@@ -1,4 +1,4 @@
-package toyproject.genshin.teybatguide.controller.dto.base;
+package toyproject.genshin.teybatguide.base.dto;
 
 import lombok.Builder;
 import lombok.Getter;

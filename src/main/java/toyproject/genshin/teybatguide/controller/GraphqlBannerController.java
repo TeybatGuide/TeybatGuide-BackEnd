@@ -1,19 +1,14 @@
 package toyproject.genshin.teybatguide.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesResponse;
 import toyproject.genshin.teybatguide.controller.dto.main.BannerEventsDto;
 import toyproject.genshin.teybatguide.controller.dto.main.CharacterBannerResponse;
-import toyproject.genshin.teybatguide.controller.dto.main.MainResourcesResponse;
 import toyproject.genshin.teybatguide.controller.dto.main.WeaponBannerResponse;
 import toyproject.genshin.teybatguide.domain.value.BannerType;
-import toyproject.genshin.teybatguide.domain.value.SortDirection;
-import toyproject.genshin.teybatguide.service.MainService;
+import toyproject.genshin.teybatguide.service.BannerService;
 
 import java.util.List;
 
@@ -21,26 +16,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GraphqlBannerController {
 
-    private final MainService mainService;
+    private final BannerService bannerService;
 
     @QueryMapping
     public CharacterBannerResponse getCharacterBanner() {
-        return mainService.searchCharacterBanner(BannerType.CHARACTER);
+        return bannerService.searchCharacterBanner(BannerType.CHARACTER);
     }
 
     @QueryMapping
     public WeaponBannerResponse getWeaponBanner() {
-        return mainService.searchWeaponBanner(BannerType.WEAPON);
+        return bannerService.searchWeaponBanner(BannerType.WEAPON);
     }
 
     @QueryMapping
     public List<BannerEventsDto> getEvents() {
-        return mainService.searchEvents();
+        return bannerService.searchEvents();
     }
 
     @QueryMapping
     public List<MainCharacterResourcesResponse> getResourcesForBannerCharacter() {
-        return mainService.searchBannerCharacterResources();
+        return bannerService.searchBannerCharacterResources();
     }
 
 }

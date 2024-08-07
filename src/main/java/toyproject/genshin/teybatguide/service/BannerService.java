@@ -1,35 +1,26 @@
 package toyproject.genshin.teybatguide.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesResponse;
-import toyproject.genshin.teybatguide.controller.dto.base.PageDto;
-import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
 import toyproject.genshin.teybatguide.controller.dto.main.*;
 import toyproject.genshin.teybatguide.domain.*;
 import toyproject.genshin.teybatguide.domain.value.BannerType;
-import toyproject.genshin.teybatguide.domain.value.DayOfWeek;
-import toyproject.genshin.teybatguide.domain.value.Materials;
 import toyproject.genshin.teybatguide.exception.TeybatException;
 import toyproject.genshin.teybatguide.repository.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MainService {
+public class BannerService {
 
     private final CharacterBannerRepository characterBannerRepository;
     private final CharacterAscendRepository characterAscendRepository;
     private final WeaponBannerRepository weaponBannerRepository;
-    private final ResourcesRepository resourcesRepository;
     private final EventRepository eventRepository;
 
     public CharacterBannerResponse searchCharacterBanner(BannerType bannerType) {
@@ -52,22 +43,6 @@ public class MainService {
         return WeaponBannerResponse.of(BannerType.WEAPON, weaponBanners);
     }
 
-//    public PageResponseData<List<MainResourcesResponse>> searchResources(Pageable pageable) {
-//        Page<Resources> resourcesPage = resourcesRepository.findByDayOfWeekForMain(DayOfWeek.of(getDayOfWeek()), pageable);
-//
-//        Map<Materials, List<MainResourcesListDto>> materialsListMap = resourcesPage.stream()
-//                .collect(Collectors.groupingBy(
-//                        Resources::getMaterials,
-//                        Collectors.mapping(MainResourcesListDto::of, Collectors.toList())
-//                ));
-//
-//        List<MainResourcesResponse> mainResourcesResponses = materialsListMap.entrySet().stream()
-//                .map(entry -> MainResourcesResponse.of(entry.getKey(), entry.getValue()))
-//                .toList();
-//
-//        return PageResponseData.of(mainResourcesResponses, PageDto.of(resourcesPage));
-//    }
-
     public List<BannerEventsDto> searchEvents() {
         return eventRepository.findByDate(LocalDateTime.now()).stream()
                 .map(BannerEventsDto::of)
@@ -81,38 +56,32 @@ public class MainService {
                 .toList();
     }
 
-    private java.time.DayOfWeek getDayOfWeek() {
-        LocalDateTime now = LocalDateTime.now();
-
-        if (now.getHour() < 5) {
-            now = now.minusDays(1);
-        }
-
-        return now.getDayOfWeek();
-    }
-
     @Transactional
-    public String saveCharacterBanner(CharacterBannerSaveRequest request) {
+    public CharacterBannerDto saveCharacterBanner(CharacterBannerSaveRequest request) {
         Characters characters = characterBannerRepository.findCharactersById(request.characterId())
                 .orElseThrow(() -> new TeybatException("아이디가 없습니다."));
 
-        characterBannerRepository.save(CharacterBanner.of(characters, request));
-        return "good";
+        CharacterBanner banner = CharacterBanner.of(characters, request);
+        characterBannerRepository.save(banner);
+        characterBannerRepository.findById(banner.getId());
+        return CharacterBannerDto.of(banner);
     }
 
     @Transactional
-    public String saveWeaponBanner(WeaponBannerSaveRequest request) {
+    public WeaponBannerDto saveWeaponBanner(WeaponBannerSaveRequest request) {
         Weapon weapon = weaponBannerRepository.findWeaponById(request.weaponId())
                 .orElseThrow(() -> new TeybatException("id가 존재하지 않습니다."));
 
-        weaponBannerRepository.save(WeaponBanner.of(weapon, request));
-        return "good";
+        WeaponBanner banner = WeaponBanner.of(weapon, request);
+        weaponBannerRepository.save(banner);
+        return WeaponBannerDto.of(banner);
     }
 
     @Transactional
-    public String saveEvents(BannerEventsDto request) {
-        eventRepository.save(Event.of(request));
-        return "저장 완료";
+    public BannerEventsDto saveEvents(BannerEventsDto request) {
+        Event event = Event.of(request);
+        eventRepository.save(event);
+        return BannerEventsDto.of(event);
     }
 
 }

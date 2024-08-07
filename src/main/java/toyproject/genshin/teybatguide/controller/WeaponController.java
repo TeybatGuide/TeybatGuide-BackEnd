@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toyproject.genshin.teybatguide.controller.dto.characters.CharacterListResponse;
 import toyproject.genshin.teybatguide.controller.dto.weapons.*;
-import toyproject.genshin.teybatguide.controller.dto.base.PageDto;
-import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
+import toyproject.genshin.teybatguide.base.dto.PageDto;
+import toyproject.genshin.teybatguide.base.PageResponseData;
 import toyproject.genshin.teybatguide.service.WeaponService;
 
 import java.util.List;

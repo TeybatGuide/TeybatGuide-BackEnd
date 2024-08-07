@@ -1,4 +1,4 @@
-package toyproject.genshin.teybatguide.domain;
+package toyproject.genshin.teybatguide.base;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;

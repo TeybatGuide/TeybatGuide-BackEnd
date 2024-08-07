@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
+import toyproject.genshin.teybatguide.base.BaseEntity;
 import toyproject.genshin.teybatguide.controller.dto.main.BannerEventsDto;
 import toyproject.genshin.teybatguide.domain.value.Domain;
 

@@ -3,10 +3,9 @@ package toyproject.genshin.teybatguide.domain;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import toyproject.genshin.teybatguide.base.BaseEntity;
 import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponAscendSaveRequest;
 import toyproject.genshin.teybatguide.domain.value.Domain;
-
-import java.util.List;
 
 @Entity
 @Getter
