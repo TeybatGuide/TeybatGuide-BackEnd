@@ -16,7 +16,10 @@ import toyproject.genshin.teybatguide.domain.Domain;
 import toyproject.genshin.teybatguide.domain.Resources;
 import toyproject.genshin.teybatguide.domain.value.DayOfWeek;
 import toyproject.genshin.teybatguide.domain.value.Materials;
+import toyproject.genshin.teybatguide.exception.TeybatBadRequestException;
+import toyproject.genshin.teybatguide.exception.TeybatDataAccessException;
 import toyproject.genshin.teybatguide.exception.TeybatException;
+import toyproject.genshin.teybatguide.exception.TeybatNotFoundException;
 import toyproject.genshin.teybatguide.repository.DomainRepository;
 import toyproject.genshin.teybatguide.repository.ResourcesRepository;
 
@@ -46,7 +49,7 @@ public class ResourcesService {
     @Transactional
     public ResourceListResponse saveResources(ResourceSaveRequest request) {
         Domain domain = domainRepository.findById(request.domainId())
-                .orElseThrow(() -> new TeybatException("domainId가 존재하지 않습니다."));
+                .orElseThrow(() -> new TeybatBadRequestException("비경이 존재하지 않습니다."));
 
         Resources resources = Resources.of(request, domain);
         String path = "/" + resources.getId().replace("_", "/") + ".webp";
@@ -54,7 +57,7 @@ public class ResourcesService {
         resourcesRepository.save(resources);
 
         Resources resource = resourcesRepository.findById(resources.getId())
-                .orElseThrow(() -> new TeybatException("resource 저장에 실패하였습니다."));
+                .orElseThrow(() -> new TeybatDataAccessException("resource 저장에 실패하였습니다."));
         return ResourceListResponse.of(resource);
     }
 

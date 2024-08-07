@@ -1,7 +1,6 @@
 package toyproject.genshin.teybatguide.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesResponse;
 import toyproject.genshin.teybatguide.base.ResponseData;
@@ -19,23 +18,23 @@ public class BannerController {
     private final BannerService bannerService;
 
     @GetMapping("/characters")
-    public ResponseEntity<CharacterBannerResponse> getCharacterBanner(@RequestParam(name = "type", defaultValue = "CHARACTER") BannerType bannerType) {
-        return ResponseEntity.ok(bannerService.searchCharacterBanner(bannerType));
+    public ResponseData<CharacterBannerResponse> getCharacterBanner(@RequestParam(name = "type", defaultValue = "CHARACTER") BannerType bannerType) {
+        return ResponseData.of(bannerService.searchCharacterBanner(bannerType));
     }
 
     @GetMapping("/weapons")
-    public ResponseEntity<WeaponBannerResponse> getWeaponBanner(@RequestParam(name = "type", defaultValue = "WEAPON") BannerType bannerType) {
-        return ResponseEntity.ok(bannerService.searchWeaponBanner(bannerType));
+    public ResponseData<WeaponBannerResponse> getWeaponBanner(@RequestParam(name = "type", defaultValue = "WEAPON") BannerType bannerType) {
+        return ResponseData.of(bannerService.searchWeaponBanner(bannerType));
     }
 
     @GetMapping("/events")
-    public ResponseEntity<List<BannerEventsDto>> getEvents() {
-        return ResponseEntity.ok(bannerService.searchEvents());
+    public ResponseData<List<BannerEventsDto>> getEvents() {
+        return ResponseData.of(bannerService.searchEvents());
     }
 
     @GetMapping("/characters/resources")
-    public ResponseEntity<List<MainCharacterResourcesResponse>> getResourcesForBannerCharacter() {
-        return ResponseEntity.ok(bannerService.searchBannerCharacterResources());
+    public ResponseData<List<MainCharacterResourcesResponse>> getResourcesForBannerCharacter() {
+        return ResponseData.of(bannerService.searchBannerCharacterResources());
     }
 
     @PostMapping("/character/save")

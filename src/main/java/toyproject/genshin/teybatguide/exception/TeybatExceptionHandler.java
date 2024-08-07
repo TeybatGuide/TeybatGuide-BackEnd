@@ -53,7 +53,7 @@ public class TeybatExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleExceptionInternal(
             Exception ex, Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request
     ) {
-        return super.handleExceptionInternal(ex, body, headers, statusCode, (WebRequest) request);
+        return super.handleExceptionInternal(ex, body, headers, statusCode, request);
     }
 
     private ResponseEntity<Object> handleExceptionInternal(

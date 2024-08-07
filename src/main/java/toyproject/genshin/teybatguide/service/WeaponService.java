@@ -6,15 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toyproject.genshin.teybatguide.controller.dto.characters.CharacterListResponse;
-import toyproject.genshin.teybatguide.controller.dto.characters.CharacterWeaponDto;
-import toyproject.genshin.teybatguide.controller.dto.characters.CharacterWeaponListDto;
 import toyproject.genshin.teybatguide.controller.dto.weapons.*;
-import toyproject.genshin.teybatguide.domain.CharacterWeapon;
 import toyproject.genshin.teybatguide.domain.Resources;
 import toyproject.genshin.teybatguide.domain.Weapon;
 import toyproject.genshin.teybatguide.domain.WeaponAscend;
 import toyproject.genshin.teybatguide.domain.value.Stars;
-import toyproject.genshin.teybatguide.domain.value.WeaponCriteria;
+import toyproject.genshin.teybatguide.exception.TeybatBadRequestException;
+import toyproject.genshin.teybatguide.exception.TeybatDataAccessException;
 import toyproject.genshin.teybatguide.exception.TeybatException;
 import toyproject.genshin.teybatguide.repository.ResourcesRepository;
 import toyproject.genshin.teybatguide.repository.WeaponAscendRepository;
@@ -41,14 +39,14 @@ public class WeaponService {
 
     public WeaponDetailsResponse searchForBasicWeaponsInformation(String id) {
         Weapon weapon = weaponRepository.findById(id)
-                .orElseThrow(() -> new TeybatException("id가 존재하지 않습니다."));
+                .orElseThrow(() -> new TeybatBadRequestException("id가 존재하지 않습니다."));
 
         return WeaponDetailsResponse.of(weapon);
     }
 
     public List<CharacterListResponse> searchForRecommendedCharacters(String id) {
         Weapon weapon = weaponRepository.findById(id)
-                .orElseThrow(() -> new TeybatException("id가 존재하지 않습니다."));
+                .orElseThrow(() -> new TeybatException("무기가 존재하지 않습니다."));
 
         return weapon.getCharacterWeapons().stream()
                 .map(characterWeapon -> CharacterListResponse.of(characterWeapon.getCharacters()))
@@ -57,7 +55,7 @@ public class WeaponService {
 
     public List<WeaponAscendListResponse> searchForAscendResources(String id) {
         Weapon weapon = weaponRepository.findById(id)
-                .orElseThrow(() -> new TeybatException("id가 존재하지 않습니다."));
+                .orElseThrow(() -> new TeybatBadRequestException("무기가 존재하지 않습니다."));
 
         Map<Stars, List<WeaponAscendDto>> map = weapon.getWeaponAscends().stream()
                 .collect(Collectors.groupingBy(
@@ -75,13 +73,18 @@ public class WeaponService {
     }
 
     @Transactional
-    public String saveWeaponAscend(WeaponAscendSaveRequest request) {
+    public WeaponAscendDto saveWeaponAscend(WeaponAscendSaveRequest request) {
         Weapon weapon = weaponRepository.findById(request.weaponId())
-                .orElseThrow(() -> new TeybatException("id가 없습니다."));
+                .orElseThrow(() -> new TeybatBadRequestException("무기가 존재하지 않습니다."));
         Resources resources = resourcesRepository.findById(request.resourceId())
-                .orElseThrow(() -> new TeybatException("id가 없습니다."));
-        weaponAscendRepository.save(WeaponAscend.of(request, weapon, resources));
-        return "good";
+                .orElseThrow(() -> new TeybatBadRequestException("resource가 존재하지 않습니다."));
+
+        WeaponAscend entity = WeaponAscend.of(request, weapon, resources);
+        weaponAscendRepository.save(entity);
+
+        WeaponAscend weaponAscend = weaponAscendRepository.findById(entity.getId())
+                .orElseThrow(() -> new TeybatDataAccessException("저장에 실패하였습니다."));
+        return WeaponAscendDto.of(weaponAscend);
     }
 
 }

@@ -19,6 +19,8 @@ import toyproject.genshin.teybatguide.controller.dto.oauth.KakaoProfile;
 import toyproject.genshin.teybatguide.controller.dto.oauth.KakaoTokenRequest;
 import toyproject.genshin.teybatguide.controller.dto.oauth.OauthToken;
 import toyproject.genshin.teybatguide.controller.dto.user.UserInfoResponse;
+import toyproject.genshin.teybatguide.exception.TeybatBadRequestException;
+import toyproject.genshin.teybatguide.exception.TeybatDataAccessException;
 import toyproject.genshin.teybatguide.jwt.properties.JwtProperties;
 import toyproject.genshin.teybatguide.domain.User;
 import toyproject.genshin.teybatguide.exception.TeybatException;
@@ -40,7 +42,7 @@ public class UserService {
 
     public UserInfoResponse getUser(HttpServletRequest request) {
         User user = userRepository.findById(request.getHeader("id"))
-                .orElseThrow(() -> new TeybatException("아이디가 존재하지 않습니다."));
+                .orElseThrow(() -> new TeybatBadRequestException("아이디가 존재하지 않습니다."));
 
         return UserInfoResponse.of(user);
     }
@@ -81,7 +83,7 @@ public class UserService {
         }
 
         User user = userRepository.findByEmail(profile.getKakao_account().getEmail())
-                .orElseThrow(() -> new TeybatException("저장이 안됐습니다."));
+                .orElseThrow(() -> new TeybatDataAccessException("저장에 실패하였습니다."));
         return createToken(user);
     }
 

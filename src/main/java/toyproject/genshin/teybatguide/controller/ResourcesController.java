@@ -8,8 +8,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import toyproject.genshin.teybatguide.base.ResponseData;
 import toyproject.genshin.teybatguide.base.dto.PageDto;
 import toyproject.genshin.teybatguide.base.PageResponseData;
 import toyproject.genshin.teybatguide.controller.dto.main.MainResourcesResponse;
@@ -53,8 +53,8 @@ public class ResourcesController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ResourceListResponse> saveResources(@RequestBody ResourceSaveRequest request) {
-        return ResponseEntity.ok().body(resourcesService.saveResources(request));
+    public ResponseData<ResourceListResponse> saveResources(@RequestBody ResourceSaveRequest request) {
+        return ResponseData.of(resourcesService.saveResources(request));
     }
 
     private boolean isSortDirectionAscending(String sortDirection) {

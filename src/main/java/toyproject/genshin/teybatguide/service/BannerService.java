@@ -7,7 +7,10 @@ import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesRespo
 import toyproject.genshin.teybatguide.controller.dto.main.*;
 import toyproject.genshin.teybatguide.domain.*;
 import toyproject.genshin.teybatguide.domain.value.BannerType;
+import toyproject.genshin.teybatguide.exception.TeybatBadRequestException;
+import toyproject.genshin.teybatguide.exception.TeybatDataAccessException;
 import toyproject.genshin.teybatguide.exception.TeybatException;
+import toyproject.genshin.teybatguide.exception.TeybatNotFoundException;
 import toyproject.genshin.teybatguide.repository.*;
 
 import java.time.LocalDateTime;
@@ -59,29 +62,40 @@ public class BannerService {
     @Transactional
     public CharacterBannerDto saveCharacterBanner(CharacterBannerSaveRequest request) {
         Characters characters = characterBannerRepository.findCharactersById(request.characterId())
-                .orElseThrow(() -> new TeybatException("아이디가 없습니다."));
+                .orElseThrow(() -> new TeybatBadRequestException("캐릭터가 존재하지 않습니다."));
 
         CharacterBanner banner = CharacterBanner.of(characters, request);
         characterBannerRepository.save(banner);
-        characterBannerRepository.findById(banner.getId());
-        return CharacterBannerDto.of(banner);
+
+        CharacterBanner savedBanner = characterBannerRepository.findById(banner.getId())
+                .orElseThrow(() -> new TeybatDataAccessException("캐릭터 배너 저장에 실패하였습니다."));
+
+        return CharacterBannerDto.of(savedBanner);
     }
 
     @Transactional
     public WeaponBannerDto saveWeaponBanner(WeaponBannerSaveRequest request) {
         Weapon weapon = weaponBannerRepository.findWeaponById(request.weaponId())
-                .orElseThrow(() -> new TeybatException("id가 존재하지 않습니다."));
+                .orElseThrow(() -> new TeybatBadRequestException("무기가 존재하지 않습니다."));
 
         WeaponBanner banner = WeaponBanner.of(weapon, request);
         weaponBannerRepository.save(banner);
-        return WeaponBannerDto.of(banner);
+
+        WeaponBanner savedBanner = weaponBannerRepository.findById(banner.getId())
+                .orElseThrow(() -> new TeybatDataAccessException("무기 배너 저장에 실패하였습니다."));
+
+        return WeaponBannerDto.of(savedBanner);
     }
 
     @Transactional
     public BannerEventsDto saveEvents(BannerEventsDto request) {
         Event event = Event.of(request);
         eventRepository.save(event);
-        return BannerEventsDto.of(event);
+
+        Event savedEvent = eventRepository.findById(event.getId())
+                .orElseThrow(() -> new TeybatDataAccessException("이벤트 저장에 실패하였습니다."));
+
+        return BannerEventsDto.of(savedEvent);
     }
 
 }

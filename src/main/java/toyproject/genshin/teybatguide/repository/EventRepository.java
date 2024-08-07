@@ -9,4 +9,7 @@ import toyproject.genshin.teybatguide.repository.querydsl.CustomEventRepository;
 //@Repository
 @GraphQlRepository
 public interface EventRepository extends JpaRepository<Event, String>, CustomEventRepository {
+
+    boolean exists(Event event);
+
 }
