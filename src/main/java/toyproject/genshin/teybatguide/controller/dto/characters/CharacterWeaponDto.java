@@ -1,22 +1,22 @@
 package toyproject.genshin.teybatguide.controller.dto.characters;
 
-import lombok.Builder;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import toyproject.genshin.teybatguide.domain.CharacterWeapon;
 import toyproject.genshin.teybatguide.domain.Weapon;
 
-@Builder
 public record CharacterWeaponDto(String id, String weaponImage, String weaponName, String recommend, String comments) {
 
-    public static CharacterWeaponDto of(CharacterWeapon characterWeapon) {
+    @Contract("_ -> new")
+    public static @NotNull CharacterWeaponDto of(@NotNull CharacterWeapon characterWeapon) {
         Weapon weapon = characterWeapon.getWeapon();
-
-        return CharacterWeaponDto.builder()
-                .id(weapon.getId())
-                .weaponImage(weapon.getWeaponImage())
-                .weaponName(weapon.getWeaponName())
-                .recommend(characterWeapon.getRecommend().getRecommendName())
-                .comments(characterWeapon.getComments())
-                .build();
+        return new CharacterWeaponDto(
+                weapon.getId(),
+                weapon.getWeaponImage(),
+                weapon.getWeaponName(),
+                characterWeapon.getRecommend().getRecommendName(),
+                characterWeapon.getComments()
+        );
     }
 
 }

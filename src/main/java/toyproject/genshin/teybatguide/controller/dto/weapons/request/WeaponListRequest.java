@@ -1,4 +1,4 @@
-package toyproject.genshin.teybatguide.controller.dto.weapons;
+package toyproject.genshin.teybatguide.controller.dto.weapons.request;
 
 import toyproject.genshin.teybatguide.domain.value.Stars;
 import toyproject.genshin.teybatguide.domain.value.WeaponOptions;

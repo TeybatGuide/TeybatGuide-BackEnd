@@ -2,9 +2,13 @@ package toyproject.genshin.teybatguide.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesResponse;
+import toyproject.genshin.teybatguide.controller.dto.banner.response.CharacterResourcesResponse;
 import toyproject.genshin.teybatguide.base.ResponseData;
-import toyproject.genshin.teybatguide.controller.dto.main.*;
+import toyproject.genshin.teybatguide.controller.dto.banner.*;
+import toyproject.genshin.teybatguide.controller.dto.banner.request.CharacterBannerSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.banner.request.WeaponBannerSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.banner.response.CharacterBannerResponse;
+import toyproject.genshin.teybatguide.controller.dto.banner.response.WeaponBannerResponse;
 import toyproject.genshin.teybatguide.domain.value.BannerType;
 import toyproject.genshin.teybatguide.service.BannerService;
 
@@ -18,12 +22,16 @@ public class BannerController {
     private final BannerService bannerService;
 
     @GetMapping("/characters")
-    public ResponseData<CharacterBannerResponse> getCharacterBanner(@RequestParam(name = "type", defaultValue = "CHARACTER") BannerType bannerType) {
+    public ResponseData<CharacterBannerResponse> getCharacterBanner(
+            @RequestParam(name = "type", defaultValue = "CHARACTER") BannerType bannerType
+    ) {
         return ResponseData.of(bannerService.searchCharacterBanner(bannerType));
     }
 
     @GetMapping("/weapons")
-    public ResponseData<WeaponBannerResponse> getWeaponBanner(@RequestParam(name = "type", defaultValue = "WEAPON") BannerType bannerType) {
+    public ResponseData<WeaponBannerResponse> getWeaponBanner(
+            @RequestParam(name = "type", defaultValue = "WEAPON") BannerType bannerType
+    ) {
         return ResponseData.of(bannerService.searchWeaponBanner(bannerType));
     }
 
@@ -33,7 +41,7 @@ public class BannerController {
     }
 
     @GetMapping("/characters/resources")
-    public ResponseData<List<MainCharacterResourcesResponse>> getResourcesForBannerCharacter() {
+    public ResponseData<List<CharacterResourcesResponse>> getResourcesForBannerCharacter() {
         return ResponseData.of(bannerService.searchBannerCharacterResources());
     }
 

@@ -1,6 +1,7 @@
 package toyproject.genshin.teybatguide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,12 @@ public class ArtifactService {
                 .map(ArtifactListResponse::of);
     }
 
+    /*
+        todo
+            CharacterListResponse 구현로직 추가
+     */
     @Transactional
-    public ArtifactListResponse saveArtifact(ArtifactSaveRequest request) {
+    public ArtifactListResponse saveArtifact(@NotNull ArtifactSaveRequest request) {
         Domain domain = domainRepository.findById(request.domain())
                 .orElseThrow(() -> new TeybatBadRequestException("비경이 존재하지 않습니다."));
 

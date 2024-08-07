@@ -1,12 +1,18 @@
 package toyproject.genshin.teybatguide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toyproject.genshin.teybatguide.controller.dto.characters.CharacterListResponse;
+import toyproject.genshin.teybatguide.controller.dto.characters.response.CharacterListResponse;
 import toyproject.genshin.teybatguide.controller.dto.weapons.*;
+import toyproject.genshin.teybatguide.controller.dto.weapons.request.WeaponAscendSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.weapons.request.WeaponListRequest;
+import toyproject.genshin.teybatguide.controller.dto.weapons.response.WeaponAscendListResponse;
+import toyproject.genshin.teybatguide.controller.dto.weapons.response.WeaponDetailsResponse;
+import toyproject.genshin.teybatguide.controller.dto.weapons.response.WeaponListResponse;
 import toyproject.genshin.teybatguide.domain.Resources;
 import toyproject.genshin.teybatguide.domain.Weapon;
 import toyproject.genshin.teybatguide.domain.WeaponAscend;
@@ -73,7 +79,7 @@ public class WeaponService {
     }
 
     @Transactional
-    public WeaponAscendDto saveWeaponAscend(WeaponAscendSaveRequest request) {
+    public WeaponAscendDto saveWeaponAscend(@NotNull WeaponAscendSaveRequest request) {
         Weapon weapon = weaponRepository.findById(request.weaponId())
                 .orElseThrow(() -> new TeybatBadRequestException("무기가 존재하지 않습니다."));
         Resources resources = resourcesRepository.findById(request.resourceId())

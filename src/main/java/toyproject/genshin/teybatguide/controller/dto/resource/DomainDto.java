@@ -1,16 +1,14 @@
 package toyproject.genshin.teybatguide.controller.dto.resource;
 
-import lombok.Builder;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import toyproject.genshin.teybatguide.domain.Domain;
 
-@Builder
-public record DomainDto(String id, String name) {
+public record DomainDto(String id, String name, String countryName) {
 
-    public static DomainDto of(Domain domain) {
-        return DomainDto.builder()
-                .id(domain.getId())
-                .name(domain.getDomainName())
-                .build();
+    @Contract("_ -> new")
+    public static @NotNull DomainDto of(@NotNull Domain domain) {
+        return new DomainDto(domain.getId(), domain.getDomainName(), domain.getCountry().getCountryName());
     }
 
 }

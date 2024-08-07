@@ -1,16 +1,19 @@
 package toyproject.genshin.teybatguide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesResponse;
-import toyproject.genshin.teybatguide.controller.dto.main.*;
+import toyproject.genshin.teybatguide.controller.dto.banner.response.CharacterResourcesResponse;
+import toyproject.genshin.teybatguide.controller.dto.banner.*;
+import toyproject.genshin.teybatguide.controller.dto.banner.request.CharacterBannerSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.banner.request.WeaponBannerSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.banner.response.CharacterBannerResponse;
+import toyproject.genshin.teybatguide.controller.dto.banner.response.WeaponBannerResponse;
 import toyproject.genshin.teybatguide.domain.*;
 import toyproject.genshin.teybatguide.domain.value.BannerType;
 import toyproject.genshin.teybatguide.exception.TeybatBadRequestException;
 import toyproject.genshin.teybatguide.exception.TeybatDataAccessException;
-import toyproject.genshin.teybatguide.exception.TeybatException;
-import toyproject.genshin.teybatguide.exception.TeybatNotFoundException;
 import toyproject.genshin.teybatguide.repository.*;
 
 import java.time.LocalDateTime;
@@ -52,15 +55,15 @@ public class BannerService {
                 .toList();
     }
 
-    public List<MainCharacterResourcesResponse> searchBannerCharacterResources() {
+    public List<CharacterResourcesResponse> searchBannerCharacterResources() {
         List<Characters> characters = characterBannerRepository.findCharactersByDateTimeBetween(LocalDateTime.now());
         return characterAscendRepository.findByCharacters(characters).entrySet().stream()
-                .map(entry -> MainCharacterResourcesResponse.of(entry.getKey(), entry.getValue()))
+                .map(entry -> CharacterResourcesResponse.of(entry.getKey(), entry.getValue()))
                 .toList();
     }
 
     @Transactional
-    public CharacterBannerDto saveCharacterBanner(CharacterBannerSaveRequest request) {
+    public CharacterBannerDto saveCharacterBanner(@NotNull CharacterBannerSaveRequest request) {
         Characters characters = characterBannerRepository.findCharactersById(request.characterId())
                 .orElseThrow(() -> new TeybatBadRequestException("캐릭터가 존재하지 않습니다."));
 
@@ -74,7 +77,7 @@ public class BannerService {
     }
 
     @Transactional
-    public WeaponBannerDto saveWeaponBanner(WeaponBannerSaveRequest request) {
+    public WeaponBannerDto saveWeaponBanner(@NotNull WeaponBannerSaveRequest request) {
         Weapon weapon = weaponBannerRepository.findWeaponById(request.weaponId())
                 .orElseThrow(() -> new TeybatBadRequestException("무기가 존재하지 않습니다."));
 

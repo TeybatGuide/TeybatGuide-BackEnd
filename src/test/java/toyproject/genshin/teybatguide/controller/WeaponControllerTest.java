@@ -12,8 +12,8 @@ import toyproject.genshin.teybatguide.common.RequestConverter;
 import toyproject.genshin.teybatguide.common.restDocs.AbstractRestDocsTests;
 import toyproject.genshin.teybatguide.common.restDocs.Field;
 import toyproject.genshin.teybatguide.common.restDocs.RestDocsUtil;
-import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListRequest;
-import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListResponse;
+import toyproject.genshin.teybatguide.controller.dto.weapons.request.WeaponListRequest;
+import toyproject.genshin.teybatguide.controller.dto.weapons.response.WeaponListResponse;
 import toyproject.genshin.teybatguide.domain.Weapon;
 import toyproject.genshin.teybatguide.domain.value.Stars;
 import toyproject.genshin.teybatguide.domain.value.WeaponOptions;
@@ -30,7 +30,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.web.servlet.mvc.method.annotation.SseEmitter.event;
 import static toyproject.genshin.teybatguide.common.data.Types.*;
 
 @Slf4j

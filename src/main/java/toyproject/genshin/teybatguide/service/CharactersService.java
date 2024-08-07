@@ -1,11 +1,18 @@
 package toyproject.genshin.teybatguide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toyproject.genshin.teybatguide.controller.dto.characters.*;
+import toyproject.genshin.teybatguide.controller.dto.characters.request.CharacterListRequest;
+import toyproject.genshin.teybatguide.controller.dto.characters.request.CharacterWeaponSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.characters.response.CharacterDetailsResponse;
+import toyproject.genshin.teybatguide.controller.dto.characters.response.CharacterListResponse;
+import toyproject.genshin.teybatguide.controller.dto.characters.response.CharacterWeaponResponse;
 import toyproject.genshin.teybatguide.domain.CharacterWeapon;
 import toyproject.genshin.teybatguide.domain.Characters;
 import toyproject.genshin.teybatguide.domain.Weapon;
@@ -26,7 +33,7 @@ public class CharactersService {
 
     private final CharactersRepository charactersRepository;
     private final CharacterSpecificationsRepository specificationsRepository;
-        private final CharacterWeaponRepository characterWeaponRepository;
+    private final CharacterWeaponRepository characterWeaponRepository;
     private final WeaponRepository weaponRepository;
 
     public Page<CharacterListResponse> findAndCreateCharacterList(CharacterListRequest request, Pageable pageable) {
@@ -70,11 +77,11 @@ public class CharactersService {
         return CharacterWeaponResponse.of(characterWeaponListDtos, getVersion(characterList));
     }
 
-    private boolean isPresentCharacterList(List<CharacterWeapon> characterWeapons) {
+    private boolean isPresentCharacterList(@NotNull List<CharacterWeapon> characterWeapons) {
         return !characterWeapons.isEmpty();
     }
 
-    private String getVersion(List<CharacterWeapon> characterWeapons) {
+    private @Nullable String getVersion(List<CharacterWeapon> characterWeapons) {
         if (isPresentCharacterList(characterWeapons)) {
             return characterWeapons.get(0).getVersion();
         }
@@ -82,7 +89,7 @@ public class CharactersService {
     }
 
     @Transactional
-    public CharacterWeaponDto save(CharacterWeaponSaveRequest request) {
+    public CharacterWeaponDto save(@NotNull CharacterWeaponSaveRequest request) {
         Characters character = charactersRepository.findById(request.characterId())
                 .orElseThrow(() -> new TeybatBadRequestException("캐릭터가 존재하지 않습니다."));
         Weapon weapon = weaponRepository.findById(request.weaponId())

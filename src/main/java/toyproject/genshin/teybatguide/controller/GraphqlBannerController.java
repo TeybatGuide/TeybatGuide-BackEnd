@@ -3,10 +3,10 @@ package toyproject.genshin.teybatguide.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import toyproject.genshin.teybatguide.controller.dto.MainCharacterResourcesResponse;
-import toyproject.genshin.teybatguide.controller.dto.main.BannerEventsDto;
-import toyproject.genshin.teybatguide.controller.dto.main.CharacterBannerResponse;
-import toyproject.genshin.teybatguide.controller.dto.main.WeaponBannerResponse;
+import toyproject.genshin.teybatguide.controller.dto.banner.response.CharacterResourcesResponse;
+import toyproject.genshin.teybatguide.controller.dto.banner.BannerEventsDto;
+import toyproject.genshin.teybatguide.controller.dto.banner.response.CharacterBannerResponse;
+import toyproject.genshin.teybatguide.controller.dto.banner.response.WeaponBannerResponse;
 import toyproject.genshin.teybatguide.domain.value.BannerType;
 import toyproject.genshin.teybatguide.service.BannerService;
 
@@ -34,7 +34,7 @@ public class GraphqlBannerController {
     }
 
     @QueryMapping
-    public List<MainCharacterResourcesResponse> getResourcesForBannerCharacter() {
+    public List<CharacterResourcesResponse> getResourcesForBannerCharacter() {
         return bannerService.searchBannerCharacterResources();
     }
 

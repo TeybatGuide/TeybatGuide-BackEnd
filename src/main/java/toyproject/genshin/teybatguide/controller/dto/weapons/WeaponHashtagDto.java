@@ -1,13 +1,20 @@
 package toyproject.genshin.teybatguide.controller.dto.weapons;
 
 import lombok.Builder;
+import org.jetbrains.annotations.NotNull;
 import toyproject.genshin.teybatguide.domain.Weapon;
 import toyproject.genshin.teybatguide.domain.value.SignatureWeapon;
 
 @Builder
-public record WeaponHashtagDto(String weaponOption, String weaponType, String characterName, String weaponSource, String weaponSourceExplanation) {
+public record WeaponHashtagDto(
+        String weaponOption,
+        String weaponType,
+        String characterName,
+        String weaponSource,
+        String weaponSourceExplanation
+) {
 
-    public static WeaponHashtagDto of(Weapon weapon) {
+    public static WeaponHashtagDto of(@NotNull Weapon weapon) {
         String characterName = weapon.getCharacterWeapons().stream()
                 .filter(characterWeapon -> characterWeapon.getSignatureWeapon().equals(SignatureWeapon.TRUE))
                 .findFirst()

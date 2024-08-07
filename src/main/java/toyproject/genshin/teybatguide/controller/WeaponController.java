@@ -6,10 +6,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import toyproject.genshin.teybatguide.base.ResponseData;
-import toyproject.genshin.teybatguide.controller.dto.characters.CharacterListResponse;
+import toyproject.genshin.teybatguide.controller.dto.characters.response.CharacterListResponse;
 import toyproject.genshin.teybatguide.controller.dto.weapons.*;
 import toyproject.genshin.teybatguide.base.dto.PageDto;
 import toyproject.genshin.teybatguide.base.PageResponseData;
+import toyproject.genshin.teybatguide.controller.dto.weapons.request.WeaponAscendSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.weapons.request.WeaponListRequest;
+import toyproject.genshin.teybatguide.controller.dto.weapons.response.WeaponAscendListResponse;
+import toyproject.genshin.teybatguide.controller.dto.weapons.response.WeaponDetailsResponse;
+import toyproject.genshin.teybatguide.controller.dto.weapons.response.WeaponListResponse;
 import toyproject.genshin.teybatguide.service.WeaponService;
 
 import java.util.List;

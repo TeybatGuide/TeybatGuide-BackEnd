@@ -1,4 +1,4 @@
-package toyproject.genshin.teybatguide.controller.dto.characters;
+package toyproject.genshin.teybatguide.controller.dto.characters.request;
 
 import toyproject.genshin.teybatguide.domain.value.Country;
 import toyproject.genshin.teybatguide.domain.value.Element;

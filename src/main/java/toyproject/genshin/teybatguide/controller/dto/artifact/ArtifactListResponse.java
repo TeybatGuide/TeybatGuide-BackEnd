@@ -1,26 +1,29 @@
 package toyproject.genshin.teybatguide.controller.dto.artifact;
 
-import lombok.Builder;
-import toyproject.genshin.teybatguide.controller.dto.characters.CharacterListResponse;
+import org.jetbrains.annotations.NotNull;
+import toyproject.genshin.teybatguide.controller.dto.characters.response.CharacterListResponse;
 import toyproject.genshin.teybatguide.domain.Artifact;
 import toyproject.genshin.teybatguide.domain.value.ArtifactOptions;
 
 import java.util.List;
 
-@Builder
-public record ArtifactListResponse(String id, String artifactName, String imageUrls, List<String> artifactOptions, List<CharacterListResponse> characters) {
+public record ArtifactListResponse(
+        String id, String artifactName, String imageUrls,
+        List<String> artifactOptions, List<CharacterListResponse> characters
+) {
 
-    public static ArtifactListResponse of(Artifact artifact) {
+    /*
+        todo
+            CharacterListResponse 로직 추가
+     */
+
+    public static @NotNull ArtifactListResponse of(@NotNull Artifact artifact) {
         List<String> options = artifact.getArtifactOptions().stream()
                 .map(ArtifactOptions::getOptionsName)
                 .toList();
-
-        return ArtifactListResponse.builder()
-                .id(artifact.getId())
-                .artifactName(artifact.getArtifactName())
-                .imageUrls(artifact.getArtifactImage())
-                .artifactOptions(options)
-                .build();
+        return new ArtifactListResponse(
+                artifact.getId(), artifact.getArtifactName(), artifact.getArtifactImage(), options, null
+        );
     }
 
 }

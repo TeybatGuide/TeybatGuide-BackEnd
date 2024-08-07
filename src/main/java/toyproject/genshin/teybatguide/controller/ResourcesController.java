@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import toyproject.genshin.teybatguide.base.ResponseData;
 import toyproject.genshin.teybatguide.base.dto.PageDto;
 import toyproject.genshin.teybatguide.base.PageResponseData;
-import toyproject.genshin.teybatguide.controller.dto.main.MainResourcesResponse;
+import toyproject.genshin.teybatguide.controller.dto.banner.response.ResourcesResponse;
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceListRequest;
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceListResponse;
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceSaveRequest;
@@ -39,7 +39,7 @@ public class ResourcesController {
     }
 
     @QueryMapping
-    public MainResourcesResponse getResourcesToday(
+    public ResourcesResponse getResourcesToday(
             @Argument String materials,
             @Argument int limit,
             @Argument int offset,

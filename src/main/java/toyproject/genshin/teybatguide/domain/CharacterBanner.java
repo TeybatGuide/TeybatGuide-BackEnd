@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import toyproject.genshin.teybatguide.base.BaseEntity;
-import toyproject.genshin.teybatguide.controller.dto.main.CharacterBannerSaveRequest;
+import toyproject.genshin.teybatguide.controller.dto.banner.request.CharacterBannerSaveRequest;
 import toyproject.genshin.teybatguide.domain.value.BannerType;
 import toyproject.genshin.teybatguide.domain.value.Domain;
 
