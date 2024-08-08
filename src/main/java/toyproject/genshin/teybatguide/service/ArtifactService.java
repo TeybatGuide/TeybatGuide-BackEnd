@@ -1,6 +1,7 @@
 package toyproject.genshin.teybatguide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,9 @@ import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactListRespon
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactSaveRequest;
 import toyproject.genshin.teybatguide.domain.Artifact;
 import toyproject.genshin.teybatguide.domain.Domain;
-import toyproject.genshin.teybatguide.exception.TeybatException;
+import toyproject.genshin.teybatguide.exception.TeybatBadRequestException;
+import toyproject.genshin.teybatguide.exception.TeybatDataAccessException;
+import toyproject.genshin.teybatguide.exception.TeybatNotFoundException;
 import toyproject.genshin.teybatguide.repository.ArtifactRepository;
 import toyproject.genshin.teybatguide.repository.DomainRepository;
 
@@ -27,14 +30,23 @@ public class ArtifactService {
                 .map(ArtifactListResponse::of);
     }
 
+    /*
+        todo
+            CharacterListResponse 구현로직 추가
+     */
     @Transactional
-    public String saveArtifact(ArtifactSaveRequest request) {
+    public ArtifactListResponse saveArtifact(@NotNull ArtifactSaveRequest request) {
         Domain domain = domainRepository.findById(request.domain())
-                .orElseThrow(() -> new TeybatException("비경 id가 존재하지 않습니다."));
+                .orElseThrow(() -> new TeybatBadRequestException("비경이 존재하지 않습니다."));
+
         Artifact entity = Artifact.of(request, domain);
         entity.setArtifactImage("/"+ entity.getId().replace("_", "/") + ".webp");
         artifactRepository.save(entity);
-        return "good";
+
+        Artifact artifact = artifactRepository.findById(entity.getId())
+                .orElseThrow(() -> new TeybatDataAccessException("성유물 저장에 실패하였습니다."));
+
+        return ArtifactListResponse.of(artifact);
     }
 
 }

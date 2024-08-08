@@ -18,4 +18,8 @@ public enum Materials {
 
     private final String resourceByName;
 
+    public static Materials of(final String name) {
+        return Materials.valueOf(name.toUpperCase());
+    }
+
 }

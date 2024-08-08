@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import toyproject.genshin.teybatguide.base.ResponseData;
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactListRequest;
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactListResponse;
 import toyproject.genshin.teybatguide.controller.dto.artifact.ArtifactSaveRequest;
-import toyproject.genshin.teybatguide.controller.dto.base.PageDto;
-import toyproject.genshin.teybatguide.controller.dto.base.PageResponseData;
+import toyproject.genshin.teybatguide.base.dto.PageDto;
+import toyproject.genshin.teybatguide.base.PageResponseData;
 import toyproject.genshin.teybatguide.service.ArtifactService;
 
 import java.util.List;
@@ -34,8 +35,8 @@ public class ArtifactController {
     }
 
     @PostMapping("/save")
-    public String saveArtifact(@RequestBody ArtifactSaveRequest request) {
-        return artifactService.saveArtifact(request);
+    public ResponseData<ArtifactListResponse> saveArtifact(@RequestBody ArtifactSaveRequest request) {
+        return ResponseData.of(artifactService.saveArtifact(request));
     }
 
 }

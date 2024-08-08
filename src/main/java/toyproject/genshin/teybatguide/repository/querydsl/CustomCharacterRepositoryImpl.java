@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
-import toyproject.genshin.teybatguide.controller.dto.characters.CharacterListRequest;
+import toyproject.genshin.teybatguide.controller.dto.characters.request.CharacterListRequest;
 import toyproject.genshin.teybatguide.domain.Characters;
 import toyproject.genshin.teybatguide.domain.value.Country;
 import toyproject.genshin.teybatguide.domain.value.Element;

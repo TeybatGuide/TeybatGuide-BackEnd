@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
-import toyproject.genshin.teybatguide.controller.dto.weapons.WeaponListRequest;
+import toyproject.genshin.teybatguide.controller.dto.weapons.request.WeaponListRequest;
 import toyproject.genshin.teybatguide.domain.Weapon;
 import toyproject.genshin.teybatguide.domain.value.Stars;
 import toyproject.genshin.teybatguide.domain.value.WeaponOptions;

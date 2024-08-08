@@ -1,16 +1,14 @@
 package toyproject.genshin.teybatguide.controller.dto.weapons;
 
-import lombok.Builder;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import toyproject.genshin.teybatguide.domain.Weapon;
 
-@Builder
 public record WeaponEffectDto(String weaponEffectName, String weaponEffectExplain) {
 
-    public static WeaponEffectDto of(Weapon weapon) {
-        return WeaponEffectDto.builder()
-                .weaponEffectName(weapon.getWeaponEffect())
-                .weaponEffectExplain(weapon.getWeaponEffectExplanation())
-                .build();
+    @Contract("_ -> new")
+    public static @NotNull WeaponEffectDto of(@NotNull Weapon weapon) {
+        return new WeaponEffectDto(weapon.getWeaponEffect(), weapon.getWeaponEffectExplanation());
     }
 
 }

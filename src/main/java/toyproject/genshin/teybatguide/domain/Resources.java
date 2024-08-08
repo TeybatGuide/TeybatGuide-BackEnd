@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import toyproject.genshin.teybatguide.base.BaseEntity;
 import toyproject.genshin.teybatguide.controller.dto.resource.ResourceSaveRequest;
 import toyproject.genshin.teybatguide.domain.value.*;
 

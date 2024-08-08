@@ -1,0 +1,70 @@
+scalar DateTime
+
+# 필수 필드: ! -> null이면 안됨, 클라이언트가 요청하지 않을 시 서버는 오류 반환
+
+type Query {
+    characterBanner: CharacterBanner
+    weaponBanner: WeaponBanner
+    events: [Event]
+    resourcesTodayByMaterials(
+        materials: String!, limit: Int!, offset: Int!, sortAttribute: String, sortDirection: String
+    ): Resources
+    resourcesForBannerCharacters: ResourcesForBanners
+}
+
+type CharacterBanner {
+    startDate: DateTime
+    endDate: DateTime
+    bannerType: String
+    characters: [Entity]
+}
+
+type WeaponBanner {
+    startDate: DateTime
+    endDate: DateTime
+    bannerType: String
+    weapons: [Entity]
+}
+
+type Event {
+    eventName: String
+    startDate: DateTime
+    endDate: DateTime
+}
+
+type Resources {
+    criterion: String
+    resources: [MainResourcesListDto]
+}
+
+type MainResourcesListDto {
+    id: String!
+    name: String!
+    imageUrls: String
+    star: String!
+}
+
+type ResourcesForBanners {
+    characterId: String!
+    responses: [ResourceListRes]
+}
+
+type ResourceListRes {
+    resourceId: String!
+    resourceName: String!
+    imageUrls: String
+    star: String
+    domain: Domain!
+}
+
+type Entity {
+    id: String!
+    name: String!
+    image: String
+}
+
+type Domain {
+    id: String!
+    name: String!
+    countryName: String!
+}
