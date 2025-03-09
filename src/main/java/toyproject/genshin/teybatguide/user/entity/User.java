@@ -6,7 +6,7 @@ import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import toyproject.genshin.teybatguide.base.BaseEntity;
-import toyproject.genshin.teybatguide.controller.dto.oauth.KakaoProfile;
+import toyproject.genshin.teybatguide.oauth.controller.dto.KakaoProfile;
 import toyproject.genshin.teybatguide.base.value.Domain;
 import toyproject.genshin.teybatguide.user.entity.value.Role;
 

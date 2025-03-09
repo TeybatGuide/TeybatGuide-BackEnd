@@ -1,4 +1,4 @@
-package toyproject.genshin.teybatguide.controller.dto.oauth;
+package toyproject.genshin.teybatguide.oauth.controller.dto;
 
 import lombok.Builder;
 import lombok.Getter;
