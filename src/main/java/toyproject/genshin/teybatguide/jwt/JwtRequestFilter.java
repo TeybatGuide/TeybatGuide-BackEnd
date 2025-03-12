@@ -16,21 +16,23 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
+    private final JwtProperties jwtProperties;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String jwtHeader = request.getHeader(JwtProperties.HEADER_STRING);
+        String jwtHeader = request.getHeader(jwtProperties.getHeaderString());
 
-        if(jwtHeader == null || !jwtHeader.startsWith(JwtProperties.TOKEN_PREFIX)) {
+        if (jwtHeader == null || !jwtHeader.startsWith(jwtProperties.getTokenPrefix())) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String token = jwtHeader.replace(JwtProperties.TOKEN_PREFIX, "");
+        String token = jwtHeader.replace(jwtProperties.getTokenPrefix(), "");
 
         String id = Jwts.parser()
-                .setSigningKey("id")
-                .parseClaimsJws(token)
-                .getSignature();
+            .setSigningKey("id")
+            .parseClaimsJws(token)
+            .getSignature();
 
         request.setAttribute("id", id);
         filterChain.doFilter(request, response);

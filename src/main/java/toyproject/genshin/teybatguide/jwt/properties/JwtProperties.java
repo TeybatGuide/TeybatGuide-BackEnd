@@ -1,10 +1,19 @@
 package toyproject.genshin.teybatguide.jwt.properties;
 
-public interface JwtProperties {
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
-    String SECRET = "{}";
-    int EXPIRATION_TIME =  864000000;
-    String TOKEN_PREFIX = "Bearer ";
-    String HEADER_STRING = "Authorization";
+@Getter
+@Setter
+@Configuration
+@ConfigurationProperties(prefix = "jwt")
+public class JwtProperties {
+
+    private String secret;
+    private int expirationTime;
+    private String tokenPrefix;
+    private String headerString;
 
 }

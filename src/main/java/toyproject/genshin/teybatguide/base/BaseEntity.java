@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
-import toyproject.genshin.teybatguide.domain.value.Domain;
+import toyproject.genshin.teybatguide.base.value.Domain;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Getter
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public abstract class BaseEntity implements Serializable {
 
     @Id
     @Column(name = "id", updatable = false, unique = true, nullable = false, length = 50)

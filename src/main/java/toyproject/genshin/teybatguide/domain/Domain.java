@@ -3,12 +3,13 @@ package toyproject.genshin.teybatguide.domain;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import toyproject.genshin.teybatguide.artifact.entity.Artifact;
 import toyproject.genshin.teybatguide.base.BaseEntity;
-import toyproject.genshin.teybatguide.domain.value.Country;
+import toyproject.genshin.teybatguide.base.value.Country;
 
 import java.util.List;
 
-import static toyproject.genshin.teybatguide.domain.value.Domain.DOMAIN;
+import static toyproject.genshin.teybatguide.base.value.Domain.DOMAIN;
 
 @Getter
 @Entity

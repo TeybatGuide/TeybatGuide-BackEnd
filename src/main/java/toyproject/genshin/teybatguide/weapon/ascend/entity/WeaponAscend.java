@@ -1,0 +1,47 @@
+package toyproject.genshin.teybatguide.weapon.ascend.entity;
+
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import toyproject.genshin.teybatguide.base.BaseEntity;
+import toyproject.genshin.teybatguide.resource.entity.Resources;
+import toyproject.genshin.teybatguide.weapon.controller.dto.request.WeaponAscendSaveRequest;
+import toyproject.genshin.teybatguide.base.value.Domain;
+import toyproject.genshin.teybatguide.weapon.entity.Weapon;
+
+@Entity
+@Getter
+@Table(name = "weapon_ascend")
+public class WeaponAscend extends BaseEntity {
+
+    @ManyToOne
+    @JoinColumn(name = "weapon_id", referencedColumnName = "id")
+    private Weapon weapon;
+
+    @ManyToOne
+    @JoinColumn(name = "resources_id", referencedColumnName = "id")
+    private Resources resources;
+
+    @Column(nullable = false)
+    private int weaponAscendCount;
+
+    protected WeaponAscend() {
+        super(Domain.WEAPON_ASCEND);
+    }
+
+    @Builder
+    public WeaponAscend(Weapon weapon, Resources resources, int weaponAscendCount) {
+        this();
+        this.weapon = weapon;
+        this.resources = resources;
+        this.weaponAscendCount = weaponAscendCount;
+    }
+
+    public static WeaponAscend of(WeaponAscendSaveRequest request, Weapon weapon, Resources resources) {
+        return WeaponAscend.builder()
+                .weapon(weapon)
+                .resources(resources)
+                .weaponAscendCount(request.count())
+                .build();
+    }
+}
