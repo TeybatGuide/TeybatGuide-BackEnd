@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <!-- 환경변수 설정 -->
+    <property name="LOG_DIR" value="${user.home}/logs"/>
+    <property name="CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-3level] %logger{5} - %msg %n"/>
+    <property name="ROLLING_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %logger{5} - %msg %n"/>
+    <property name="FILE_NAME" value="${LOG_DIR}/application.log"/>
+    <property name="LOG_NAME_PATTERN" value="${LOG_DIR}/application-%d{yyyy-MM-dd-HH-mm}.%i.log"/>
+    <property name="MAX_FILE_SIZE" value="10MB"/>
+    <property name="TOTAL_SIZE" value="500MB"/>
+    <property name="MAX_HISTORY" value="7"/>
+
+    <!-- 콘솔 출력 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${CONSOLE_PATTERN}</Pattern>
+        </encoder>
+    </appender>
+
+    <!-- 파일 로그 (Rolling) -->
+    <appender name="ROLLING_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${ROLLING_PATTERN}</pattern>
+        </encoder>
+        <file>${FILE_NAME}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_NAME_PATTERN}</fileNamePattern>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            <totalSizeCap>${TOTAL_SIZE}</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 로그 레벨 설정 -->
+    <logger name="jdbc" level="OFF" additive="false"/>
+    <logger name="jdbc.sqlonly" level="DEBUG" additive="false"/>
+    <logger name="jdbc.sqltiming" level="DEBUG" additive="false"/>
+    <logger name="org.hibernate.SQL" level="INFO" additive="false"/>
+    <logger name="toyproject.genshin.teybatguide" level="DEBUG" additive="false"/>
+
+    <!-- 기본 로그 설정 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ROLLING_LOG_FILE"/>
+    </root>
+</configuration>
