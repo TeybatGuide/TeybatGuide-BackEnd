@@ -9,7 +9,7 @@ import toyproject.genshin.teybatguide.banner.event.entity.Event;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static toyproject.genshin.teybatguide.domain.QEvent.event;
+import static toyproject.genshin.teybatguide.banner.event.entity.QEvent.event;
 
 @RequiredArgsConstructor
 public class CustomEventRepositoryImpl implements CustomEventRepository {
@@ -19,9 +19,9 @@ public class CustomEventRepositoryImpl implements CustomEventRepository {
     @Override
     public List<Event> findByDate(LocalDateTime dateTime) {
         return jpaQueryFactory
-                .selectFrom(event)
-                .where(betweenDate(dateTime))
-                .fetch();
+            .selectFrom(event)
+            .where(betweenDate(dateTime))
+            .fetch();
     }
 
     private BooleanExpression betweenDate(LocalDateTime localDateTime) {

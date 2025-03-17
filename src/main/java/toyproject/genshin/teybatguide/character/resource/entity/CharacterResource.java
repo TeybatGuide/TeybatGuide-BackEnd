@@ -27,7 +27,6 @@ public abstract class CharacterResource extends BaseEntity {
         super(domain);
     }
 
-    @Builder
     public CharacterResource(Domain domain, Characters characters, int resourceCount) {
         this(domain);
         this.characters = characters;

@@ -8,16 +8,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import toyproject.genshin.teybatguide.base.value.Country;
+import toyproject.genshin.teybatguide.base.value.Stars;
 import toyproject.genshin.teybatguide.resource.controller.dto.ResourceListRequest;
 import toyproject.genshin.teybatguide.resource.entity.Resources;
-import toyproject.genshin.teybatguide.base.value.Country;
 import toyproject.genshin.teybatguide.resource.entity.value.DayOfWeek;
 import toyproject.genshin.teybatguide.resource.entity.value.Materials;
-import toyproject.genshin.teybatguide.base.value.Stars;
 
 import java.util.List;
 
-import static toyproject.genshin.teybatguide.domain.QResources.resources;
+import static toyproject.genshin.teybatguide.resource.entity.QResources.resources;
 
 @RequiredArgsConstructor
 public class CustomResourcesRepositoryImpl implements CustomResourcesRepository {
@@ -28,31 +28,31 @@ public class CustomResourcesRepositoryImpl implements CustomResourcesRepository 
     public Page<Resources> findByDayOfWeekForMain(DayOfWeek dayOfWeek, Pageable pageable) {
 
         List<Resources> resourcesList = jpaQueryFactory
-                .selectFrom(resources)
-                .where(
-                        eqDayOfWeek(dayOfWeek),
-                        eqStarsAndMaterials()
-                )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+            .selectFrom(resources)
+            .where(
+                eqDayOfWeek(dayOfWeek),
+                eqStarsAndMaterials()
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
 
         return PageableExecutionUtils.getPage(resourcesList, pageable, getCount(dayOfWeek)::fetchOne);
     }
 
     @Override
     public Page<Resources> findByDayOfWeekAndMaterialForMain(
-            DayOfWeek dayOfWeek, Materials materials, Pageable pageable
+        DayOfWeek dayOfWeek, Materials materials, Pageable pageable
     ) {
         List<Resources> resourcesList = jpaQueryFactory
-                .selectFrom(resources)
-                .where(
-                        eqDayOfWeek(dayOfWeek),
-                        eqMaterialsDivideByStar(materials)
-                )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+            .selectFrom(resources)
+            .where(
+                eqDayOfWeek(dayOfWeek),
+                eqMaterialsDivideByStar(materials)
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
 
         return PageableExecutionUtils.getPage(resourcesList, pageable, getCount(dayOfWeek)::fetchOne);
     }
@@ -61,38 +61,38 @@ public class CustomResourcesRepositoryImpl implements CustomResourcesRepository 
     public Page<Resources> findByCountryAndDayOfWeekAndMaterial(ResourceListRequest request, Pageable pageable) {
 
         List<Resources> resourcesList = jpaQueryFactory
-                .selectFrom(resources)
-                .where(
-                        inCountry(request.countries()),
-                        inDayOfWeek(request.dayOfWeek()),
-                        inMaterials(request.materials())
-                )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+            .selectFrom(resources)
+            .where(
+                inCountry(request.countries()),
+                inDayOfWeek(request.dayOfWeek()),
+                inMaterials(request.materials())
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
 
         return PageableExecutionUtils.getPage(resourcesList, pageable, getCount(request)::fetchOne);
     }
 
     private JPAQuery<Long> getCount(DayOfWeek dayOfWeek) {
         return jpaQueryFactory
-                .select(resources.count())
-                .from(resources)
-                .where(
-                        eqDayOfWeek(dayOfWeek),
-                        eqStarsAndMaterials()
-                );
+            .select(resources.count())
+            .from(resources)
+            .where(
+                eqDayOfWeek(dayOfWeek),
+                eqStarsAndMaterials()
+            );
     }
 
     private JPAQuery<Long> getCount(ResourceListRequest request) {
         return jpaQueryFactory
-                .select(resources.count())
-                .from(resources)
-                .where(
-                        inCountry(request.countries()),
-                        inDayOfWeek(request.dayOfWeek()),
-                        inMaterials(request.materials())
-                );
+            .select(resources.count())
+            .from(resources)
+            .where(
+                inCountry(request.countries()),
+                inDayOfWeek(request.dayOfWeek()),
+                inMaterials(request.materials())
+            );
     }
 
     private BooleanExpression eqStarsAndMaterials() {

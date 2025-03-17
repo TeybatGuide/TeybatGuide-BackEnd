@@ -12,6 +12,7 @@ import toyproject.genshin.teybatguide.common.RequestConverter;
 import toyproject.genshin.teybatguide.common.restDocs.AbstractRestDocsTests;
 import toyproject.genshin.teybatguide.common.restDocs.Field;
 import toyproject.genshin.teybatguide.common.restDocs.RestDocsUtil;
+import toyproject.genshin.teybatguide.jwt.properties.JwtProperties;
 import toyproject.genshin.teybatguide.weapon.controller.dto.request.WeaponListRequest;
 import toyproject.genshin.teybatguide.weapon.controller.dto.response.WeaponListResponse;
 import toyproject.genshin.teybatguide.weapon.entity.Weapon;
@@ -40,6 +41,8 @@ public class WeaponControllerTest extends AbstractRestDocsTests {
 
     @MockBean
     private WeaponService weaponService;
+    @MockBean
+    private JwtProperties jwtProperties;
 
     @Test
     public void getWeaponListTest() throws Exception {

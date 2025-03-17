@@ -6,8 +6,8 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import toyproject.genshin.teybatguide.banner.character.entity.CharacterBanner;
-import toyproject.genshin.teybatguide.character.entity.Characters;
 import toyproject.genshin.teybatguide.banner.value.BannerType;
+import toyproject.genshin.teybatguide.character.entity.Characters;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,8 +15,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.querydsl.core.group.GroupBy.list;
-import static toyproject.genshin.teybatguide.domain.QCharacterBanner.characterBanner;
-import static toyproject.genshin.teybatguide.domain.QCharacters.characters;
+import static toyproject.genshin.teybatguide.banner.character.entity.QCharacterBanner.characterBanner;
+import static toyproject.genshin.teybatguide.character.entity.QCharacters.characters;
 
 @RequiredArgsConstructor
 public class CustomCharacterBannerRepositoryImpl implements CustomCharacterBannerRepository {
@@ -26,42 +26,42 @@ public class CustomCharacterBannerRepositoryImpl implements CustomCharacterBanne
     @Override
     public Map<BannerType, List<CharacterBanner>> findByDateTimeBetweenGroupBy(LocalDateTime localDateTime) {
         return jpaQueryFactory
-                .from(characterBanner)
-                .where(betweenDate(localDateTime))
-                .transform(GroupBy
-                        .groupBy(characterBanner.bannerType)
-                        .as(list(characterBanner))
-                );
+            .from(characterBanner)
+            .where(betweenDate(localDateTime))
+            .transform(GroupBy
+                .groupBy(characterBanner.bannerType)
+                .as(list(characterBanner))
+            );
     }
 
     @Override
     public List<CharacterBanner> findByDateTimeBetween(LocalDateTime localDateTime, BannerType bannerType) {
         return jpaQueryFactory
-                .selectFrom(characterBanner)
-                .where(
-                        betweenDate(localDateTime),
-                        eqBannerType(bannerType)
-                )
-                .fetch();
+            .selectFrom(characterBanner)
+            .where(
+                betweenDate(localDateTime),
+                eqBannerType(bannerType)
+            )
+            .fetch();
 
     }
 
     @Override
     public List<Characters> findCharactersByDateTimeBetween(LocalDateTime localDateTime) {
         return jpaQueryFactory
-                .select(characterBanner.characters)
-                .from(characterBanner)
-                .where(betweenDate(localDateTime))
-                .fetch();
+            .select(characterBanner.characters)
+            .from(characterBanner)
+            .where(betweenDate(localDateTime))
+            .fetch();
     }
 
     @Override
     public Optional<Characters> findCharactersById(String id) {
         return Optional.ofNullable(
-                jpaQueryFactory
-                        .selectFrom(characters)
-                        .where(eqCharacterId(id))
-                        .fetchOne()
+            jpaQueryFactory
+                .selectFrom(characters)
+                .where(eqCharacterId(id))
+                .fetchOne()
         );
     }
 

@@ -16,7 +16,7 @@ import toyproject.genshin.teybatguide.weapon.entity.value.WeaponType;
 
 import java.util.List;
 
-import static toyproject.genshin.teybatguide.domain.QWeapon.weapon;
+import static toyproject.genshin.teybatguide.weapon.entity.QWeapon.weapon;
 
 @Slf4j
 @RequiredArgsConstructor
