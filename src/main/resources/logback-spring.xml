@@ -2,8 +2,8 @@
 <configuration>
     <!-- 환경변수 설정 -->
     <property name="LOG_DIR" value="${user.home}/logs"/>
-    <property name="CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-3level] %logger{5} - %msg %n"/>
-    <property name="ROLLING_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %logger{5} - %msg %n"/>
+    <property name="CONSOLE_PATTERN" value="[%X{request_id:-startup}] %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    <property name="ROLLING_PATTERN" value="[%X{request_id:-startup}] %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     <property name="FILE_NAME" value="${LOG_DIR}/application.log"/>
     <property name="LOG_NAME_PATTERN" value="${LOG_DIR}/application-%d{yyyy-MM-dd-HH-mm}.%i.log"/>
     <property name="MAX_FILE_SIZE" value="10MB"/>
