@@ -21,6 +21,7 @@ import toyproject.genshin.teybatguide.base.value.Country;
 import toyproject.genshin.teybatguide.character.entity.value.Element;
 import toyproject.genshin.teybatguide.base.value.Stars;
 import toyproject.genshin.teybatguide.character.service.CharactersService;
+import toyproject.genshin.teybatguide.jwt.properties.JwtProperties;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +43,8 @@ public class CharacterControllerTest extends AbstractRestDocsTests {
 
     @MockBean
     private CharactersService charactersService;
+    @MockBean
+    private JwtProperties jwtProperties;
 
     @Test
     @WithMockUser(username = "user", roles = {"GUEST"})

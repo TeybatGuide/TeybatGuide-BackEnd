@@ -1,6 +1,7 @@
 package toyproject.genshin.teybatguide.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,16 +13,20 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
-import toyproject.genshin.teybatguide.user.entity.value.Role;
 import toyproject.genshin.teybatguide.jwt.CustomAuthenticationEntryPoint;
 import toyproject.genshin.teybatguide.jwt.JwtRequestFilter;
+import toyproject.genshin.teybatguide.jwt.properties.JwtProperties;
+import toyproject.genshin.teybatguide.user.entity.value.Role;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableConfigurationProperties(JwtProperties.class)
 public class SecurityConfig {
 
     private final CorsFilter corsFilter;
+    private final JwtRequestFilter jwtRequestFilter;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     public static final String FRONT_URL = "http://localhost:3000";
 
     @Bean
@@ -32,30 +37,30 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement((sessionManagement) ->
-                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .httpBasic(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)
-                .addFilter(corsFilter);
+            .csrf(AbstractHttpConfigurer::disable)
+            .sessionManagement((sessionManagement) ->
+                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+            .httpBasic(AbstractHttpConfigurer::disable)
+            .formLogin(AbstractHttpConfigurer::disable)
+            .addFilter(corsFilter);
 
         http
-                .authorizeRequests((authz) -> authz
-                                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
-                                .requestMatchers(
-                                        new AntPathRequestMatcher("/bookmark/**"),
-                                        new AntPathRequestMatcher("/user/mypage/**")
-                                ).hasRole(Role.USER.name())
-                                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole(Role.ADMIN.name())
-                                .anyRequest().authenticated()
-                )
-                .exceptionHandling((exceptionConfig) ->
-                        exceptionConfig.authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                );
+            .authorizeRequests((authz) -> authz
+                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+                .requestMatchers(
+                    new AntPathRequestMatcher("/bookmark/**"),
+                    new AntPathRequestMatcher("/user/mypage/**")
+                ).hasRole(Role.USER.name())
+                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole(Role.ADMIN.name())
+                .anyRequest().authenticated()
+            )
+            .exceptionHandling((exceptionConfig) ->
+                exceptionConfig.authenticationEntryPoint(customAuthenticationEntryPoint)
+            );
 
         http
-                .addFilterBefore(new JwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

@@ -5,10 +5,7 @@ import org.springframework.graphql.data.GraphQlRepository;
 import toyproject.genshin.teybatguide.banner.event.entity.Event;
 import toyproject.genshin.teybatguide.banner.event.repository.querydsl.CustomEventRepository;
 
-//@Repository
 @GraphQlRepository
 public interface EventRepository extends JpaRepository<Event, String>, CustomEventRepository {
-
-    boolean exists(Event event);
 
 }

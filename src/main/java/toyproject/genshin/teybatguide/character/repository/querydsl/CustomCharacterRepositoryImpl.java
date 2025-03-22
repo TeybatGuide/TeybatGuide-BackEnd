@@ -7,16 +7,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import toyproject.genshin.teybatguide.base.value.Country;
+import toyproject.genshin.teybatguide.base.value.Stars;
 import toyproject.genshin.teybatguide.character.controller.dto.request.CharacterListRequest;
 import toyproject.genshin.teybatguide.character.entity.Characters;
-import toyproject.genshin.teybatguide.base.value.Country;
 import toyproject.genshin.teybatguide.character.entity.value.Element;
-import toyproject.genshin.teybatguide.base.value.Stars;
 import toyproject.genshin.teybatguide.weapon.entity.value.WeaponType;
 
 import java.util.List;
 
-import static toyproject.genshin.teybatguide.domain.QCharacters.characters;
+import static toyproject.genshin.teybatguide.character.entity.QCharacters.characters;
 
 @RequiredArgsConstructor
 public class CustomCharacterRepositoryImpl implements CustomCharacterRepository {
@@ -26,30 +26,30 @@ public class CustomCharacterRepositoryImpl implements CustomCharacterRepository 
     @Override
     public Page<Characters> findByStarsAndCountryAndElementAndWeaponType(CharacterListRequest request, Pageable pageable) {
         List<Characters> result = queryFactory
-                .selectFrom(characters)
-                .where(
-                        inElement(request.elements()),
-                        inCountry(request.countries()),
-                        inStars(request.stars()),
-                        inWeaponType(request.weaponTypes())
-                )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+            .selectFrom(characters)
+            .where(
+                inElement(request.elements()),
+                inCountry(request.countries()),
+                inStars(request.stars()),
+                inWeaponType(request.weaponTypes())
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
 
         return PageableExecutionUtils.getPage(result, pageable, getCount(request)::fetchOne);
     }
 
     private JPAQuery<Long> getCount(CharacterListRequest request) {
         return queryFactory
-                .select(characters.count())
-                .from(characters)
-                .where(
-                        inElement(request.elements()),
-                        inCountry(request.countries()),
-                        inStars(request.stars()),
-                        inWeaponType(request.weaponTypes())
-                );
+            .select(characters.count())
+            .from(characters)
+            .where(
+                inElement(request.elements()),
+                inCountry(request.countries()),
+                inStars(request.stars()),
+                inWeaponType(request.weaponTypes())
+            );
     }
 
     private BooleanExpression inElement(List<Element> elements) {

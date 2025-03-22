@@ -5,17 +5,17 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import toyproject.genshin.teybatguide.base.value.Stars;
 import toyproject.genshin.teybatguide.character.entity.Characters;
 import toyproject.genshin.teybatguide.resource.entity.Resources;
 import toyproject.genshin.teybatguide.resource.entity.value.Materials;
-import toyproject.genshin.teybatguide.base.value.Stars;
 
 import java.util.List;
 import java.util.Map;
 
 import static com.querydsl.core.group.GroupBy.list;
-import static toyproject.genshin.teybatguide.domain.QCharacterAscend.characterAscend;
-import static toyproject.genshin.teybatguide.domain.QResources.resources;
+import static toyproject.genshin.teybatguide.character.resource.entity.QCharacterAscend.characterAscend;
+import static toyproject.genshin.teybatguide.resource.entity.QResources.resources;
 
 @RequiredArgsConstructor
 public class CustomCharacterAscendRepositoryImpl implements CustomCharacterAscendRepository {
@@ -25,15 +25,15 @@ public class CustomCharacterAscendRepositoryImpl implements CustomCharacterAscen
     @Override
     public Map<Characters, List<Resources>> findByCharacters(List<Characters> characters) {
         return jpaQueryFactory
-                .from(characterAscend)
-                .where(
-                        inCharacters(characters),
-                        eqStarsAndMaterials()
-                )
-                .transform(GroupBy
-                        .groupBy(characterAscend.characters)
-                        .as(list(characterAscend.resources))
-                );
+            .from(characterAscend)
+            .where(
+                inCharacters(characters),
+                eqStarsAndMaterials()
+            )
+            .transform(GroupBy
+                .groupBy(characterAscend.characters)
+                .as(list(characterAscend.resources))
+            );
     }
 
     private BooleanExpression inCharacters(List<Characters> characters) {
@@ -44,8 +44,8 @@ public class CustomCharacterAscendRepositoryImpl implements CustomCharacterAscen
         BooleanExpression characterEnhancement = eqMaterials(Materials.CHARACTERS_ENHANCEMENT_MATERIAL);
         BooleanExpression characterTalent = eqMaterials(Materials.CHARACTERS_TALENT_MATERIAL);
         BooleanExpression characterWeaponEnhancement = eqMaterials(Materials.CHARACTERS_WEAPONS_ENHANCEMENT_MATERIAL)
-                .and(eqMaterialsDetailsOther())
-                .and(eqStar(Stars.THREE));
+            .and(eqMaterialsDetailsOther())
+            .and(eqStar(Stars.THREE));
 
         return Expressions.anyOf(characterTalent, characterWeaponEnhancement, characterEnhancement);
     }

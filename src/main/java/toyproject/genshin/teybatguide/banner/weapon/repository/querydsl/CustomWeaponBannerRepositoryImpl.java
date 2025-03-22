@@ -5,9 +5,9 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import toyproject.genshin.teybatguide.weapon.entity.Weapon;
-import toyproject.genshin.teybatguide.banner.weapon.entity.WeaponBanner;
 import toyproject.genshin.teybatguide.banner.value.BannerType;
+import toyproject.genshin.teybatguide.banner.weapon.entity.WeaponBanner;
+import toyproject.genshin.teybatguide.weapon.entity.Weapon;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,8 +15,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.querydsl.core.group.GroupBy.list;
-import static toyproject.genshin.teybatguide.domain.QWeapon.weapon;
-import static toyproject.genshin.teybatguide.domain.QWeaponBanner.weaponBanner;
+import static toyproject.genshin.teybatguide.banner.weapon.entity.QWeaponBanner.weaponBanner;
+import static toyproject.genshin.teybatguide.weapon.entity.QWeapon.weapon;
 
 @RequiredArgsConstructor
 public class CustomWeaponBannerRepositoryImpl implements CustomWeaponBannerRepository {
@@ -26,32 +26,32 @@ public class CustomWeaponBannerRepositoryImpl implements CustomWeaponBannerRepos
     @Override
     public Map<BannerType, List<WeaponBanner>> findByDateTimeBetweenGroupBy(LocalDateTime localDateTime) {
         return jpaQueryFactory
-                .from(weaponBanner)
-                .where(betweenDate(localDateTime))
-                .transform(GroupBy
-                        .groupBy(weaponBanner.bannerType)
-                        .as(list(weaponBanner))
-                );
+            .from(weaponBanner)
+            .where(betweenDate(localDateTime))
+            .transform(GroupBy
+                .groupBy(weaponBanner.bannerType)
+                .as(list(weaponBanner))
+            );
     }
 
     @Override
     public List<WeaponBanner> findByDateTimeBetween(LocalDateTime localDateTime, BannerType bannerType) {
         return jpaQueryFactory
-                .selectFrom(weaponBanner)
-                .where(
-                        betweenDate(localDateTime),
-                        eqBannerType(bannerType)
-                )
-                .fetch();
+            .selectFrom(weaponBanner)
+            .where(
+                betweenDate(localDateTime),
+                eqBannerType(bannerType)
+            )
+            .fetch();
     }
 
     @Override
     public Optional<Weapon> findWeaponById(String id) {
         return Optional.ofNullable(
-                jpaQueryFactory
-                        .selectFrom(weapon)
-                        .where(eqId(id))
-                        .fetchOne()
+            jpaQueryFactory
+                .selectFrom(weapon)
+                .where(eqId(id))
+                .fetchOne()
         );
     }
 
