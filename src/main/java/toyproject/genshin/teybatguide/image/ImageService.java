@@ -1,5 +1,6 @@
 package toyproject.genshin.teybatguide.image;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
@@ -9,12 +10,15 @@ import toyproject.genshin.teybatguide.exception.TeybatException;
 @Slf4j
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class ImageService {
+
+    private final ImageValue imageValue;
 
     public FileSystemResource openFile(String imageUrl) {
         try {
-            String path = "/Users/ahnnayeong/img" + imageUrl;
-            System.out.println(path);
+            String path = imageValue.getImagePath() + imageUrl;
+            log.info(path);
             FileSystemResource resource = new FileSystemResource(path);
 
             if (!resource.exists()) {

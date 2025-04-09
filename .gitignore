@@ -38,10 +38,12 @@ out/
 /src/main/resources/application.properties
 /src/main/resources/dev-application.properties
 /src/main/resources/db.sql
-/src/main/resources/application.yml
 
 ### Q class ###
 /src/main/generated/*
 
 ### rest docs ###
 /src/main/resources/static/docs/*
+/src/main/resources/application-prod.yml
+/src/main/resources/application-dev.yml
+/src/main/resources/application-local.yml

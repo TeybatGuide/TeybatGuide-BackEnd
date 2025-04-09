@@ -19,7 +19,7 @@ import toyproject.genshin.teybatguide.character.controller.dto.response.Characte
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/characters")
+@RequestMapping("/characters")
 @RequiredArgsConstructor
 public class CharactersController {
 

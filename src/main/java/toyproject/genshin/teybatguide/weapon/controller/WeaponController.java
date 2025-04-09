@@ -20,7 +20,7 @@ import toyproject.genshin.teybatguide.weapon.controller.dto.response.WeaponListR
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/weapons")
+@RequestMapping("/weapons")
 @RequiredArgsConstructor
 public class WeaponController {
 

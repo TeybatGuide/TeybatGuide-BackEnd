@@ -23,7 +23,7 @@ import toyproject.genshin.teybatguide.base.value.SortDirection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/resources")
+@RequestMapping("/resources")
 @RequiredArgsConstructor
 public class ResourcesController {
 
