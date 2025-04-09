@@ -19,7 +19,7 @@ import toyproject.genshin.teybatguide.base.PageResponseData;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/artifact")
+@RequestMapping("/artifact")
 @RequiredArgsConstructor
 public class ArtifactController {
 

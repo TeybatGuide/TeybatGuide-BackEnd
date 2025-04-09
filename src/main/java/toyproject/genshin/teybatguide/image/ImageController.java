@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import toyproject.genshin.teybatguide.image.dto.ImageRequest;
 
 @RestController
-@RequestMapping("/api/image")
+@RequestMapping("/image")
 @RequiredArgsConstructor
 public class ImageController {
 

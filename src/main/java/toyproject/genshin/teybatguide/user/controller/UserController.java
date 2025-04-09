@@ -10,7 +10,7 @@ import toyproject.genshin.teybatguide.user.controller.dto.UserInfoResponse;
 import toyproject.genshin.teybatguide.user.service.UserService;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 

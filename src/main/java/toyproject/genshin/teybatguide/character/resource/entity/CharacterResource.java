@@ -1,7 +1,6 @@
 package toyproject.genshin.teybatguide.character.resource.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import toyproject.genshin.teybatguide.base.BaseEntity;
 import toyproject.genshin.teybatguide.base.value.Domain;

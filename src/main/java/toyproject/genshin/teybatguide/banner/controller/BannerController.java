@@ -17,7 +17,7 @@ import toyproject.genshin.teybatguide.banner.value.BannerType;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/banner")
+@RequestMapping("/banner")
 @RequiredArgsConstructor
 public class BannerController {
 

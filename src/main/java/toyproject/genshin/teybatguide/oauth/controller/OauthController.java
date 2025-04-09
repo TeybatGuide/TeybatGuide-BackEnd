@@ -10,7 +10,7 @@ import toyproject.genshin.teybatguide.jwt.properties.JwtProperties;
 import toyproject.genshin.teybatguide.oauth.OauthService;
 import toyproject.genshin.teybatguide.oauth.controller.dto.OauthToken;
 
-@RestController("oauth")
+@RestController("/oauth")
 @RequiredArgsConstructor
 public class OauthController {
 
