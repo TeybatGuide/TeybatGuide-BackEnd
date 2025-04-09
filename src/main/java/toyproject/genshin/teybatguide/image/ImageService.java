@@ -15,9 +15,9 @@ public class ImageService {
 
     private final ImageValue imageValue;
 
-    public FileSystemResource openFile(String imageUrl) {
+    public FileSystemResource openFile(String folderName, String imageUrl) {
         try {
-            String path = imageValue.getImagePath() + imageUrl;
+            String path = String.join("/", imageValue.getImagePath(), folderName, imageUrl);
             log.info(path);
             FileSystemResource resource = new FileSystemResource(path);
 

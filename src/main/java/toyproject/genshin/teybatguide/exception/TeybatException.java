@@ -10,7 +10,7 @@ public class TeybatException extends RuntimeException {
 
     public TeybatException(String message) {
         super(message);
-        this.errorCode = null;
+        this.errorCode = Code.BAD_REQUEST;
     }
 
     public TeybatException(Code errorCode) {
